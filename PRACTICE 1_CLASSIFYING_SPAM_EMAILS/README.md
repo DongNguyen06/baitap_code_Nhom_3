@@ -24,4 +24,4 @@ Dự án xây dựng hệ thống phân loại Email/Tin nhắn Spam (Spam vs Ha
 ---
 
 ## 🚀 Hướng dẫn nhanh cho thành viên nhóm
-Xem chi tiết quy trình tạo nhánh `feature/`, commit và tạo Pull Request (PR) tại tài liệu [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md).
+Xem chi tiết quy trình tạo nhánh `feature/`, commit và tạo Pull Request (PR) tại tài liệu [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md). 
