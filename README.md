@@ -1,23 +1,23 @@
-# 🏛️ ĐẠI HỌC GIAO THÔNG VẬN TẢI (UTC)
+# 🏛️ TRƯỜNG ĐẠI HỌC GIAO THÔNG VẬN TẢI TP.HCM (UTH)
 ## BỘ MÔN: HỌC MÁY (MACHINE LEARNING) — NHÓM 3
 
 > **Học kỳ:** Năm 3 — Học kỳ 1  
-> **Repository:** `ML_Nhom_3` (Monorepo tổng quản lý toàn bộ các bài thực hành và đồ án môn học)  
-> **Trưởng nhóm (Leader):** Nguyễn Xuân Đông  
+> **Giảng viên hướng dẫn (GVHD):** Tiến sĩ Nguyễn Thị Khánh Tiên  
+> **Kho lưu trữ:** Tổng hợp các bài thực hành và đồ án môn học  
 
 ---
 
 ## 👥 1. DANH SÁCH THÀNH VIÊN NHÓM 3 (7 THÀNH VIÊN)
 
-| STT | Mã sinh viên (MSSV) | Họ và tên | Vai trò phụ trách chung | Ký hiệu (Tag) |
-| :---: | :---: | :--- | :--- | :---: |
-| **1** | `94206000207` | **Nguyễn Xuân Đông** | **Trưởng nhóm (Leader)** • Quản trị Repo, Kiến trúc, Review PR, Slide báo cáo | `TV1` |
-| **2** | `066206005311` | **Mai Hoàng Danh** | Tiền xử lý dữ liệu (Data Preprocessing, Cleaning, Regex) | `TV2` |
-| **3** | `87206002694` | **Trương Thành Công** | Kỹ thuật đặc trưng (Feature Engineering, TF-IDF, Vectorization) | `TV3` |
-| **4** | `79206001370` | **Võ Khôi Nguyên** | Kỹ sư ML 1 (Xây dựng & Tinh chỉnh Naive Bayes, Logistic Regression) | `TV4` |
-| **5** | `89206003078` | **Võ Thanh Phú** | Kỹ sư ML 2 (Xây dựng & Tinh chỉnh Linear SVM, Ensemble Methods) | `TV5` |
-| **6** | `70206006644` | **Nguyễn Minh Nhật** | Đánh giá mô hình (Metrics, Confusion Matrix, Error Analysis, Notebook) | `TV6` |
-| **7** | `052206005348` | **Mai An Thịnh** | Triển khai & Kiểm thử (Console Chat, Web Demo Streamlit, Unit Tests) | `TV7` |
+| STT | Mã sinh viên (MSSV) | Họ và tên | Chức danh | Ký hiệu (Tag) |
+| :---: | :---: | :--- | :---: | :---: |
+| **1** | `94206000207` | **Nguyễn Xuân Đông** | **Trưởng nhóm (Leader)** | `TV1` |
+| **2** | `066206005311` | **Mai Hoàng Danh** | Thành viên | `TV2` |
+| **3** | `87206002694` | **Trương Thành Công** | Thành viên | `TV3` |
+| **4** | `79206001370` | **Võ Khôi Nguyên** | Thành viên | `TV4` |
+| **5** | `89206003078` | **Võ Thanh Phú** | Thành viên | `TV5` |
+| **6** | `70206006644` | **Nguyễn Minh Nhật** | Thành viên | `TV6` |
+| **7** | `052206005348` | **Mai An Thịnh** | Thành viên | `TV7` |
 
 ---
 

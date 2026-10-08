@@ -1,7 +1,8 @@
 # 🛡️ PRACTICE 1: CLASSIFYING SPAM EMAILS
-> **Bài tập môn:** Học máy (Machine Learning) — Năm 3 ĐH Giao thông Vận tải (ĐH GTVT)  
+> **Bài tập môn:** Học máy (Machine Learning) — Trường ĐH Giao thông Vận tải TP.HCM (UTH)  
+> **Giảng viên hướng dẫn (GVHD):** Tiến sĩ Nguyễn Thị Khánh Tiên  
 > **Nhóm thực hiện:** Nhóm 3 (7 thành viên)  
-> **Quy trình làm việc nhóm:** Xem chi tiết tại [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md)
+> **Quy trình làm việc nhóm & Đánh giá đóng góp:** Xem chi tiết tại [docs/TEAM_WORKFLOW.md](docs/TEAM_WORKFLOW.md)
 
 ---
 
