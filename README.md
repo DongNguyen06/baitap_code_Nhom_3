@@ -1,4 +1,4 @@
-# 🏛️ ĐẠI HỌC GIAO THÔNG VẬN TẢI (UTC)
+# 🏛️ ĐẠI HỌC GIAO THÔNG VẬN TẢI TPHCM (UTH)
 ## BỘ MÔN: HỌC MÁY (MACHINE LEARNING) — NHÓM 3
 
 > **Học kỳ:** Năm 3 — Học kỳ 1  
@@ -11,7 +11,7 @@
 
 | STT | Mã sinh viên (MSSV) | Họ và tên | Vai trò phụ trách chung | Ký hiệu (Tag) |
 | :---: | :---: | :--- | :--- | :---: |
-| **1** | `94206000207` | **Nguyễn Xuân Đông** | **Trưởng nhóm (Leader)** • Quản trị Repo, Kiến trúc, Review PR, Slide báo cáo | `TV1` |
+| **1** | `94206000207` | **Nguyễn Xuân Đông** | Quản trị Repo, Kiến trúc, Review PR, Slide báo cáo | `TV1` |
 | **2** | `066206005311` | **Mai Hoàng Danh** | Tiền xử lý dữ liệu (Data Preprocessing, Cleaning, Regex) | `TV2` |
 | **3** | `87206002694` | **Trương Thành Công** | Kỹ thuật đặc trưng (Feature Engineering, TF-IDF, Vectorization) | `TV3` |
 | **4** | `79206001370` | **Võ Khôi Nguyên** | Kỹ sư ML 1 (Xây dựng & Tinh chỉnh Naive Bayes, Logistic Regression) | `TV4` |
