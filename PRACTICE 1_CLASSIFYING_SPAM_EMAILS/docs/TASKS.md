@@ -1,7 +1,6 @@
 # KẾ HOẠCH PHÂN RÃ CÔNG VIỆC THEO 4 BƯỚC WORKFLOW (TASKS BREAKDOWN)
 ## PRACTICE 1: CLASSIFYING SPAM EMAILS
 
-> **Mã tài liệu:** `DOC-TSK-001`  
 > **Nguyên tắc:** Bám sát toàn diện 4 bước Workflow và các mục mở rộng (Feature Engineering, Hyperparameter Tuning, Ensemble) của đề bài.  
 > **Trạng thái:** `READY TO IMPLEMENT (SẴN SÀNG TRIỂN KHAI)`  
 
@@ -79,36 +78,37 @@
     3. $\text{Recall}$
     4. $\text{F1-score}$
   * Tính toán ma trận nhầm lẫn (Confusion Matrix): số ca True Positive, False Positive, True Negative, False Negative.
-* **Task 3.2: Lựa chọn Best Model & Xuất Artifact**
-  * Tự động chọn mô hình có điểm cân bằng Precision và F1-score cao nhất.
-  * Lưu toàn bộ End-to-End Pipeline vào `models/best_model.joblib`.
-  * Lưu báo cáo chỉ số và cấu hình vào `models/metadata.json`.
+* **Task 3.2: Lựa chọn Best Model & Xuất Artifact toàn bộ 3 mô hình**
+  * Lưu độc lập cả 3 mô hình đã train & tuning để phục vụ so sánh:
+    - `models/naive_bayes.joblib`
+    - `models/logistic_reg.joblib`
+    - `models/svm.joblib`
+  * Tự động chọn mô hình có điểm cân bằng Precision và F1-score cao nhất làm `models/best_model.joblib`.
+  * Lưu báo cáo chỉ số so sánh chi tiết vào `models/metadata.json`.
 * **Task 3.3: Script huấn luyện tự động toàn trình (`scripts/run_train.py`)**
   * Cho phép người dùng chạy 1 lệnh duy nhất để tự động thực thi Bước 1 $\rightarrow$ Bước 2 $\rightarrow$ Bước 3.
-* **Tiêu chí kiểm thử M3:** File `models/best_model.joblib` được tạo ra hợp lệ, nạp lại được và nhận trực tiếp chuỗi văn bản thô để dự đoán.
+* **Tiêu chí kiểm thử M3:** Cả 3 file `.joblib` được tạo ra hợp lệ, nạp lại được và nhận trực tiếp chuỗi văn bản thô để dự đoán.
 
 ---
 
-### 🟢 MILESTONE 4: MODEL DEPLOYMENT, INTERACTIVE CHAT & BÁO CÁO
+### 🟢 MILESTONE 4: MODEL DEPLOYMENT, WEB DEMO SO SÁNH 3 MÔ HÌNH & BÁO CÁO
 *Mục tiêu đề bài:* 
 * Deploy the trained model to classify new, unseen emails.
+* **Nâng cấp đặc biệt:** Xây dựng Web Demo Streamlit nạp đồng thời cả 3 mô hình đã train, hiển thị so sánh song song trong 3 cột.
 * Cung cấp ô Chat tương tác nhập văn bản trực tiếp trong Terminal.
 * Bổ sung Notebook trực quan hóa để phục vụ báo cáo bài tập lớn.
 
-* **Task 4.1: Xây dựng Module suy luận (`src/inference.py`)**
-  * Nạp `best_model.joblib` vào RAM duy nhất 1 lần khi khởi động.
-  * Cung cấp hàm `predict_email(text)` trả về: Nhãn (`SPAM` hoặc `HAM`), Độ tin cậy (`confidence_score %`), và Thời gian xử lý (`latency_ms`).
-* **Task 4.2: Xây dựng Giao diện Ô Chat Console tương tác (`scripts/run_predict.py`)**
-  * Khởi tạo giao diện terminal thân thiện, có khung hướng dẫn rõ ràng.
-  * Vòng lặp `while True`:
-    * Nhập `💬 Bạn: `
-    * Nếu nhập `exit` hoặc `quit`: Thoát chương trình êm thuận.
-    * Nếu nhập chuỗi trống: Nhắc người dùng nhập lại.
-    * Nếu nhập nội dung email: Dự đoán ngay lập tức và in:
-      `🤖 AI: [ 🚨 SPAM ] | Độ tin cậy: XX.XX% | Độ trễ: X.X ms`
-* **Task 4.3: Viết bộ kiểm thử tự động toàn diện (`tests/test_workflow.py`)**
-  * Kiểm thử trơn tru toàn bộ luồng từ tiền xử lý, huấn luyện đến dự đoán mẫu email thực tế.
-* **Task 4.4: Tạo Jupyter Notebook báo cáo trực quan (`notebooks/eda_and_experiments.ipynb`)**
+* **Task 4.1: Xây dựng Module suy luận đa mô hình (`src/inference.py`)**
+  * Nạp đồng thời cả 3 file `.joblib` vào RAM ngay khi khởi động.
+  * Cung cấp hàm `predict_all_models(text)` trả về kết quả dự đoán (nhãn, % tin cậy, độ trễ) của cả 3 mô hình Naive Bayes, Logistic Regression, Linear SVM.
+* **Task 4.2: Xây dựng Giao diện Web Demo so sánh 3 Cột (`app.py` Streamlit)**
+  * Thiết kế giao diện hiện đại: Ô textarea nhập email $\rightarrow$ Bấm nút "Phân tích & So sánh 3 Mô hình".
+  * Chia 3 cột song song (`col1, col2, col3`) thể hiện trực quan kết quả của cả 3 mô hình đã train.
+  * Hiển thị thanh tiến trình độ tin cậy % và kết luận đồng thuận của các mô hình.
+* **Task 4.3: Xây dựng Giao diện Ô Chat Console tương tác (`scripts/run_predict.py`)**
+  * Vòng lặp `while True`: Chờ người dùng nhập văn bản trực tiếp trong terminal và in kết quả tức thì ($< 5\text{ms}$).
+* **Task 4.4: Tạo Jupyter Notebook báo cáo trực quan (`notebooks/eda_and_report.ipynb`)**
+  * Vẽ biểu đồ phân tích dữ liệu (EDA), biểu đồ nhiệt Confusion Matrix của 3 mô hình, bảng so sánh điểm số nộp cho Cô Khánh Tiên.
   * Vẽ biểu đồ phân bố nhãn (Ham vs Spam).
   * Biểu đồ phân tích độ dài và tần suất ký tự đặc biệt giữa Spam và Ham.
   * Biểu đồ nhiệt ma trận nhầm lẫn (Confusion Matrix Heatmap).

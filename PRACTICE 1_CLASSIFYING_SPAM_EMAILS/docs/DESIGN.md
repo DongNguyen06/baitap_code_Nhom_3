@@ -1,7 +1,6 @@
 # THIẾT KẾ KIẾN TRÚC HỆ THỐNG TINH GỌN (SYSTEM DESIGN)
 ## PRACTICE 1: CLASSIFYING SPAM EMAILS
 
-> **Mã tài liệu:** `DOC-DES-001`  
 > **Nguyên tắc thiết kế:** Bám sát 4 bước Workflow trong đề bài kết hợp các mục mở rộng (Feature Engineering, Hyperparameter Tuning, Ensemble), cấu trúc module hóa chuẩn mực, tối ưu cho tập dữ liệu thực tế `data/raw/spam.csv`.  
 
 ---
@@ -22,10 +21,13 @@ E:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 ├── notebooks/                        # Jupyter Notebook phục vụ làm báo cáo & thuyết trình
 │   └── eda_and_report.ipynb          # Phân tích dữ liệu (EDA), biểu đồ và so sánh mô hình
 ├── models/
-│   ├── best_model.joblib             # Pipeline ML tối ưu hoàn chỉnh (Feature Extractor + Classifier)
-│   └── metadata.json                 # Kết quả đánh giá chi tiết (Acc, Prec, Rec, F1, Confusion Matrix)
+│   ├── naive_bayes.joblib            # [Model 1] Pipeline Naive Bayes đã train & tuning
+│   ├── logistic_reg.joblib           # [Model 2] Pipeline Logistic Regression đã train & tuning
+│   ├── svm.joblib                    # [Model 3] Pipeline Calibrated LinearSVC đã train & tuning
+│   ├── best_model.joblib             # Pipeline tối ưu nhất (hoặc Ensemble)
+│   └── metadata.json                 # Kết quả so sánh 4 chỉ số (Acc, Prec, Rec, F1) của 3 mô hình
 ├── scripts/
-│   ├── run_train.py                  # Thực thi Workflow: Preprocessing -> Train -> Tuning -> Eval
+│   ├── run_train.py                  # Thực thi Workflow: Preprocessing -> Train 3 Models -> Tuning -> Eval
 │   └── run_predict.py                # Thực thi Bước 4: Mở ô Chat Console tương tác thời gian thực
 ├── src/
 │   ├── __init__.py
@@ -39,12 +41,12 @@ E:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │   │   ├── svm.py                    # Calibrated LinearSVC + Tuning
 │   │   └── ensemble.py               # VotingClassifier & RandomForest
 │   ├── evaluation.py                 # [Bước 3] Đánh giá 4 chỉ số & Confusion Matrix
-│   └── inference.py                  # [Bước 4] Nạp pipeline model và dự đoán thời gian thực
-├── app.py                            # Giao diện Web Demo Streamlit trực quan để báo cáo
+│   └── inference.py                  # [Bước 4] Nạp 3 pipeline model và dự đoán so sánh thời gian thực
+├── app.py                            # [Bước 4] Web Demo Streamlit so sánh đồng thời 3 mô hình đã train
 ├── tests/
 │   ├── __init__.py
 │   └── test_workflow.py              # Bộ kiểm thử tự động chứng minh toàn trình chạy trơn tru
-├── requirements.txt                  # Danh sách thư viện (scikit-learn, pandas, numpy, joblib,...)
+├── requirements.txt                  # Danh sách thư viện (scikit-learn, pandas, numpy, joblib, streamlit...)
 └── README.md                         # Hướng dẫn cài đặt và chạy nhanh hệ thống
 ```
 
@@ -71,13 +73,14 @@ flowchart TD
 
     subgraph W3["Bước 3: Model Evaluation"]
         T1 & T2 & T3 & T4 --> Eval["Đánh giá trên tập Test 20%:\n- Accuracy, Precision, Recall, F1\n- Confusion Matrix Heatmap"]
-        Eval --> Best["Chọn Mô hình Tối ưu nhất\n-> Lưu models/best_model.joblib\n-> Lưu models/metadata.json"]
+        Eval --> SaveModels["Xuất toàn bộ 3 mô hình đã train:\n-> models/naive_bayes.joblib\n-> models/logistic_reg.joblib\n-> models/svm.joblib\n-> models/metadata.json"]
     end
 
-    subgraph W4["Bước 4: Deployment & Interactive Chat"]
-        Best -.->|"Load 1 lần vào RAM"| ChatEngine["src/inference.py"]
-        User["Người dùng nhập email"] --> ChatLoop["scripts/run_predict.py\n(Terminal Chat Loop)"]
-        ChatLoop <--> ChatEngine
+    subgraph W4["Bước 4: Deployment & Comparative Demo"]
+        SaveModels -.->|"Load cả 3 model vào RAM"| App["app.py (Web Streamlit)\nSo sánh song song 3 Cột"]
+        SaveModels -.->|"Load Best Model"| ChatLoop["scripts/run_predict.py\n(Terminal Chat Loop)"]
+        User["Người dùng nhập email"] --> App & ChatLoop
+        App --> Comp["Hiển thị 3 Cột song song:\nNaive Bayes vs Logistic vs SVM"]
         ChatLoop --> Output["Hiển thị: [SPAM] / [HAM]\nkèm Confidence % & Latency (ms)"]
     end
 ```
@@ -94,13 +97,41 @@ flowchart TD
   * Số lượng ký hiệu tiền tệ `$`, `£`, `€`.
   * Tỷ lệ ký tự in hoa / tổng số ký tự.
   * Tổng số ký tự trong thông điệp.
-* Toàn bộ được đóng gói trong một `scikit-learn Pipeline` duy nhất, giúp file `best_model.joblib` có thể nhận trực tiếp văn bản thô đầu vào mà không cần bước tiền xử lý thủ công bên ngoài khi suy luận.
+* Toàn bộ được đóng gói trong một `scikit-learn Pipeline` duy nhất, giúp các file `.joblib` có thể nhận trực tiếp văn bản thô đầu vào mà không cần bước tiền xử lý thủ công bên ngoài khi suy luận.
 
 ### 3.2. Xử lý xác suất (Probability Calibration) cho SVM
 * **Vấn đề:** `LinearSVC` của Scikit-learn chỉ cung cấp `decision_function()` (khoảng cách đến siêu phẳng), không hỗ trợ phương thức `predict_proba()` mặc định.
-* **Giải pháp:** Sử dụng `CalibratedClassifierCV(estimator=LinearSVC(C=...), cv=3)` hoặc dùng ánh xạ Sigmoid trên giá trị hàm quyết định. Điều này đảm bảo khi người dùng chat trong terminal, hệ thống luôn trả về chỉ số độ tin cậy phần trăm (Confidence %) chính xác và mượt mà, không gặp lỗi `AttributeError`.
+* **Giải pháp:** Sử dụng `CalibratedClassifierCV(estimator=LinearSVC(C=...), cv=3)` hoặc dùng ánh xạ Sigmoid trên giá trị hàm quyết định. Điều này đảm bảo khi người dùng kiểm tra trên web hoặc chat terminal, cả 3 mô hình đều hiển thị độ tin cậy % (Confidence) mượt mà, không gặp lỗi `AttributeError`.
 
-### 3.3. Thiết kế Ô Chat tương tác trong `scripts/run_predict.py`
+### 3.3. Thiết kế Giao diện Web Demo so sánh đồng thời 3 Mô hình (`app.py` Streamlit)
+Web App nạp đồng thời cả 3 mô hình đã huấn luyện (`naive_bayes.joblib`, `logistic_reg.joblib`, `svm.joblib`). Khi người dùng dán nội dung email vào ô nhập và bấm **"Phân tích & So sánh"**, cả 3 mô hình sẽ cùng dự đoán và hiển thị kết quả song song trong 3 cột (`col1, col2, col3`):
+
+```text
+=================================================================================================
+             🛡️ HỆ THỐNG SO SÁNH & PHÂN LOẠI EMAIL SPAM — NHÓM 3 (UTH)
+=================================================================================================
+[ Ô nhập văn bản email / tin nhắn cần kiểm tra:                                                ]
+[ "WINNER!! You have won a $1000 cash prize! Claim code KL341. Valid 12 hours only. Call now!"   ]
+
+                              [ 🚀 PHÂN TÍCH & SO SÁNH 3 MÔ HÌNH ]
+
+-------------------------------------------------------------------------------------------------
+     CỘT 1: NAIVE BAYES       │   CỘT 2: LOGISTIC REGRESSION  │    CỘT 3: LINEAR SVM
+-------------------------------------------------------------------------------------------------
+       [ 🚨 SPAM ]            │         [ 🚨 SPAM ]           │       [ 🚨 SPAM ]
+   Độ tin cậy: 99.12%         │     Độ tin cậy: 98.45%        │   Độ tin cậy: 99.80%
+   Thanh đo: [█████████░]     │     Thanh đo: [████████░░]    │   Thanh đo: [██████████]
+   Độ trễ: 1.1 ms             │     Độ trễ: 0.9 ms            │   Độ trễ: 1.4 ms
+-------------------------------------------------------------------------------------------------
+                      📊 KẾT LUẬN CHUNG: ĐỒNG THUẬN 3/3 MÔ HÌNH LÀ SPAM!
+```
+
+#### Ưu điểm vượt trội của Giao diện 3 Cột:
+1. **So sánh trực quan tuyệt đối:** Giúp Giảng viên thấy ngay sự đồng thuận hoặc khác biệt giữa 3 thuật toán trên các câu test thực tế.
+2. **Khai thác toàn diện công sức nhóm:** Sử dụng đồng thời cả 3 mô hình đã train và tuning, không bỏ phí bất kỳ mô hình nào.
+3. **Thanh tiến trình (Progress Bar):** Thể hiện trực quan % xác suất từ 0% đến 100%.
+
+### 3.4. Thiết kế Ô Chat tương tác Terminal trong `scripts/run_predict.py`
 Khi người dùng chạy `python scripts/run_predict.py`, giao diện Terminal Chat hiển thị như sau:
 
 ```text
@@ -125,7 +156,7 @@ Khi người dùng chạy `python scripts/run_predict.py`, giao diện Terminal 
 Tạm biệt! Kết thúc phiên làm việc.
 ```
 
-### 3.4. Nguyên lý an toàn và hiệu năng của Ô Chat:
-1. **Nạp 1 lần (Pre-load):** Pipeline được nạp vào bộ nhớ trước khi bước vào vòng lặp `while True`.
-2. **Xử lý ngoại lệ (Graceful Exit):** Bắt sự kiện `KeyboardInterrupt` (Ctrl+C) và chuỗi rỗng để không bị văng lỗi traceback ngoài ý muốn.
-3. **Độ trễ phản hồi cực thấp:** Suy luận trực tiếp trên RAM đạt $< 5\text{ms}$ mỗi lần gõ.
+### 3.5. Nguyên lý an toàn và hiệu năng:
+1. **Nạp 1 lần (Pre-load):** Cả 3 file `.joblib` được nạp vào RAM ngay khi khởi động Web/Console.
+2. **Xử lý ngoại lệ (Graceful Exit):** Bắt chuỗi rỗng và ngoại lệ mềm dẻo, không bao giờ văng lỗi traceback ngoài ý muốn.
+3. **Độ trễ phản hồi cực thấp:** Suy luận trực tiếp trên RAM đạt $< 5\text{ms}$ cho mỗi lượt kiểm tra.

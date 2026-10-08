@@ -1,7 +1,9 @@
 # BẢN ĐẶC TẢ DỰ ÁN (PROJECT DEFINITION SPECIFICATION)
 ## PRACTICE 1: CLASSIFYING SPAM EMAILS
 
-> **Mã tài liệu:** `DOC-DEF-001`  
+> **Bộ môn:** Học máy (Machine Learning) — Trường ĐH Giao thông Vận tải TP.HCM (UTH)  
+> **Giảng viên hướng dẫn (GVHD):** Tiến sĩ Nguyễn Thị Khánh Tiên  
+> **Nhóm thực hiện:** Nhóm 3 (7 thành viên)  
 > **Dự án:** `SpamGuard-ML (Email Spam Classification Engine)`  
 > **Tập dữ liệu nguồn:** `data/raw/spam.csv` (Kaggle Dataset: 5.572 dòng, 2 cột `Category` & `Message`)  
 > **Quy chuẩn thực thi:** Bám sát toàn diện 4 bước Workflow và các mục mở rộng (Feature Engineering, Hyperparameter Tuning, Ensemble Methods) theo đúng đề bài.
