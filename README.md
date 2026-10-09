@@ -9,15 +9,15 @@
 
 ## 👥 1. DANH SÁCH THÀNH VIÊN NHÓM 3 (7 THÀNH VIÊN)
 
-| STT | Mã sinh viên (MSSV) | Họ và tên | Vai trò phụ trách chung | Ký hiệu (Tag) |
-| :---: | :---: | :--- | :--- | :---: |
-| **1** | `94206000207` | **Nguyễn Xuân Đông** | **Trưởng nhóm (Leader)** • Quản trị Repo, Kiến trúc, Review PR, Slide báo cáo | `TV1` |
-| **2** | `066206005311` | **Mai Hoàng Danh** | Tiền xử lý dữ liệu (Data Preprocessing, Cleaning, Regex) | `TV2` |
-| **3** | `87206002694` | **Trương Thành Công** | Kỹ thuật đặc trưng (Feature Engineering, TF-IDF, Vectorization) | `TV3` |
-| **4** | `79206001370` | **Võ Khôi Nguyên** | Kỹ sư ML 1 (Xây dựng & Tinh chỉnh Naive Bayes, Logistic Regression) | `TV4` |
-| **5** | `89206003078` | **Võ Thanh Phú** | Kỹ sư ML 2 (Xây dựng & Tinh chỉnh Linear SVM, Ensemble Methods) | `TV5` |
-| **6** | `70206006644` | **Nguyễn Minh Nhật** | Đánh giá mô hình (Metrics, Confusion Matrix, Error Analysis, Notebook) | `TV6` |
-| **7** | `052206005348` | **Mai An Thịnh** | Triển khai & Kiểm thử (Console Chat, Web Demo Streamlit, Unit Tests) | `TV7` |
+| STT | Mã sinh viên (MSSV) | Họ và tên | Ký hiệu (Tag) |
+| :---: | :---: | :--- | :---: |
+| **1** | `94206000207` | **Nguyễn Xuân Đông** (Trưởng nhóm) | `TV1` |
+| **2** | `066206005311` | **Mai Hoàng Danh** | `TV2` |
+| **3** | `87206002694` | **Trương Thành Công** | `TV3` |
+| **4** | `79206001370` | **Võ Khôi Nguyên** | `TV4` |
+| **5** | `89206003078` | **Võ Thanh Phú** | `TV5` |
+| **6** | `70206006644` | **Nguyễn Minh Nhật** | `TV6` |
+| **7** | `052206005348` | **Mai An Thịnh** | `TV7` |
 
 ---
 

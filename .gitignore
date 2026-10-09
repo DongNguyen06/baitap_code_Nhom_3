@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.ipynb_checkpoints/
+scratch_*.ipynb
 
 # Virtual Environments
 venv/
@@ -16,12 +17,14 @@ ENV/
 *.sublime-project
 *.sublime-workspace
 
-# Large datasets cache / logs
+# Large datasets cache (CSV, ZIP dung lượng lớn không đưa lên Git)
+*.csv
+*.zip
+*.tar.gz
 *.log
 .DS_Store
 Thumbs.db
 
-# Machine Learning Artifacts (models cache lớn > 100MB nếu có)
+# Large ML Weights (> 100MB)
 *.h5
 *.pth
-*.tar.gz

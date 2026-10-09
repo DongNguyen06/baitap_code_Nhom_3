@@ -1,22 +1,20 @@
-# Python bytecode & cache
+# Python cache & checkpoints
 __pycache__/
 *.py[cod]
-*$py.class
-*.ipynb_checkpoints/
+.ipynb_checkpoints/
+scratch_*.ipynb
 
 # Virtual Environments
-venv/
 .venv/
+venv/
 env/
-ENV/
 
-# IDE & Editor configs
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
+# Data cache (CSV/ZIP lớn > 50MB không commit lên Git)
+data/raw/*.csv
+data/raw/*.zip
+data/processed/*.csv
 
-# Large datasets cache / logs
+# Logs & OS temp
 *.log
 .DS_Store
 Thumbs.db
