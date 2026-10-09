@@ -9,15 +9,15 @@
 
 ## 👥 1. DANH SÁCH THÀNH VIÊN NHÓM 3 (7 THÀNH VIÊN)
 
-| STT | Mã sinh viên (MSSV) | Họ và tên | Chức danh | Ký hiệu (Tag) |
-| :---: | :---: | :--- | :---: | :---: |
-| **1** | `94206000207` | **Nguyễn Xuân Đông** | **Trưởng nhóm (Leader)** | `TV1` |
-| **2** | `066206005311` | **Mai Hoàng Danh** | Thành viên | `TV2` |
-| **3** | `87206002694` | **Trương Thành Công** | Thành viên | `TV3` |
-| **4** | `79206001370` | **Võ Khôi Nguyên** | Thành viên | `TV4` |
-| **5** | `89206003078` | **Võ Thanh Phú** | Thành viên | `TV5` |
-| **6** | `70206006644` | **Nguyễn Minh Nhật** | Thành viên | `TV6` |
-| **7** | `052206005348` | **Mai An Thịnh** | Thành viên | `TV7` |
+| STT | Mã sinh viên (MSSV) | Họ và tên | Ký hiệu (Tag) |
+| :---: | :---: | :--- | :---: |
+| **1** | `94206000207` | **Nguyễn Xuân Đông** (Trưởng nhóm) | `TV1` |
+| **2** | `066206005311` | **Mai Hoàng Danh** | `TV2` |
+| **3** | `87206002694` | **Trương Thành Công** | `TV3` |
+| **4** | `79206001370` | **Võ Khôi Nguyên** | `TV4` |
+| **5** | `89206003078` | **Võ Thanh Phú** | `TV5` |
+| **6** | `70206006644` | **Nguyễn Minh Nhật** | `TV6` |
+| **7** | `052206005348` | **Mai An Thịnh** | `TV7` |
 
 ---
 
