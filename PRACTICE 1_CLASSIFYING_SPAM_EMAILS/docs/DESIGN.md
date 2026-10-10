@@ -9,7 +9,7 @@
 ```text
 PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 ├── data/
-│   ├── raw/CEAS_08.csv                       # Dữ liệu nguồn (39.154 email, 7 cột)
+│   ├── raw/CEAS_08.csv                       # Dữ liệu nguồn
 │   └── processed/clean_emails.csv            # Dữ liệu sạch (sau khi bóc HTML, bỏ trùng lặp)
 ├── docs/                                     # Bộ tài liệu đặc tả dự án
 │   ├── DEFINE.md                             # 7 mục đặc tả chuẩn theo vở ghi
