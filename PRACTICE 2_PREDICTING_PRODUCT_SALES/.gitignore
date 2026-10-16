@@ -1,0 +1,28 @@
+# Python cache & checkpoints
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+scratch_*.ipynb
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Data cache (CSV/ZIP lớn không commit lên Git)
+data/raw/*.csv
+data/raw/*.zip
+data/processed/*.csv
+
+# Models (.joblib lớn)
+models/*.joblib
+
+# Logs & OS temp
+*.log
+.DS_Store
+Thumbs.db
+
+# Tài liệu hướng dẫn nội bộ (Không đẩy lên Git)
+HUONG_DAN_CODE_CHI_TIET.md
+NHIEM_VU_THUC_HIEN_CODE.md
+PROJECT_MASTER_BLUEPRINT.md

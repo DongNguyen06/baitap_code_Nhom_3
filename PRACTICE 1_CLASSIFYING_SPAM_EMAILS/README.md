@@ -10,21 +10,33 @@
 ## 📌 1. GIỚI THIỆU DỰ ÁN
 Hệ thống giải quyết bài toán phân loại email nhị phân: Tự động phát hiện email là **Spam** (Thư rác - nhãn 1) hay **Ham** (Hợp lệ - nhãn 0) dựa trên nội dung văn bản tổng hợp từ tiêu đề và thân email.
 
-Dự án áp dụng phương pháp luận **Vibe Coding** với AI: Toàn bộ quy trình ML từ tiền xử lý đến đánh giá 3 mô hình (Naive Bayes, Logistic Regression, Linear SVM) được tích hợp trong **1 file Jupyter Notebook duy nhất** (`notebooks/spam_classification.ipynb`). Nhóm phối hợp theo quy trình Git nhánh gối đầu, xóa output trước khi commit để không bao giờ bị xung đột mã nguồn.
+Dự án áp dụng phương pháp luận **Vibe Coding** với AI: Toàn bộ quy trình ML đi từ 5 bước EDA toàn diện, thực thi làm sạch dữ liệu, 5 trụ cột Feature Engineering (chống rò rỉ dữ liệu) đến huấn luyện 3 mô hình cốt lõi (**Naive Bayes, Logistic Regression, Linear Support Vector Machine**) được tích hợp trong **1 file Jupyter Notebook duy nhất** (`notebooks/spam_classification.ipynb`). Nhóm phối hợp theo quy trình Git nhánh gối đầu, xóa output trước khi commit để không bao giờ bị xung đột mã nguồn.
 
 ---
 
 ## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG NHIỆM VỤ
 
-| STT | Họ và tên | MSSV | Vai trò | Phần phụ trách trong Notebook / Repo |
-| :---: | :--- | :---: | :--- | :--- |
-| 1 | **Nguyễn Xuân Đông** | `94206000207` | **Trưởng nhóm** | Mục 1 (Cấu hình) & Mục 7 (Demo), Quản trị Git |
-| 2 | **Mai Hoàng Danh** | `066206005311` | Data Cleaning | Mục 2: Tiền xử lý & Làm sạch dữ liệu văn bản |
-| 3 | **Trương Thành Công** | `87206002694` | Feature Engineer | Mục 3: Kỹ thuật đặc trưng (TF-IDF & Đặc trưng số) |
-| 4 | **Võ Khôi Nguyên** | `79206001370` | ML Engineer 1 | Mục 4: Huấn luyện Naive Bayes & Logistic Regression |
-| 5 | **Võ Thanh Phú** | `89206003078` | ML Engineer 2 | Mục 5: Huấn luyện Support Vector Machine (Linear SVM) |
-| 6 | **Nguyễn Minh Nhật** | `70206006644` | Evaluation Analyst | Mục 6: Đánh giá & So sánh 3 mô hình, vẽ Confusion Matrix |
-| 7 | **Mai An Thịnh** | `052206005348` | Deployment & Demo | Mục 7: Ô Chat tương tác (`run_predict.py`), Web (`app.py`) |
+| STT | Họ và tên | Vai trò | Đóng góp | Phần phụ trách trong Notebook / Repo |
+| :---: | :--- | :---: | :---: | :--- |
+| 1 | **Nguyễn Xuân Đông** | **Trưởng nhóm** | 15% | Mục 1: EDA Nền tảng (Cấu trúc, Chất lượng & Đơn biến), Quản trị Git |
+| 2 | *[Chưa chỉ định]* | Thành viên | 14% | Mục 2: EDA Chuyên sâu (Đa biến, Ngoại lai & Đúc kết định hướng) |
+| 3 | *[Chưa chỉ định]* | Thành viên | 14% | Mục 3: Tiền xử lý dữ liệu & Làm sạch văn bản |
+| 4 | *[Chưa chỉ định]* | Thành viên | 14% | Mục 4: FE Biến đổi (Log, Binning) & Tạo biến Domain |
+| 5 | *[Chưa chỉ định]* | Thành viên | 14% | Mục 5: FE Trích xuất (TF-IDF), Lọc Chi-square & Pipeline chống Leak |
+| 6 | *[Chưa chỉ định]* | Thành viên | 14% | Mục 6: Huấn luyện 3 mô hình (Naive Bayes, Logistic, Linear SVM) |
+| 7 | *[Chưa chỉ định]* | Thành viên | 15% | Mục 7: Đánh giá 3 mô hình, Phân tích lỗi & Triển khai Web Demo |
+| | **Tổng cộng** | | **100%** | |
+
+### Sơ đồ luồng thực hiện tuần tự (Pipeline Workflow):
+```text
+[CEAS_08.csv] ──> TV 1 (EDA Nền tảng: Cấu trúc, Chất lượng & Đơn biến)
+              ──> TV 2 (EDA Chuyên sâu: Đa biến, Ngoại lai & Đúc kết định hướng)
+              ──> TV 3 (Làm sạch dữ liệu: Khử trùng, điền missing, clean_text)
+              ──> TV 4 (FE Biến đổi: Log, Binning, Tạo biến Domain, Mã hóa)
+              ──> TV 5 (FE Lọc & Pipeline: Chia Train/Test chống Leak, TF-IDF, Chi2)
+              ──> TV 6 (Huấn luyện 3 mô hình: Naive Bayes, Logistic L1, Linear SVM)
+              ──> TV 7 (Đánh giá kiểm thử, Phân tích lỗi & Web Demo Streamlit)
+```
 
 ---
 
@@ -61,21 +73,20 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │   ├── raw/CEAS_08.csv                       # Dữ liệu nguồn (39.154 email, 7 cột)
 │   └── processed/clean_emails.csv            # Dữ liệu sạch (sau khi bóc HTML, bỏ trùng lặp)
 ├── docs/                                     # Bộ tài liệu đặc tả dự án
-│   ├── DEFINE.md                             # 7 mục đặc tả chuẩn theo vở ghi
-│   ├── DESIGN.md                             # Thiết kế kiến trúc & luồng dữ liệu
-│   ├── TASKS.md                              # Phân công 7 thành viên theo các mục của Notebook
-│   └── TEAM_WORKFLOW.md                      # 4 nguyên tắc Vibe Coding & Git nhánh gối đầu
-├── models/                                   # Nơi lưu trữ 3 mô hình sau huấn luyện
+│   ├── project_description.md                # 7 mục đặc tả dự án chuẩn (dưới 200 từ)
+│   ├── project_design.md                     # Thiết kế hệ thống theo 4 tính năng (dưới 200 từ)
+│   └── TASKS.md                              # Phân công 7 thành viên bám sát 4 tính năng
+├── models/                                   # Nơi lưu trữ các mô hình sau huấn luyện
 │   ├── best_model.joblib                     # Mô hình tối ưu nhất dùng cho ô chat/web
 │   ├── naive_bayes.joblib                    # Mô hình 1: Naive Bayes
-│   ├── logistic_reg.joblib                   # Mô hình 2: Logistic Regression
-│   ├── svm.joblib                            # Mô hình 3: Linear Support Vector Machine
+│   ├── logistic_reg.joblib                   # Mô hình 2: Logistic Regression (L1 Lasso)
+│   ├── svm.joblib                            # Mô hình 3: Linear Support Vector Machine (Platt Scaling)
 │   └── metadata.json                         # Kết quả đánh giá các chỉ số & ma trận nhầm lẫn
 ├── notebooks/                                # KHÔNG GIAN LÀM VIỆC CHÍNH CỦA NHÓM
 │   └── spam_classification.ipynb             # 1 Notebook duy nhất chứa toàn bộ 7 mục (khung sườn)
 ├── scripts/
-│   └── run_predict.py                        # [TV7] Ô Chat dòng lệnh tương tác (đang để trống)
-├── app.py                                    # [TV7] Web Demo Streamlit trực quan 3 cột (đang để trống)
+│   └── run_predict.py                        # [TV7] Ô Chat dòng lệnh tương tác
+├── app.py                                    # [TV7] Web Demo Streamlit trực quan 3 cột
 ├── requirements.txt                          # Danh sách thư viện cần thiết
 └── README.md                                 # Hướng dẫn tổng quan bài thực hành (file này)
 ```
