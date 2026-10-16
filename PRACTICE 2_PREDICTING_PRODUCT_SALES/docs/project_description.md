@@ -22,7 +22,7 @@
 - [Dự đoán và mô phỏng doanh số qua giao diện Web trực quan]
 
 ## 6. Technology Constraints
-[Python 3.10+, Scikit-learn, Pandas; tích hợp toàn bộ luồng huấn luyện trong 1 file Jupyter Notebook duy nhất]
+[Python 3.10+, Scikit-learn, Pandas; tổ chức quy trình thực thi qua 3 Jupyter Notebooks tuần tự]
 
 ## 7. Algorithm / Evaluation
 - **Thuật toán:** [Linear Regression, Decision Tree Regressor, Random Forest Regressor]

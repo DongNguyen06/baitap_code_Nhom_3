@@ -20,7 +20,7 @@ Người dùng cá nhân cần tự động lọc thư rác trong hộp thư đi
 - Dự đoán email thời gian thực qua giao diện Web trực quan.
 
 ## 6. Technology Constraints
-Python 3.10+, Scikit-learn, Pandas; tích hợp toàn bộ trong 1 file Jupyter Notebook.
+Python 3.10+, Scikit-learn, Pandas; tổ chức thực thi qua 3 Jupyter Notebooks tuần tự.
 
 ## 7. Algorithm / Evaluation
 - **Thuật toán:** Naive Bayes, Logistic Regression, Linear SVM.

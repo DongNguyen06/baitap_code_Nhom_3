@@ -16,6 +16,7 @@ data/processed/*.csv
 
 # Models (.joblib lớn)
 models/*.joblib
+*.joblib
 
 # Logs & OS temp
 *.log

@@ -25,6 +25,12 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Large ML Weights (> 100MB)
+# Large ML Weights & Models (.joblib lớn không đưa lên Git)
 *.h5
 *.pth
+*.joblib
+
+# Tài liệu hướng dẫn nội bộ nhóm (Không đưa lên Git)
+HUONG_DAN_CODE_CHI_TIET.md
+NHIEM_VU_THUC_HIEN_CODE.md
+PROJECT_MASTER_BLUEPRINT.md
