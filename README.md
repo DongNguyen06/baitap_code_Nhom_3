@@ -9,15 +9,15 @@
 
 ## 👥 1. DANH SÁCH THÀNH VIÊN NHÓM 3 (7 THÀNH VIÊN)
 
-| STT | Mã sinh viên (MSSV) | Họ và tên | Ký hiệu (Tag) |
-| :---: | :---: | :--- | :---: |
-| **1** | `94206000207` | **Nguyễn Xuân Đông** (Trưởng nhóm) | `TV1` |
-| **2** | `066206005311` | **Mai Hoàng Danh** | `TV2` |
-| **3** | `87206002694` | **Trương Thành Công** | `TV3` |
-| **4** | `79206001370` | **Võ Khôi Nguyên** | `TV4` |
-| **5** | `89206003078` | **Võ Thanh Phú** | `TV5` |
-| **6** | `70206006644` | **Nguyễn Minh Nhật** | `TV6` |
-| **7** | `052206005348` | **Mai An Thịnh** | `TV7` |
+| STT | Họ và tên | Vai trò |
+| :---: | :--- | :---: |
+| **1** | **Nguyễn Xuân Đông** | **Trưởng nhóm** |
+| **2** | **Mai Hoàng Danh** | Thành viên |
+| **3** | **Trương Thành Công** | Thành viên |
+| **4** | **Võ Khôi Nguyên** | Thành viên |
+| **5** | **Võ Thanh Phú** | Thành viên |
+| **6** | **Nguyễn Minh Nhật** | Thành viên |
+| **7** | **Mai An Thịnh** | Thành viên |
 
 ---
 
@@ -28,7 +28,7 @@ Monorepo này được thiết kế để chứa tất cả các dự án trong 
 | Mã bài | Tên bài thực hành / Dự án | Thư mục mã nguồn | Báo cáo & Tài liệu | Trạng thái |
 | :---: | :--- | :--- | :---: | :---: |
 | **Practice 1** | **Classifying Spam Emails**<br>*(Phân loại email/tin nhắn rác)* | [`PRACTICE 1_CLASSIFYING_SPAM_EMAILS/`](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/) | [Xem Docs](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/docs/) | 🟢 **Đang thực hiện** |
-| **Practice 2** | **Predicting Product Sales**<br>*(Dự đoán doanh số bán hàng)* | `PRACTICE 2_PREDICTING_PRODUCT_SALES/` | *Chờ cập nhật* | ⏳ Sắp triển khai |
+| **Practice 2** | **Predicting Product Sales**<br>*(Dự đoán doanh số bán hàng)* | [`PRACTICE 2_PREDICTING_PRODUCT_SALES/`](./PRACTICE%202_PREDICTING_PRODUCT_SALES/) | [Xem Docs](./PRACTICE%202_PREDICTING_PRODUCT_SALES/docs/) | 🟢 **Đang thực hiện** |
 | **Practice 3** | **Machine Learning Project 3** | *Chờ đề bài* | *Chờ cập nhật* | ⏳ Sắp triển khai |
 | **Final Project**| **Đồ án cuối kỳ môn Học máy** | `FINAL_PROJECT/` | *Chờ cập nhật* | ⏳ Kế hoạch cuối kỳ |
 
