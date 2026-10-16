@@ -34,28 +34,7 @@ Monorepo này được thiết kế để chứa tất cả các dự án trong 
 
 ---
 
-## 🛠️ 3. QUY ƯỚC LÀM VIỆC GIT TRÊN MONOREPO
-
-Để tránh xung đột khi 7 thành viên cùng làm việc trên nhiều dự án khác nhau:
-
-### 3.1. Cấu trúc nhánh (Branching Strategy):
-* **`main`:** Nhánh bảo vệ (Protected Branch) — Chỉ merge vào cuối kỳ hoặc khi mỗi bài đã hoàn thiện 100%.
-* **`dev`:** Nhánh tích hợp trung tâm của cả nhóm.
-* **Nhánh cá nhân cho từng bài:** Tạo từ `dev` theo tiền tố:
-  * Khi làm **Practice 1**: `p1/feature/tv<số>-<tên-chức-năng>` (Ví dụ: `p1/feature/tv2-data-preprocessing`)
-  * Khi làm **Practice 2**: `p2/feature/tv<số>-<tên-chức-năng>` (Ví dụ: `p2/feature/tv2-eda-sales`)
-
-### 3.2. Cú pháp Commit có gắn thẻ (Tagging Convention):
-Mỗi lần commit cần ghi rõ mã bài và mã thành viên để minh bạch đóng góp cá nhân:
-```text
-[P<mã-bài>][TV<số>] <Loại hành động>: <Mô tả việc đã làm bằng tiếng Việt>
-```
-* **Ví dụ:** `git commit -m "[P1][TV1] Khoi tao: Cau hinh he thong va tai lieu dac ta"`
-* **Ví dụ:** `git commit -m "[P1][TV2] Them: Ham boc tach the HTML va loc dau cau"`
-
----
-
-## 💻 4. CÀI ĐẶT MÔI TRƯỜNG CHUNG
+## 💻 3. CÀI ĐẶT MÔI TRƯỜNG CHUNG
 
 Cài đặt tất cả thư viện cần thiết cho các bài thực hành bằng một lệnh duy nhất:
 ```bash
