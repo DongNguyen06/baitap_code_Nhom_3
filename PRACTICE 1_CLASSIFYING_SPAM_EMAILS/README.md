@@ -22,14 +22,14 @@ Toàn bộ quy trình ML được tổ chức theo **kiến trúc 3 Notebooks tu
 
 | STT | Họ và tên | Vai trò | Đóng góp | Vị trí phụ trách trong dự án / Repo |
 | :---: | :--- | :---: | :---: | :--- |
-| 1 | **Nguyễn Xuân Đông** | **Trưởng nhóm** | 15% | **Notebook 1 — Mục 1:** EDA Nền tảng, Quản trị Git, Web Demo Streamlit (`app.py`) & CLI |
-| 2 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 1 — Mục 2:** EDA Chuyên sâu (Đa biến, Ngoại lai & Đúc kết định hướng) |
-| 3 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 1 — Mục 3:** Tiền xử lý dữ liệu & Làm sạch văn bản (`clean_text`) |
-| 4 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 2 — Mục 4:** FE Biến đổi (Log, Binning) & Tạo biến Domain (`caps_ratio`, `!`, `$`) |
-| 5 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 2 — Mục 5:** FE Trích xuất TF-IDF, Lọc Chi-square & Pipeline chống Leak |
-| 6 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 3 — Mục 6:** Huấn luyện 3 mô hình (Naive Bayes, Logistic, Linear SVM) |
-| 7 | *[Chưa chỉ định]* | Thành viên | 15% | **Notebook 3 — Mục 7:** Đánh giá Test, Confusion Matrix, Error Analysis & Feature Importance |
-| | **Tổng cộng** | | **100%** | **Hoàn thành toàn diện 4 tính năng hệ thống** |
+| 1 | **Nguyễn Xuân Đông** | **Trưởng nhóm** | **18%** | **Kiến trúc tổng thể, Quản trị Git, Notebook 1 — Mục 1 (EDA Nền tảng), Web Demo Streamlit (`app.py`) & CLI** |
+| 2 | **Mai An Thịnh** | Thành viên | **14%** | **Notebook 1 — Mục 2:** EDA Chuyên sâu (Đa biến tương quan, Ngoại lai IQR & Bảng đúc kết định hướng) |
+| 3 | **Nguyễn Minh Nhật** | Thành viên | **14%** | **Notebook 1 — Mục 3:** Tiền xử lý dữ liệu & Làm sạch văn bản NLP (`clean_text`, khử trùng lặp, missing) |
+| 4 | **Trương Thành Công** | Thành viên | **14%** | **Notebook 2 — Mục 4:** FE Biến đổi (Log, Binning) & Tạo biến Domain (`caps_ratio`, `!`, `$`) |
+| 5 | **Võ Thanh Phú** | Thành viên | **14%** | **Notebook 2 — Mục 5:** FE Trích xuất TF-IDF, Lọc Chi-square & Pipeline phân chia Train/Test chống Leak |
+| 6 | **Võ Khôi Nguyên** | Thành viên | **14%** | **Notebook 3 — Mục 6:** Huấn luyện 3 mô hình (Naive Bayes, Logistic L1, Linear SVM) + 5-Fold Stratified CV |
+| 7 | **Mai Hoàng Danh** | Thành viên | **12%** | **Notebook 3 — Mục 7:** Đánh giá Test, Confusion Matrix, Error Analysis & Feature Importance |
+| | **Tổng cộng** | | **100%** | **Hoàn thành toàn diện toàn bộ yêu cầu đồ án môn học** |
 
 ### Sơ đồ luồng thực hiện tuần tự qua 3 Notebooks:
 ```text
@@ -37,22 +37,22 @@ Toàn bộ quy trình ML được tổ chức theo **kiến trúc 3 Notebooks tu
       │
       ▼
 📓 NOTEBOOK 1: 01_data_cleaning_and_eda.ipynb (Khám phá & Làm sạch văn bản)
-   ├── TV 1 (15%): Nguyễn Xuân Đông (Trưởng nhóm) — EDA 1 (Cấu trúc), EDA 2 (Chất lượng), EDA 3 (Đơn biến 4 thuộc tính)
-   ├── TV 2 (14%): *[Chưa chỉ định]* — EDA 4 (Đa biến tương quan, Ngoại lai IQR) & EDA 5 (Bảng đúc kết EDA)
-   └── TV 3 (14%): *[Chưa chỉ định]* — Tiền xử lý (Khử trùng, điền missing, clean_text) ──> [clean_emails.csv]
+   ├── TV 1 (18%): Nguyễn Xuân Đông (Trưởng nhóm) — EDA 1 (Cấu trúc), EDA 2 (Chất lượng), EDA 3 (Đơn biến 4 thuộc tính)
+   ├── TV 2 (14%): Mai An Thịnh — EDA 4 (Đa biến tương quan, Ngoại lai IQR) & EDA 5 (Bảng đúc kết EDA)
+   └── TV 3 (14%): Nguyễn Minh Nhật — Tiền xử lý (Khử trùng, điền missing, clean_text) ──> [clean_emails.csv]
       │
       ▼
 📓 NOTEBOOK 2: 02_feature_engineering_and_pipeline.ipynb (Kỹ thuật đặc trưng & Pipeline)
-   ├── TV 4 (14%): *[Chưa chỉ định]* — FE Biến đổi (Log, Binning) & Tạo biến Domain (caps_ratio, !, $)
-   └── TV 5 (14%): *[Chưa chỉ định]* — Chia Train/Test phân tầng chống Leak, TF-IDF Vectorizer, Lọc Chi-square
+   ├── TV 4 (14%): Trương Thành Công — FE Biến đổi (Log, Binning) & Tạo biến Domain (caps_ratio, !, $)
+   └── TV 5 (14%): Võ Thanh Phú — Chia Train/Test phân tầng chống Leak, TF-IDF Vectorizer, Lọc Chi-square
       │                             └──> [train_test_data.joblib & preprocessor.joblib]
       ▼
 📓 NOTEBOOK 3: 03_model_training_evaluation_and_explain.ipynb (Huấn luyện & Đánh giá chuyên sâu)
-   ├── TV 6 (14%): *[Chưa chỉ định]* — Huấn luyện 3 mô hình (Naive Bayes, Logistic L1, Linear SVM) + 5-Fold Stratified CV
-   └── TV 7 (15%): *[Chưa chỉ định]* — Đánh giá Test, Confusion Matrix, Error Analysis & Top từ khóa Spam
+   ├── TV 6 (14%): Võ Khôi Nguyên — Huấn luyện 3 mô hình (Naive Bayes, Logistic L1, Linear SVM) + 5-Fold Stratified CV
+   └── TV 7 (12%): Mai Hoàng Danh — Đánh giá Test, Confusion Matrix, Error Analysis & Top từ khóa Spam
       │                             └──> [best_model.joblib & metadata.json]
       ▼
-🚀 TV 1: NGUYỄN XUÂN ĐÔNG TRIỂN KHAI WEB DEMO STREAMLIT (app.py) & CLI TEST (scripts/run_predict.py)
+🚀 NGUYỄN XUÂN ĐÔNG TRIỂN KHAI WEB DEMO STREAMLIT (app.py) & CLI TEST (scripts/run_predict.py)
 ```
 
 ---
