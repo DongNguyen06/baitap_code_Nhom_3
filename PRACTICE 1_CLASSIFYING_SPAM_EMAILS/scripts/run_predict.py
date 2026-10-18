@@ -1,14 +1,28 @@
 """
 CLI Inference Script - Classifying Spam Emails (SpamGuard-ML)
-Nhóm 3 - Học máy (Đại học Giao thông Vận tải TP.HCM)
+Hệ thống: Học máy Phân loại Thư rác Tự động
 """
 
 import sys
 import os
+from pathlib import Path
+
+# Tự động cấu hình chuẩn UTF-8 cho console Windows tránh UnicodeEncodeError
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 import joblib
 import pandas as pd
 
-def predict_email(email_text: str, model_path: str = "models/best_model.joblib"):
+# Tự động xác định đường dẫn tuyệt đối đến file mô hình
+BASE_DIR = Path(__file__).resolve().parent.parent
+DEFAULT_MODEL_PATH = str(BASE_DIR / "models" / "best_model.joblib")
+
+def predict_email(email_text: str, model_path: str = DEFAULT_MODEL_PATH):
     """
     Dự đoán nhãn email (Spam / Ham) từ chuỗi văn bản.
     """

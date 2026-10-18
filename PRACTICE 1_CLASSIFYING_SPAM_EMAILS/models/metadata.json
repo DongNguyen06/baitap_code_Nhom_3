@@ -1,0 +1,14 @@
+{
+  "project_name": "Practice 1: Classifying Spam Emails",
+  "team": "Nhóm 3 - Học máy UTH",
+  "created_at": "2026-10-18 19:59:56",
+  "best_model": "linear_svm",
+  "test_metrics": {
+    "f1_score_percent": 99.27,
+    "accuracy_percent": 99.18
+  },
+  "pipeline_steps": [
+    "preprocessor",
+    "classifier"
+  ]
+}
