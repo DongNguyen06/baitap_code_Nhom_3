@@ -1,7 +1,7 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails",
-  "team": "Nhóm 3 - Học máy UTH",
-  "created_at": "2026-10-18 19:59:56",
+  "team": "SpamGuard-ML Team",
+  "created_at": "2026-10-18 21:10:25",
   "best_model": "linear_svm",
   "test_metrics": {
     "f1_score_percent": 99.27,
@@ -10,5 +10,22 @@
   "pipeline_steps": [
     "preprocessor",
     "classifier"
+  ],
+  "top_15_keywords": [
+    {"rank": 1, "keyword": "payment", "weight": 2.40},
+    {"rank": 2, "keyword": "mg", "weight": 2.15},
+    {"rank": 3, "keyword": "absolutely", "weight": 2.14},
+    {"rank": 4, "keyword": "custom alert", "weight": 2.09},
+    {"rank": 5, "keyword": "genuine", "weight": 1.84},
+    {"rank": 6, "keyword": "microsoft", "weight": 1.66},
+    {"rank": 7, "keyword": "growth", "weight": 1.62},
+    {"rank": 8, "keyword": "love", "weight": 1.58},
+    {"rank": 9, "keyword": "sex", "weight": 1.57},
+    {"rank": 10, "keyword": "ladies", "weight": 1.49},
+    {"rank": 11, "keyword": "enlargement", "weight": 1.49},
+    {"rank": 12, "keyword": "lowest", "weight": 1.40},
+    {"rank": 13, "keyword": "girl", "weight": 1.40},
+    {"rank": 14, "keyword": "alerts custom", "weight": 1.39},
+    {"rank": 15, "keyword": "enlarge", "weight": 1.35}
   ]
 }

@@ -266,7 +266,7 @@ with tab2:
     df_compare = pd.DataFrame([
         {"Mô hình": "Linear SVM (Platt Scaling)", "CV F1 (5-Fold)": "99.18% ± 0.001", "Test F1": "99.27%", "Đánh giá": "Quán quân — Khả năng phân tách tối ưu trong không gian nhiều chiều"},
         {"Mô hình": "Logistic Regression (L1 Lasso)", "CV F1 (5-Fold)": "99.12% ± 0.001", "Test F1": "99.19%", "Đánh giá": "Triệt tiêu trọng số từ vựng nhiễu, khả năng diễn giải cao"},
-        {"Mô hình": "Multinomial Naive Bayes", "CV F1 (5-Fold)": "96.65% ± 0.003", "Test F1": "96.72%", "Đánh giá": "Tốc độ huấn luyện và suy luận cực nhanh, Precision cao"}
+        {"Mô hình": "Multinomial Naive Bayes", "CV F1 (5-Fold)": "96.65% ± 0.003", "Test F1": "96.71%", "Đánh giá": "Tốc độ huấn luyện và suy luận cực nhanh, Precision cao"}
     ])
     st.dataframe(df_compare, use_container_width=True, hide_index=True)
 
@@ -286,21 +286,21 @@ with tab3:
     """)
     
     top_keywords_data = [
-        {"Hạng": 1, "Từ khóa": "payment", "Chủ đề": "Tài chính & Giao dịch", "Trọng số phân loại": 2.40},
-        {"Hạng": 2, "Từ khóa": "mg", "Chủ đề": "Liều lượng dược phẩm", "Trọng số phân loại": 2.15},
-        {"Hạng": 3, "Từ khóa": "absolutely", "Chủ đề": "Cam kết thái quá", "Trọng số phân loại": 2.14},
-        {"Hạng": 4, "Từ khóa": "custom alert", "Chủ đề": "Giả mạo cảnh báo hệ thống", "Trọng số phân loại": 2.09},
+        {"Hạng": 1, "Từ khóa": "payment", "Chủ đề": "Tài chính & Mạo danh", "Trọng số phân loại": 2.40},
+        {"Hạng": 2, "Từ khóa": "mg", "Chủ đề": "Biệt dược & Dược phẩm", "Trọng số phân loại": 2.15},
+        {"Hạng": 3, "Từ khóa": "absolutely", "Chủ đề": "Cam kết uy tín ảo", "Trọng số phân loại": 2.14},
+        {"Hạng": 4, "Từ khóa": "custom alert", "Chủ đề": "Mạo danh cảnh báo hệ thống", "Trọng số phân loại": 2.09},
         {"Hạng": 5, "Từ khóa": "genuine", "Chủ đề": "Khẳng định uy tín giả", "Trọng số phân loại": 1.84},
         {"Hạng": 6, "Từ khóa": "microsoft", "Chủ đề": "Mạo danh tập đoàn công nghệ", "Trọng số phân loại": 1.66},
-        {"Hạng": 7, "Từ khóa": "growth", "Chủ đề": "Cơ hội đầu tư ảo", "Trọng số phân loại": 1.62},
-        {"Hạng": 8, "Từ khóa": "meds", "Chủ đề": "Thuốc tân dược online", "Trọng số phân loại": 1.58},
-        {"Hạng": 9, "Từ khóa": "cialis", "Chủ đề": "Dược phẩm cấm", "Trọng số phân loại": 1.55},
-        {"Hạng": 10, "Từ khóa": "viagra", "Chủ đề": "Dược phẩm cấm", "Trọng số phân loại": 1.51},
-        {"Hạng": 11, "Từ khóa": "guaranteed", "Chủ đề": "Cam kết lợi nhuận", "Trọng số phân loại": 1.45},
-        {"Hạng": 12, "Từ khóa": "click", "Chủ đề": "Kêu gọi hành động", "Trọng số phân loại": 1.42},
-        {"Hạng": 13, "Từ khóa": "cash", "Chủ đề": "Mồi chài tiền mặt", "Trọng số phân loại": 1.38},
-        {"Hạng": 14, "Từ khóa": "winner", "Chủ đề": "Trúng thưởng ảo", "Trọng số phân loại": 1.35},
-        {"Hạng": 15, "Từ khóa": "free", "Chủ đề": "Miễn phí câu khách", "Trọng số phân loại": 1.31}
+        {"Hạng": 7, "Từ khóa": "growth", "Chủ đề": "Hứa hẹn tài chính / Đầu tư", "Trọng số phân loại": 1.62},
+        {"Hạng": 8, "Từ khóa": "love", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.58},
+        {"Hạng": 9, "Từ khóa": "sex", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.57},
+        {"Hạng": 10, "Từ khóa": "ladies", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.49},
+        {"Hạng": 11, "Từ khóa": "enlargement", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.49},
+        {"Hạng": 12, "Từ khóa": "lowest", "Chủ đề": "Mồi chài giá rẻ / Tài chính", "Trọng số phân loại": 1.40},
+        {"Hạng": 13, "Từ khóa": "girl", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.40},
+        {"Hạng": 14, "Từ khóa": "alerts custom", "Chủ đề": "Mạo danh cảnh báo hệ thống", "Trọng số phân loại": 1.39},
+        {"Hạng": 15, "Từ khóa": "enlarge", "Chủ đề": "Nội dung người lớn & Kích dục", "Trọng số phân loại": 1.35}
     ]
     df_keywords = pd.DataFrame(top_keywords_data)
     
