@@ -2,9 +2,8 @@
 ## PRACTICE 1: CLASSIFYING SPAM EMAILS — NHÓM 3 (UTH)
 
 > **Môn học:** Học máy (Machine Learning) — Trường Đại học Giao thông Vận tải TP.HCM (UTH)  
-> **Giảng viên hướng dẫn:** Tiến sĩ Nguyễn Thị Khánh Tiên  
 > **Bài toán:** Phân loại nhị phân Email Spam / Ham (Spam Email Classification)  
-> **Kiến trúc triển khai:** 3 Notebooks Walkthrough chuyên sâu theo chuẩn của Will Koehrsen & TS. Nguyễn Thị Khánh Tiên
+> **Kiến trúc triển khai:** Hệ thống 4 tầng kết hợp 3 Notebooks Walkthrough chuyên sâu, Thư viện thuật toán tự cài đặt From Scratch và Web Demo Streamlit tương tác thời gian thực.
 
 ---
 
@@ -16,48 +15,11 @@ Toàn bộ quy trình ML được tổ chức theo **kiến trúc 3 Notebooks tu
 2. `02_feature_engineering_and_pipeline.ipynb`: Tạo biến Domain, phân chia Train/Test phân tầng chống rò rỉ dữ liệu, trích xuất TF-IDF và chọn lọc đặc trưng Chi-square.
 3. `03_model_training_evaluation_and_explain.ipynb`: Huấn luyện 3 mô hình phân loại (Naive Bayes, Logistic Regression, Linear SVM), kiểm định chéo 5-Fold Stratified CV, đánh giá trên Test set và trích xuất Top từ khóa spam quan trọng.
 
----
-
-## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG NHIỆM VỤ (TỔNG: 100%)
-
-| STT | Họ và tên | Vai trò | Đóng góp | Vị trí phụ trách trong dự án / Repo |
-| :---: | :--- | :---: | :---: | :--- |
-| 1 | **Nguyễn Xuân Đông** | **Trưởng nhóm** | **18%** | **Kiến trúc tổng thể, Quản trị Git, Notebook 1 — Mục 1 (EDA Nền tảng), Web Demo Streamlit (`app.py`) & CLI** |
-| 2 | **Mai An Thịnh** | Thành viên | **14%** | **Notebook 1 — Mục 2:** EDA Chuyên sâu (Đa biến tương quan, Ngoại lai IQR & Bảng đúc kết định hướng) |
-| 3 | **Nguyễn Minh Nhật** | Thành viên | **14%** | **Notebook 1 — Mục 3:** Tiền xử lý dữ liệu & Làm sạch văn bản NLP (`clean_text`, khử trùng lặp, missing) |
-| 4 | **Trương Thành Công** | Thành viên | **14%** | **Notebook 2 — Mục 4:** FE Biến đổi (Log, Binning) & Tạo biến Domain (`caps_ratio`, `!`, `$`) |
-| 5 | **Võ Thanh Phú** | Thành viên | **14%** | **Notebook 2 — Mục 5:** FE Trích xuất TF-IDF, Lọc Chi-square & Pipeline phân chia Train/Test chống Leak |
-| 6 | **Võ Khôi Nguyên** | Thành viên | **14%** | **Notebook 3 — Mục 6:** Huấn luyện 3 mô hình (Naive Bayes, Logistic L1, Linear SVM) + 5-Fold Stratified CV |
-| 7 | **Mai Hoàng Danh** | Thành viên | **12%** | **Notebook 3 — Mục 7:** Đánh giá Test, Confusion Matrix, Error Analysis & Feature Importance |
-| | **Tổng cộng** | | **100%** | **Hoàn thành toàn diện toàn bộ yêu cầu đồ án môn học** |
-
-### Sơ đồ luồng thực hiện tuần tự qua 3 Notebooks:
-```text
-[CEAS_08.csv]
-      │
-      ▼
-📓 NOTEBOOK 1: 01_data_cleaning_and_eda.ipynb (Khám phá & Làm sạch văn bản)
-   ├── TV 1 (18%): Nguyễn Xuân Đông (Trưởng nhóm) — EDA 1 (Cấu trúc), EDA 2 (Chất lượng), EDA 3 (Đơn biến 4 thuộc tính)
-   ├── TV 2 (14%): Mai An Thịnh — EDA 4 (Đa biến tương quan, Ngoại lai IQR) & EDA 5 (Bảng đúc kết EDA)
-   └── TV 3 (14%): Nguyễn Minh Nhật — Tiền xử lý (Khử trùng, điền missing, clean_text) ──> [clean_emails.csv]
-      │
-      ▼
-📓 NOTEBOOK 2: 02_feature_engineering_and_pipeline.ipynb (Kỹ thuật đặc trưng & Pipeline)
-   ├── TV 4 (14%): Trương Thành Công — FE Biến đổi (Log, Binning) & Tạo biến Domain (caps_ratio, !, $)
-   └── TV 5 (14%): Võ Thanh Phú — Chia Train/Test phân tầng chống Leak, TF-IDF Vectorizer, Lọc Chi-square
-      │                             └──> [train_test_data.joblib & preprocessor.joblib]
-      ▼
-📓 NOTEBOOK 3: 03_model_training_evaluation_and_explain.ipynb (Huấn luyện & Đánh giá chuyên sâu)
-   ├── TV 6 (14%): Võ Khôi Nguyên — Huấn luyện 3 mô hình (Naive Bayes, Logistic L1, Linear SVM) + 5-Fold Stratified CV
-   └── TV 7 (12%): Mai Hoàng Danh — Đánh giá Test, Confusion Matrix, Error Analysis & Top từ khóa Spam
-      │                             └──> [best_model.joblib & metadata.json]
-      ▼
-🚀 NGUYỄN XUÂN ĐÔNG TRIỂN KHAI WEB DEMO STREAMLIT (app.py) & CLI TEST (scripts/run_predict.py)
-```
+> **Phân công nhiệm vụ:** Chi tiết phân rã công việc của 7 thành viên được quản lý tập trung tại [docs/TASKS.md](docs/TASKS.md).
 
 ---
 
-## 🚀 3. HƯỚNG DẪN KHỞI CHẠY (QUICK START)
+## 🚀 2. HƯỚNG DẪN KHỞI CHẠY (QUICK START)
 
 ### Bước 1: Cài đặt môi trường
 Khuyến nghị sử dụng Python 3.10 trở lên:
@@ -80,37 +42,60 @@ Mở và thực thi các Notebook theo đúng thứ tự chuyển giao dữ li�
    jupyter notebook notebooks/03_model_training_evaluation_and_explain.ipynb
    ```
 
-### Bước 3: Khởi chạy Ứng dụng Web Demo Streamlit
+### Bước 3: Chạy độc lập các Thuật toán Tự cài đặt (From Scratch)
+```bash
+# Kiểm thử Logistic Regression Scratch
+python scripts/algorithms/logistic_regression.py
+
+# Kiểm thử Naive Bayes Scratch
+python scripts/algorithms/naive_bayes.py
+
+# Kiểm thử Linear SVM Scratch
+python scripts/algorithms/support_vector_machine.py
+```
+
+### Bước 4: Khởi chạy Ứng dụng Web Demo Streamlit
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-## 📂 4. CẤU TRÚC THƯ MỤC CHUẨN
+## 📂 3. CẤU TRÚC THƯ MỤC CHUẨN 4 TẦNG
+
 ```text
 PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 ├── data/
 │   ├── raw/CEAS_08.csv                       # Dữ liệu nguồn 39.154 email
 │   └── processed/clean_emails.csv            # Dữ liệu sạch sau tiền xử lý (Output NB1)
-├── docs/                                     # Bộ tài liệu đặc tả dự án
-│   ├── project_description.md                # 7 mục đặc tả dự án chuẩn (dưới 200 từ)
-│   ├── project_design.md                     # Thiết kế hệ thống theo 4 tính năng (dưới 200 từ)
-│   └── TASKS.md                              # Phân công 7 thành viên theo 3 Notebooks
-├── models/                                   # Nơi lưu trữ pipeline và mô hình
+├── docs/                                     # Bộ tài liệu học thuật & đặc tả dự án
+│   ├── images/                               # Thư mục chứa biểu đồ trực quan hóa (.png)
+│   ├── project_description.md                # Đặc tả bài toán tổng quan
+│   ├── project_design.md                     # Thiết kế kiến trúc 4 giai đoạn
+│   ├── TASKS.md                              # Bảng phân công nhiệm vụ 7 thành viên
+│   ├── visualization_tutorial.md             # Cẩm nang trực quan hóa kết quả 3 thuật toán (42 dòng)
+│   └── algorithms/                           # Thư mục chứa đặc tả thuật toán chuẩn 10 mục (< 70 dòng)
+│       ├── logistic_regression.md            # Đặc tả Logistic Regression Scratch (59 dòng)
+│       ├── naive_bayes.md                    # Đặc tả Multinomial Naive Bayes Scratch (49 dòng)
+│       └── support_vector_machine.md         # Đặc tả Linear Support Vector Machine Scratch (50 dòng)
+├── models/                                   # Nơi lưu trữ pipeline và mô hình đã huấn luyện
 │   ├── preprocessor.joblib                   # Pipeline TF-IDF + Chi-square (Output NB2)
-│   ├── best_model.joblib                     # Mô hình tối ưu nhất dùng cho web app (Output NB3)
+│   ├── best_model.joblib                     # Mô hình Linear SVM hiệu chuẩn Platt Scaling (Output NB3)
 │   ├── naive_bayes.joblib                    # Mô hình 1: Multinomial Naive Bayes
 │   ├── logistic_regression.joblib            # Mô hình 2: Logistic Regression (L1)
 │   ├── linear_svm.joblib                     # Mô hình 3: Linear SVM
-│   └── metadata.json                         # Kết quả đối sánh Accuracy, Precision, Recall, F1
+│   └── metadata.json                         # Metrics F1, Accuracy và Top 15 từ khóa spam thực tế
 ├── notebooks/                                # KHÔNG GIAN 3 NOTEBOOKS WALKTHROUGH
-│   ├── 01_data_cleaning_and_eda.ipynb        # [TV1, TV2, TV3] Khám phá & Làm sạch
-│   ├── 02_feature_engineering_and_pipeline.ipynb # [TV4, TV5] Tạo biến & Pipeline
-│   └── 03_model_training_evaluation_and_explain.ipynb # [TV6, TV7] Huấn luyện, Đánh giá & Phân tích lỗi
+│   ├── 01_data_cleaning_and_eda.ipynb        # Khám phá & Làm sạch văn bản (Chuẩn sạch outputs)
+│   ├── 02_feature_engineering_and_pipeline.ipynb # Tạo biến Domain & Pipeline Zero Leakage (Chuẩn sạch outputs)
+│   └── 03_model_training_evaluation_and_explain.ipynb # Huấn luyện đa mô hình, Đánh giá & Explain (Chuẩn sạch outputs)
 ├── scripts/
-│   └── run_predict.py                        # [TV1] Ô Chat dòng lệnh tương tác suy luận nhanh
-├── app.py                                    # [TV1] Web Demo Streamlit trực quan phân loại email
-├── requirements.txt                          # Danh sách thư viện cần thiết
+│   ├── run_predict.py                        # CLI tương tác suy luận nhanh cho người dùng
+│   └── algorithms/                           # THƯ VIỆN THUẬT TOÁN TỰ CÀI ĐẶT (FROM SCRATCH OOP)
+│       ├── logistic_regression.py            # Class LogisticRegressionScratch thuần NumPy
+│       ├── naive_bayes.py                    # Class MultinomialNaiveBayesScratch thuần NumPy
+│       └── support_vector_machine.py         # Class LinearSVMScratch thuần NumPy
+├── app.py                                    # Web Demo Streamlit trực quan phân loại email
+├── requirements.txt                          # Danh sách thư viện phụ thuộc
 └── README.md                                 # Hướng dẫn tổng quan bài thực hành (file này)
 ```

@@ -1,31 +1,125 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails",
   "team": "SpamGuard-ML Team",
-  "created_at": "2026-10-18 21:10:25",
-  "best_model": "linear_svm",
+  "created_at": "2026-10-21 10:32:57",
+  "best_model": "Support Vector Machine (Linear SVM)",
   "test_metrics": {
-    "f1_score_percent": 99.27,
-    "accuracy_percent": 99.18
+    "accuracy_percent": 99.48,
+    "precision_percent": 99.49,
+    "recall_percent": 99.42,
+    "f1_score_percent": 99.45
   },
+  "models_comparison": [
+    {
+      "Model": "Naive Bayes",
+      "Accuracy (%)": 96.3,
+      "Precision (%)": 99.31,
+      "Recall (%)": 92.87,
+      "F1-Score (%)": 95.98,
+      "ROC-AUC": 0.9982,
+      "FP": 20,
+      "FN": 222
+    },
+    {
+      "Model": "Logistic Regression (Chuẩn hóa L1)",
+      "Accuracy (%)": 99.36,
+      "Precision (%)": 99.36,
+      "Recall (%)": 99.29,
+      "F1-Score (%)": 99.33,
+      "ROC-AUC": 0.9995,
+      "FP": 20,
+      "FN": 22
+    },
+    {
+      "Model": "Support Vector Machine (Linear SVM)",
+      "Accuracy (%)": 99.48,
+      "Precision (%)": 99.49,
+      "Recall (%)": 99.42,
+      "F1-Score (%)": 99.45,
+      "ROC-AUC": 0.9997,
+      "FP": 16,
+      "FN": 18
+    }
+  ],
   "pipeline_steps": [
-    "preprocessor",
-    "classifier"
+    "preprocessor (ColumnTransformer: TF-IDF + Chi-Square + MinMaxScaler)",
+    "classifier (Calibrated LinearSVC)"
   ],
   "top_15_keywords": [
-    {"rank": 1, "keyword": "payment", "weight": 2.40},
-    {"rank": 2, "keyword": "mg", "weight": 2.15},
-    {"rank": 3, "keyword": "absolutely", "weight": 2.14},
-    {"rank": 4, "keyword": "custom alert", "weight": 2.09},
-    {"rank": 5, "keyword": "genuine", "weight": 1.84},
-    {"rank": 6, "keyword": "microsoft", "weight": 1.66},
-    {"rank": 7, "keyword": "growth", "weight": 1.62},
-    {"rank": 8, "keyword": "love", "weight": 1.58},
-    {"rank": 9, "keyword": "sex", "weight": 1.57},
-    {"rank": 10, "keyword": "ladies", "weight": 1.49},
-    {"rank": 11, "keyword": "enlargement", "weight": 1.49},
-    {"rank": 12, "keyword": "lowest", "weight": 1.40},
-    {"rank": 13, "keyword": "girl", "weight": 1.40},
-    {"rank": 14, "keyword": "alerts custom", "weight": 1.39},
-    {"rank": 15, "keyword": "enlarge", "weight": 1.35}
+    {
+      "rank": 1,
+      "keyword": "custom alert",
+      "weight": 2.593
+    },
+    {
+      "rank": 2,
+      "keyword": "healthcare",
+      "weight": 2.3878
+    },
+    {
+      "rank": 3,
+      "keyword": "sex",
+      "weight": 2.1652
+    },
+    {
+      "rank": 4,
+      "keyword": "wont",
+      "weight": 1.922
+    },
+    {
+      "rank": 5,
+      "keyword": "love",
+      "weight": 1.8763
+    },
+    {
+      "rank": 6,
+      "keyword": "ecard",
+      "weight": 1.8022
+    },
+    {
+      "rank": 7,
+      "keyword": "cnn com",
+      "weight": 1.7881
+    },
+    {
+      "rank": 8,
+      "keyword": "suite",
+      "weight": 1.7778
+    },
+    {
+      "rank": 9,
+      "keyword": "alerts custom",
+      "weight": 1.7287
+    },
+    {
+      "rank": 10,
+      "keyword": "dimension",
+      "weight": 1.6638
+    },
+    {
+      "rank": 11,
+      "keyword": "ds",
+      "weight": 1.5902
+    },
+    {
+      "rank": 12,
+      "keyword": "lowest",
+      "weight": 1.5681
+    },
+    {
+      "rank": 13,
+      "keyword": "ing",
+      "weight": 1.5591
+    },
+    {
+      "rank": 14,
+      "keyword": "enhancement",
+      "weight": 1.5042
+    },
+    {
+      "rank": 15,
+      "keyword": "watches",
+      "weight": 1.4802
+    }
   ]
 }
