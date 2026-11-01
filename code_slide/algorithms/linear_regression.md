@@ -1,54 +1,32 @@
 # Linear Regression (Hồi quy Tuyến tính Cổ điển - OLS)
 
-## 1. Name
-- **Tên:** Linear Regression (Ordinary Least Squares - OLS).
+### 1. Mục tiêu
+* Giải quyết bài toán **hồi quy (Regression)**: Dự đoán một giá trị số thực liên tục $y$ dựa trên mối quan hệ tuyến tính với các đặc trưng đầu vào.
+* Tìm một đường thẳng (hoặc siêu phẳng trong không gian nhiều chiều) vừa vặn nhất với dữ liệu, đóng vai trò làm mô hình đối chứng cơ sở (baseline) trực quan và dễ giải thích nhất.
 
-## 2. Problem
-- Dự đoán giá trị liên tục (giá nhà `house_price`) dựa trên các đặc trưng thị trường và hạ tầng. Cần mô hình đơn giản, tính toán nhanh và trực quan để làm mốc so sánh (baseline).
+### 2. Input / Output
+* **Đầu vào (Input):** Bảng dữ liệu chứa các vector đặc trưng số $x = (x_1, x_2, \dots, x_n)$ và giá trị mục tiêu thực tế liên tục $y \in \mathbb{R}$.
+* **Đầu ra (Output):** Con số dự đoán cụ thể $\hat{y} = w \cdot x + b$.
+* **Tham số mô hình học:** Bộ trọng số $w = (w_1, w_2, \dots, w_n)$ và hệ số chặn (bias) $b$.
 
-## 3. Target
-- Tối thiểu hóa tổng bình phương sai số (Residual Sum of Squares - RSS).
-- Tìm nghiệm đóng tối ưu toàn cục mà không cần bước học lặp lại (learning rate).
+### 3. Evaluation Metrics / Criteria (Tiêu chí & Độ đo)
+* **Tiêu chí tối ưu (Loss Function):** Tối thiểu hóa tổng bình phương sai số (Mean Squared Error - MSE / RSS) giữa giá trị thực tế $y$ và giá trị dự đoán $\hat{y}$: $J = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2$.
+* **Độ đo đánh giá hiệu năng:**
+  * **R2-Score ($R^2$):** Tỷ lệ biến thiên của biến mục tiêu mà mô hình giải thích được (càng gần 1 càng tốt).
+  * **RMSE (Root Mean Squared Error):** Độ lệch sai số trung bình thực tế (cùng đơn vị với biến mục tiêu, phạt nặng các lỗi lệch lớn).
+  * **MAE (Mean Absolute Error):** Sai số tuyệt đối trung bình, phản ánh độ lệch thực tế trực quan và ít bị ảnh hưởng bởi ngoại lai.
 
-## 4. Input / Output
-| Thành phần | Dữ liệu | Mô tả |
-|---|---|---|
-| **Input** | `X` (17 đặc trưng) | Các chỉ số kinh tế, xã hội, môi trường đã chuẩn hóa |
-| **Output** | `house_price` | Giá trị dự đoán liên tục của căn nhà |
+### 4. How it works (Cách hoạt động)
+*(Tóm lược: Tìm nghiệm tối ưu trực tiếp trong một bước tính toán đại số ma trận duy nhất bằng công thức Normal Equation mà không cần vòng lặp).*
 
-## 5. Core features
-- **Nghiệm đóng (Closed-form):** Giải trực tiếp bằng ma trận giả nghịch đảo pinv, hội tụ tức thì.
-- **Dễ giải thích:** Trọng số $w_i$ thể hiện trực tiếp mức tăng/giảm giá nhà theo từng đặc trưng.
-- **Mô hình nền tảng:** Làm thước đo cơ sở để đối chiếu hiệu quả của các mô hình phạt điều chuẩn.
-- **Nhạy cảm với đa cộng tuyến:** Dễ bị quá khớp (overfitting) khi các đặc trưng phụ thuộc lẫn nhau.
+1. **Thêm hệ số chặn (b):** Ghép thêm cột toàn số 1 vào bảng dữ liệu ($X_b = [1, X]$) để học mức giá trị nền tảng cơ bản khi các đặc trưng bằng 0.
+2. **Đo sai số tổng thể:** Tính khoảng cách chênh lệch bình phương giữa giá trị thực tế và đường thẳng dự đoán.
+3. **Giải phương trình nghiệm đóng (Normal Equation):** Tính thẳng bộ trọng số tối ưu qua công thức ma trận: $\theta = (X_b^T X_b)^{-1} X_b^T y$.
+4. **Dự đoán:** Mẫu mới có giá trị bằng tổng các đặc trưng nhân với trọng số tương ứng cộng hệ số chặn: $\hat{y} = w \cdot x + b$.
+*(Hạn chế: Rất nhạy cảm với ngoại lai và dễ bị bất ổn định khi các đặc trưng phụ thuộc lẫn nhau — hiện tượng đa cộng tuyến).*
 
-## 6. Technology
-- **Python 3**, **NumPy** (tự cài đặt phương trình chuẩn từ đầu), **Pandas**, **Scikit-learn** (`StandardScaler`, `train_test_split`).
-
-## 7. Evaluation
-- **R2-Score:** Tỷ lệ phần trăm biến thiên của giá nhà được mô hình giải thích (càng gần 1 càng tốt).
-- **RMSE (Root Mean Squared Error):** Độ lệch trung bình giữa giá dự đoán và giá thực tế.
-- **Khoảng cách Train - Test:** Đánh giá mức độ quá khớp (overfitting) của mô hình.
-
-## 8. How it work
-1. **Bổ sung hệ số chặn (Bias):** Ghép thêm cột 1 vào ma trận đặc trưng: $\mathbf{X}_b = [\mathbf{1}, \mathbf{X}]$.
-2. **Hàm mục tiêu OLS:** $J(\boldsymbol{\theta}) = \frac{1}{2n} \|\mathbf{y} - \mathbf{X}_b \boldsymbol{\theta}\|_2^2$.
-3. **Phương trình chuẩn:** Triệt tiêu đạo hàm về 0: $\mathbf{X}_b^T (\mathbf{X}_b \boldsymbol{\theta} - \mathbf{y}) = \mathbf{0}$.
-4. **Nghiệm đóng pinv:** $\boldsymbol{\theta} = (\mathbf{X}_b^T \mathbf{X}_b)^{-1} \mathbf{X}_b^T \mathbf{y} = \mathbf{X}_b^\dagger \mathbf{y}$.
-5. **Dự đoán:** $\hat{y} = \mathbf{X} \mathbf{w} + b$.
-
-## 9. Data used
-- **Dataset:** `housing_market_data.csv` (dữ liệu bất động sản gồm 17 đặc trưng và cột mục tiêu `house_price`).
-- **Tiền xử lý:** Chuẩn hóa `StandardScaler` trên tập Train để đồng nhất thang đo.
-- **Chia tập:** 65% Train / 35% Test.
-
-## 10. Demo
-```bash
-python linear_regression.py
-```
-Khung kết quả mẫu:
-```text
-R2 Train : 0.xx
-R2 Test  : 0.xx
-RMSE Test: x.xx
-```
+### 5. Data used (Dữ liệu sử dụng)
+* **Dạng dữ liệu phù hợp:** Dữ liệu dạng bảng số (tabular), trong đó biến mục tiêu là đại lượng đo lường liên tục.
+* **Yêu cầu tiền xử lý:** Cần xử lý giá trị ngoại lai (outliers), điền khuyết thiếu, và kiểm tra tính tuyến tính giữa các biến.
+* **Đặc điểm tương thích:** Thích hợp khi số lượng mẫu lớn hơn nhiều so với số chiều thuộc tính ($N \gg d$) và các đặc trưng có tính độc lập tương đối.
+* **Ví dụ ứng dụng thực tế:** Dự đoán giá bất động sản, dự báo doanh thu bán hàng, ước tính nhu cầu tiêu thụ điện năng, dự báo nhiệt độ khí tượng.

@@ -42,16 +42,9 @@ Mở và thực thi các Notebook theo đúng thứ tự chuyển giao dữ li�
    jupyter notebook notebooks/03_model_training_evaluation_and_explain.ipynb
    ```
 
-### Bước 3: Chạy độc lập các Thuật toán Tự cài đặt (From Scratch)
+### Bước 3: Chạy Kiểm thử 3 Thuật toán Scratch trên Dataset Thật
 ```bash
-# Kiểm thử Logistic Regression Scratch
-python scripts/algorithms/logistic_regression.py
-
-# Kiểm thử Naive Bayes Scratch
-python scripts/algorithms/naive_bayes.py
-
-# Kiểm thử Linear SVM Scratch
-python scripts/algorithms/support_vector_machine.py
+python scripts/demo_algorithms.py
 ```
 
 ### Bước 4: Khởi chạy Ứng dụng Web Demo Streamlit
@@ -60,42 +53,3 @@ streamlit run app.py
 ```
 
 ---
-
-## 📂 3. CẤU TRÚC THƯ MỤC CHUẨN 4 TẦNG
-
-```text
-PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
-├── data/
-│   ├── raw/CEAS_08.csv                       # Dữ liệu nguồn 39.154 email
-│   └── processed/clean_emails.csv            # Dữ liệu sạch sau tiền xử lý (Output NB1)
-├── docs/                                     # Bộ tài liệu học thuật & đặc tả dự án
-│   ├── images/                               # Thư mục chứa biểu đồ trực quan hóa (.png)
-│   ├── project_description.md                # Đặc tả bài toán tổng quan
-│   ├── project_design.md                     # Thiết kế kiến trúc 4 giai đoạn
-│   ├── TASKS.md                              # Bảng phân công nhiệm vụ 7 thành viên
-│   ├── visualization_tutorial.md             # Cẩm nang trực quan hóa kết quả 3 thuật toán (42 dòng)
-│   └── algorithms/                           # Thư mục chứa đặc tả thuật toán chuẩn 10 mục (< 70 dòng)
-│       ├── logistic_regression.md            # Đặc tả Logistic Regression Scratch (59 dòng)
-│       ├── naive_bayes.md                    # Đặc tả Multinomial Naive Bayes Scratch (49 dòng)
-│       └── support_vector_machine.md         # Đặc tả Linear Support Vector Machine Scratch (50 dòng)
-├── models/                                   # Nơi lưu trữ pipeline và mô hình đã huấn luyện
-│   ├── preprocessor.joblib                   # Pipeline TF-IDF + Chi-square (Output NB2)
-│   ├── best_model.joblib                     # Mô hình Linear SVM hiệu chuẩn Platt Scaling (Output NB3)
-│   ├── naive_bayes.joblib                    # Mô hình 1: Multinomial Naive Bayes
-│   ├── logistic_regression.joblib            # Mô hình 2: Logistic Regression (L1)
-│   ├── linear_svm.joblib                     # Mô hình 3: Linear SVM
-│   └── metadata.json                         # Metrics F1, Accuracy và Top 15 từ khóa spam thực tế
-├── notebooks/                                # KHÔNG GIAN 3 NOTEBOOKS WALKTHROUGH
-│   ├── 01_data_cleaning_and_eda.ipynb        # Khám phá & Làm sạch văn bản (Chuẩn sạch outputs)
-│   ├── 02_feature_engineering_and_pipeline.ipynb # Tạo biến Domain & Pipeline Zero Leakage (Chuẩn sạch outputs)
-│   └── 03_model_training_evaluation_and_explain.ipynb # Huấn luyện đa mô hình, Đánh giá & Explain (Chuẩn sạch outputs)
-├── scripts/
-│   ├── run_predict.py                        # CLI tương tác suy luận nhanh cho người dùng
-│   └── algorithms/                           # THƯ VIỆN THUẬT TOÁN TỰ CÀI ĐẶT (FROM SCRATCH OOP)
-│       ├── logistic_regression.py            # Class LogisticRegressionScratch thuần NumPy
-│       ├── naive_bayes.py                    # Class MultinomialNaiveBayesScratch thuần NumPy
-│       └── support_vector_machine.py         # Class LinearSVMScratch thuần NumPy
-├── app.py                                    # Web Demo Streamlit trực quan phân loại email
-├── requirements.txt                          # Danh sách thư viện phụ thuộc
-└── README.md                                 # Hướng dẫn tổng quan bài thực hành (file này)
-```

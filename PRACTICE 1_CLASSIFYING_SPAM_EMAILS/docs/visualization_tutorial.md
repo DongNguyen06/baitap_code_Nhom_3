@@ -4,11 +4,11 @@
 
 ![So sánh hiệu năng 3 mô hình](images/model_03_performance_comparison.png)
 
-| Thuật toán | F1 Ban đầu (CV) | F1 Tinh chỉnh (CV) | F1 Đề thi thật (Test) | Độ chính xác (Accuracy) | ROC-AUC |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Linear SVM** | 98.91% | **99.20%** | **99.45%** | **99.48%** | **0.9997** |
-| **Logistic Regression** | 98.34% | 99.06% | 99.33% | 99.36% | 0.9995 |
-| **Naive Bayes** | 92.76% | 95.83% | 95.98% | 96.30% | 0.9982 |
+| Thuật toán | F1 Ban đầu (CV) | F1 Tinh chỉnh (CV) | F1 Đề thi thật (Test) | Độ chính xác (Accuracy) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Linear SVM** | 98.91% | **99.20%** | **99.45%** | **99.48%** |
+| **Logistic Regression** | 98.34% | 99.06% | 99.33% | 99.36% |
+| **Naive Bayes** | 92.76% | 95.83% | 95.98% | 96.30% |
 
 * **Đúc kết:** Khi bước ra "đề thi thật" (6.532 mẫu kiểm tra), cả 3 mô hình đều đạt điểm cao hơn "thi thử", chứng minh hệ thống học bài rất chuẩn, hoàn toàn không bị học vẹt (Zero Overfitting).
 

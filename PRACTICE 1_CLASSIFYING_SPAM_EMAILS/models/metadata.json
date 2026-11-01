@@ -1,7 +1,7 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails",
   "team": "SpamGuard-ML Team",
-  "created_at": "2026-10-21 10:32:57",
+  "created_at": "2026-11-01 10:53:10",
   "best_model": "Support Vector Machine (Linear SVM)",
   "test_metrics": {
     "accuracy_percent": 99.48,
@@ -16,7 +16,6 @@
       "Precision (%)": 99.31,
       "Recall (%)": 92.87,
       "F1-Score (%)": 95.98,
-      "ROC-AUC": 0.9982,
       "FP": 20,
       "FN": 222
     },
@@ -26,7 +25,6 @@
       "Precision (%)": 99.36,
       "Recall (%)": 99.29,
       "F1-Score (%)": 99.33,
-      "ROC-AUC": 0.9995,
       "FP": 20,
       "FN": 22
     },
@@ -36,7 +34,6 @@
       "Precision (%)": 99.49,
       "Recall (%)": 99.42,
       "F1-Score (%)": 99.45,
-      "ROC-AUC": 0.9997,
       "FP": 16,
       "FN": 18
     }

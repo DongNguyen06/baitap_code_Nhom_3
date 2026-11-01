@@ -1,56 +1,34 @@
 # ElasticNet Regression (Hồi quy Dung hòa L1 và L2)
 
-## 1. Name
-- **Tên:** ElasticNet Regression (Dung hòa $L_1$ và $L_2$ Regularization).
+### 1. Mục tiêu
+* Kết hợp thế mạnh của cả **Ridge ($L_2$)** và **Lasso ($L_1$)**, khắc phục nhược điểm chọn biến ngẫu nhiên của Lasso khi gặp các nhóm biến có tương quan mạnh với nhau.
+* Vừa loại bỏ các đặc trưng gây nhiễu về đúng bằng 0, vừa giữ lại được cả nhóm các đặc trưng tương quan mật thiết cùng phát triển.
 
-## 2. Problem
-- Dữ liệu vừa có nhiều biến dư thừa cần loại bỏ, vừa có các nhóm biến tương quan cao mà Lasso dễ chọn ngẫu nhiên một biến và bỏ rơi các biến còn lại trong nhóm.
+### 2. Input / Output
+* **Đầu vào (Input):** Bảng dữ liệu chứa các vector đặc trưng số $x = (x_1, x_2, \dots, x_n)$ đã chuẩn hóa và giá trị mục tiêu liên tục $y \in \mathbb{R}$.
+* **Đầu ra (Output):** Con số dự đoán liên tục $\hat{y}$ cùng số lượng đặc trưng được chắt lọc cân bằng.
+* **Tham số mô hình học:** Bộ trọng số dung hòa $w$ và hệ số chặn (bias) $b$.
 
-## 3. Target
-- Dung hòa ưu điểm của cả Ridge ($L_2$) và Lasso ($L_1$), giữ lại cả nhóm đặc trưng tương quan quan trọng đồng thời triệt tiêu các đặc trưng gây nhiễu.
+### 3. Evaluation Metrics / Criteria (Tiêu chí & Độ đo)
+* **Tiêu chí tối ưu (Loss Function):** Kết hợp đồng thời sai số MSE cùng cả hai lực phạt L1 và L2:
+  $$J = \text{MSE} + \alpha \cdot \rho \sum_{i=1}^n |w_i| + \frac{\alpha (1-\rho)}{2} \sum_{i=1}^n w_i^2$$
+  *(Trong đó $\rho = \text{l1\_ratio} \in [0, 1]$ là tỷ lệ chia sẻ giữa L1 và L2).*
+* **Độ đo đánh giá hiệu năng:**
+  * **R2-Score & RMSE:** Đánh giá độ chính xác tổng thể trên tập kiểm tra.
+  * **Tỷ lệ biến giữ lại:** Tỷ lệ đặc trưng được rút gọn hợp lý, không bị triệt tiêu quá đà như Lasso thuần túy.
 
-## 4. Input / Output
-| Thành phần | Dữ liệu | Mô tả |
-|---|---|---|
-| **Input** | `X` (17 đặc trưng) | Dữ liệu đặc trưng nhà ở đã qua chuẩn hóa |
-| **Output** | `house_price`, biến lọc | Giá nhà dự đoán cùng số lượng biến thực tế được giữ lại |
+### 4. How it works (Cách hoạt động)
+*(Tóm lược: Dùng lực phạt L1 để loại bỏ các biến rác và dùng lực phạt L2 để giữ lại các nhóm biến có quan hệ tương quan chặt chẽ, tạo ra sự cân bằng tối ưu).*
 
-## 5. Core features
-- **Hiệu ứng nhóm (Grouping Effect):** Giữ hoặc giảm đều cả cụm biến có tương quan mạnh thay vì loại bỏ cảm tính.
-- **Dung hòa 2 hình phạt:** Kết hợp linh hoạt giữa L1 (lọc biến) và L2 (ổn định trọng số).
-- **Tỷ lệ l1_ratio ($\rho$):** Tự do trượt từ thuần Ridge ($\rho = 0$) sang thuần Lasso ($\rho = 1$).
-- **Tối ưu Coordinate Descent:** Sử dụng thuật toán hạ tọa độ cải tiến có co cụm mẫu số theo $L_2$.
+1. **Thiết lập tỷ lệ phối hợp:** Dùng tham số $\rho$ (`l1_ratio`) để điều chỉnh: nghiêng về 1 là thiên về lọc biến (Lasso), nghiêng về 0 là thiên về ổn định trọng số (Ridge).
+2. **Hạ tọa độ luân phiên:** Duyệt qua từng biến một cách tuần tự để tính toán mức độ cải thiện sai số của mô hình.
+3. **Lọc biến theo nhóm:** 
+   * Các biến thực sự vô dụng hoặc gây nhiễu sẽ bị thành phần L1 đưa thẳng về 0.
+   * Các nhóm biến cùng có mối tương quan mạnh sẽ được thành phần L2 bảo vệ để cùng giữ lại, tránh hiện tượng bị loại bỏ ngẫu nhiên.
+4. **Hội tụ:** Lặp lại các chu kỳ duyệt qua từng biến cho đến khi toàn bộ trọng số đạt trạng thái cân bằng ổn định.
 
-## 6. Technology
-- **Python 3**, **NumPy** (cài đặt thuật toán Coordinate Descent dung hòa từ đầu), **Pandas**, **Scikit-learn**.
-
-## 7. Evaluation
-- **R2-Score:** Đo lường độ tương thích trên tập Train và tập Test.
-- **RMSE:** Sai lệch dự đoán giá nhà so với giá thực tế.
-- **Số lượng biến bị triệt tiêu:** Tỷ lệ số biến được rút gọn phù hợp với bài toán.
-
-## 8. How it work
-1. **Hàm mục tiêu ElasticNet:** $J(\mathbf{w}, b) = \frac{1}{2n}\|\mathbf{y} - \mathbf{X}\mathbf{w} - b\|_2^2 + \alpha \rho \|\mathbf{w}\|_1 + \frac{\alpha (1-\rho)}{2} \|\mathbf{w}\|_2^2$.
-2. **Tính toán tương quan phần dư:** $\rho_j = \mathbf{x}_j^T (\mathbf{y} - \mathbf{X}_{-j}\mathbf{w}_{-j} - b)$.
-3. **Ngưỡng mềm cải tiến:** $w_j = \frac{\text{sign}(\rho_j) \cdot \max(0, |\rho_j| - n \alpha \rho)}{\|\mathbf{x}_j\|_2^2 + n \alpha (1 - \rho)}$.
-4. **Cập nhật hệ số chặn:** $b = \frac{1}{n} \sum (y_i - \mathbf{x}_i^T \mathbf{w})$.
-5. **Hội tụ:** Lặp lại việc quét qua toàn bộ trọng số cho tới khi độ thay đổi cực đại nhỏ hơn ngưỡng `tol`.
-
-## 9. Data used
-- **Dataset:** `housing_market_data.csv` (17 đặc trưng bất động sản, cột mục tiêu `house_price`).
-- **Tiền xử lý:** Chuẩn hóa `StandardScaler` tập Train.
-- **Chia tập:** 65% Train / 35% Test.
-
-## 10. Demo
-```bash
-python elasticnet_regression.py
-```
-Khung kết quả mẫu:
-```text
-Alpha (Tong hop)   : x.xx
-L1 Ratio (Ty le)   : x.xx
-R2 Train           : 0.xx
-R2 Test            : 0.xx
-RMSE Test          : x.xx
-Bien bi triet tieu : xx / 17
-```
+### 5. Data used (Dữ liệu sử dụng)
+* **Dạng dữ liệu phù hợp:** Dữ liệu có số chiều lớn, nhiều thuộc tính có tương quan phức tạp theo từng nhóm (Collinear groups).
+* **Yêu cầu tiền xử lý:** **Bắt buộc chuẩn hóa thang đo (StandardScaler)** trước khi đưa vào mô hình.
+* **Đặc điểm tương thích:** Là giải pháp an toàn và toàn diện nhất trong họ các mô hình tuyến tính có điều chuẩn khi chưa biết chắc nên ưu tiên lọc biến (L1) hay làm mượt (L2).
+* **Ví dụ ứng dụng thực tế:** Phân tích dữ liệu tài chính - thị trường chứng khoán (các mã cổ phiếu cùng ngành biến động cùng nhau), nghiên cứu biến dị di truyền sinh học, dự báo thị trường bán lẻ đa kênh.
