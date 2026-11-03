@@ -1,0 +1,78 @@
+{
+  "model_name": "Decision Tree Regressor (Scratch)",
+  "test_metrics": {
+    "Mô hình": "Decision Tree Regressor",
+    "R2 (Thực tế)": 0.49,
+    "R2 (Log)": 0.5621,
+    "RMSE (INR)": 195.78,
+    "MAE (INR)": 139.55,
+    "MSE": 38331.17
+  },
+  "dataset_summary": {
+    "train_samples": 82281,
+    "test_samples": 20571,
+    "features_count": 42
+  },
+  "top_features": [
+    {
+      "Feature": "Category_kurta",
+      "Importance": 0.7071059543957868
+    },
+    {
+      "Feature": "Category_Top",
+      "Importance": 0.15491298472574758
+    },
+    {
+      "Feature": "Category_Bottom",
+      "Importance": 0.026394650035581616
+    },
+    {
+      "Feature": "Qty",
+      "Importance": 0.020442368304677494
+    },
+    {
+      "Feature": "Size_6XL",
+      "Importance": 0.0182190343358881
+    },
+    {
+      "Feature": "Category_Blouse",
+      "Importance": 0.017646138589290906
+    },
+    {
+      "Feature": "month",
+      "Importance": 0.015048006857996198
+    },
+    {
+      "Feature": "Size_5XL",
+      "Importance": 0.014482789385127632
+    },
+    {
+      "Feature": "Size_4XL",
+      "Importance": 0.009809731625770677
+    },
+    {
+      "Feature": "Category_Set",
+      "Importance": 0.005556511580003453
+    },
+    {
+      "Feature": "is_promoted",
+      "Importance": 0.001919358040828496
+    },
+    {
+      "Feature": "ship-service-level_Expedited",
+      "Importance": 0.0016631284060221194
+    },
+    {
+      "Feature": "Size_Free",
+      "Importance": 0.001577909574290134
+    },
+    {
+      "Feature": "Fulfilment_Amazon",
+      "Importance": 0.0012708650485625283
+    },
+    {
+      "Feature": "day_of_week",
+      "Importance": 0.000984716861482147
+    }
+  ]
+}

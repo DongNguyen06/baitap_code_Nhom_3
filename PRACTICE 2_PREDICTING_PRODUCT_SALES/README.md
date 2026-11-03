@@ -1,116 +1,111 @@
-# SALESPREDICT-ML: DỰ ĐOÁN DOANH SỐ BÁN HÀNG BẰNG HỌC MÁY
-## PRACTICE 2: PREDICTING PRODUCT SALES — NHÓM 3 (UTH)
+# BÀI THỰC HÀNH 2: DỰ ĐOÁN DOANH SỐ SẢN PHẨM — NHÓM 3
+## PRACTICE 2: PREDICTING PRODUCT SALES — GROUP 3
 
-> **Môn học:** Học máy (Machine Learning) — Trường Đại học Giao thông Vận tải TP.HCM (UTH)  
-> **Giảng viên hướng dẫn:** Tiến sĩ Nguyễn Thị Khánh Tiên  
-> **Bài toán:** Hồi quy dự đoán doanh số bán hàng sản phẩm (Product Sales Prediction)  
-> **Kiến trúc triển khai:** 3 Notebooks Walkthrough chuyên sâu theo chuẩn của Will Koehrsen & TS. Nguyễn Thị Khánh Tiên
+> **Môn học:** Học máy (Machine Learning) — UTH  
+> **Bài toán:** Hồi quy dự đoán doanh số bán hàng sản phẩm ($y = \text{Amount} \in \mathbb{R}$, đơn vị INR)  
+> **Kiến trúc:** 4 Jupyter Notebooks, 3 thuật toán Scratch tự viết bằng NumPy thuần túy và Pipeline tự động hóa khép kín.
 
 ---
 
 ## 📌 1. GIỚI THIỆU DỰ ÁN
-Hệ thống giải quyết bài toán hồi quy liên tục: Dự đoán doanh số bán hàng của các sản phẩm thương mại điện tử dựa trên giá sản phẩm, chi phí quảng cáo marketing, danh mục sản phẩm và các yếu tố mùa vụ.
+Dự án giải quyết bài toán hồi quy dự đoán doanh thu bán hàng thương mại điện tử bằng Học máy trên bộ dữ liệu `Amazon Sale Report.csv` (128.975 dòng thô $\rightarrow$ 102.852 dòng sạch sau khi lọc đơn hủy, đơn lỗi và khử trùng lặp).
 
-Toàn bộ quy trình ML được tổ chức theo **kiến trúc 3 Notebooks tuần tự (Modular Walkthrough)**:
-1. `01_data_cleaning_and_eda.ipynb`: Khám phá dữ liệu 5 bước EDA toàn diện và làm sạch dữ liệu.
-2. `02_feature_engineering_and_pipeline.ipynb`: Biến đổi log, lọc đa cộng tuyến ($r > 0.6$) và đóng gói Scikit-Learn Pipeline chống rò rỉ dữ liệu.
-3. `03_model_training_evaluation_and_explain.ipynb`: Huấn luyện 3 mô hình hồi quy (Linear Regression, Decision Tree, Random Forest), kiểm định chéo 5-Fold CV, đánh giá trên Test set và trích xuất độ quan trọng đặc trưng (Feature Importances).
+Quy trình thực hiện được chia thành 4 Notebooks chuyên sâu:
+1. `notebooks/01_data_cleaning_and_eda.ipynb`: Khám phá dữ liệu toàn diện (EDA), phân tích phân phối lệch phải của Amount, biến đổi Log, quét ngoại lai IQR và làm sạch dữ liệu (`clean_amazon_sales.csv`).
+2. `notebooks/02_feature_engineering_and_pipeline.ipynb`: Trích xuất đặc trưng thời gian mùa vụ, gom nhóm địa lý Top 10 bang, tạo cờ khuyến mãi/B2B, lọc đa cộng tuyến ($|r| > 0.6$), chia Train/Test 80/20 và thiết lập `ColumnTransformer`.
+3. `notebooks/03_model_training_evaluation_and_explain.ipynb`: Huấn luyện 3 mô hình Scratch, kiểm định chéo 5-Fold Cross Validation trên 82.281 mẫu Train, đánh giá độc lập trên 20.571 mẫu Test set và trích xuất Top 15 đặc trưng quan trọng.
+4. `notebooks/demo.ipynb`: Giao diện thử nghiệm suy luận doanh số tương tác thời gian thực kèm cơ chế phòng vệ Guardrails.
 
----
-
-## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG NHIỆM VỤ (TỔNG: 100%)
-
-| STT | Họ và tên | Vai trò | Đóng góp | Vị trí phụ trách trong dự án / Repo |
-| :---: | :--- | :---: | :---: | :--- |
-| 1 | **Nguyễn Xuân Đông** | **Trưởng nhóm** | 15% | **Notebook 1 — Mục 1:** EDA Nền tảng, Quản trị Git, Web Demo Streamlit (`app.py`) & CLI |
-| 2 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 1 — Mục 2:** EDA Chuyên sâu (Đa biến, Tương quan, Ngoại lai & Đúc kết) |
-| 3 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 1 — Mục 3:** Tiền xử lý dữ liệu (Khử trùng, Điền median/mode) |
-| 4 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 2 — Mục 4:** FE Biến đổi (Log np.log1p, Binning) & Tạo biến Domain |
-| 5 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 2 — Mục 5:** FE Lọc đa cộng tuyến, OneHot + Scaler Pipeline chống Leak |
-| 6 | *[Chưa chỉ định]* | Thành viên | 14% | **Notebook 3 — Mục 6:** Huấn luyện mô hình hồi quy (Linear, Decision Tree, Random Forest) |
-| 7 | *[Chưa chỉ định]* | Thành viên | 15% | **Notebook 3 — Mục 7:** Đánh giá RMSE/R2, Biểu đồ phần dư & Feature Importance |
-| | **Tổng cộng** | | **100%** | **Hoàn thành toàn diện 4 tính năng hệ thống** |
-
-### Sơ đồ luồng thực hiện tuần tự qua 3 Notebooks:
-```text
-[sales_data.csv]
-      │
-      ▼
-📓 NOTEBOOK 1: 01_data_cleaning_and_eda.ipynb (Khám phá & Làm sạch dữ liệu)
-   ├── TV 1 (15%): Nguyễn Xuân Đông (Trưởng nhóm) — EDA 1 (Cấu trúc), EDA 2 (Chất lượng), EDA 3 (Đơn biến)
-   ├── TV 2 (14%): *[Chưa chỉ định]* — EDA 4 (Đa biến tương quan, Ngoại lai IQR) & EDA 5 (Bảng đúc kết EDA)
-   └── TV 3 (14%): *[Chưa chỉ định]* — Tiền xử lý (Khử trùng, Điền missing Median/Mode) ──> [clean_product_sales.csv]
-      │
-      ▼
-📓 NOTEBOOK 2: 02_feature_engineering_and_pipeline.ipynb (Kỹ thuật đặc trưng & Pipeline)
-   ├── TV 4 (14%): *[Chưa chỉ định]* — FE Biến đổi (Log np.log1p, Binning) & Tạo biến Domain (Tỷ lệ chi tiêu, Mùa vụ)
-   └── TV 5 (14%): *[Chưa chỉ định]* — Chia Train/Test, Lọc đa cộng tuyến (r > 0.6), OneHot + Scaler Pipeline
-      │                             └──> [train_test_data.joblib & preprocessor.joblib]
-      ▼
-📓 NOTEBOOK 3: 03_model_training_evaluation_and_explain.ipynb (Huấn luyện & Đánh giá chuyên sâu)
-   ├── TV 6 (14%): *[Chưa chỉ định]* — Huấn luyện 3 mô hình (Linear, Tree, Random Forest) + 5-Fold Cross Validation
-   └── TV 7 (15%): *[Chưa chỉ định]* — Đánh giá Test, Residual Plot, Feature Importance (Giải thích mô hình)
-      │                             └──> [best_model.joblib & metadata.json]
-      ▼
-🚀 TV 1: NGUYỄN XUÂN ĐÔNG TRIỂN KHAI WEB DEMO STREAMLIT (app.py) & CLI TEST (scripts/run_predict.py)
-```
+> **Phân công nhiệm vụ:** Chi tiết công việc của 7 thành viên được quản lý tại [docs/description/TASKS.md](docs/description/TASKS.md).  
+> **Thiết kế chi tiết 5W1H:** Xem tại [docs/description/project_design.md](docs/description/project_design.md).
 
 ---
 
-## 🚀 3. HƯỚNG DẪN KHỞI CHẠY (QUICK START)
+## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG ĐÓNG GÓP (TỔNG: 100%)
 
-### Bước 1: Cài đặt môi trường
+| STT | Thành viên | Vai trò | Tỷ lệ | Module / Tệp phụ trách | Sản phẩm nghiệm thu chính |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **1** | **Nguyễn Xuân Đông** | **Trưởng nhóm** | **16%** | `data/scripts/eda.py`<br>`notebooks/demo.ipynb`<br>`scripts/test_all_components.py` | Quản trị Git, cấu trúc dự án, đơn biến Amount, Demo suy luận và bộ test tự động. |
+| **2** | **Mai An Thịnh** | Thành viên | **14%** | `data/scripts/eda.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Phân tích đa biến, tương quan địa lý/mùa vụ, quét ngoại lai IQR và Bảng kết luận EDA. |
+| **3** | **Nguyễn Minh Nhật** | Thành viên | **14%** | `data/scripts/data_preprocessing.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Lọc đơn hủy, khử rò rỉ dữ liệu, xử lý missing và xuất `clean_amazon_sales.csv` (102.852 dòng). |
+| **4** | **Trương Thành Công** | Thành viên | **14%** | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Trích xuất đặc trưng mùa vụ (`Date`), cờ khuyến mãi (`is_promoted`), khách sỉ (`is_b2b`), Top 10 bang. |
+| **5** | **Võ Thanh Phú** | Thành viên | **14%** | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Tách Train/Test 80/20, quét đa cộng tuyến ($|r| > 0.6$), `ColumnTransformer` (Scaler + OneHot). |
+| **6** | **Võ Khôi Nguyên** | Thành viên | **14%** | `scripts/model_training.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đóng gói Pipeline hồi quy, kiểm định chéo 5-Fold Cross Validation trên tập Train. |
+| **7** | **Mai Hoàng Danh** | Thành viên | **14%** | `scripts/model_evaluation.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đánh giá độc lập 20.571 mẫu Test set (nghịch đảo expm1), Residual Plot, Feature Importances. |
+| **TỔNG** | **7 thành viên** | | **100%** | | **Cả 7 thành viên cùng nghiên cứu & cài đặt 3 thuật toán Scratch thuần NumPy** |
+
+---
+
+## 📊 3. BẢNG KẾT QUẢ NGHIỆM THU (TEST SET: 20.571 MẪU)
+
+| Thuật toán (Scratch NumPy) | $R^2$ (Log) | $R^2$ (Thực tế) | RMSE (INR) | MAE (INR) | Đánh giá & Ghi chú |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| 🥇 **Decision Tree Regressor** | **0.5623** | **0.4901** | **195.77** | **139.53** | **Quán quân (Best Model)** — Tối ưu hóa phân vị nhanh, giải thích rõ ràng |
+| 🥈 **Random Forest Regressor** | 0.5464 | 0.4554 | 202.32 | 141.61 | Học kết hợp Bagging, ổn định phương sai |
+| 🥉 **Linear Regression** | 0.5566 | -0.7194 | 359.49 | 142.00 | Mô hình đối chứng cơ sở (OLS Normal Equation) |
+
+---
+
+## 🚀 4. HƯỚNG DẪN KHỞI CHẠY (QUICK START)
+
+### Bước 1: Cài đặt thư viện phụ thuộc
 Khuyến nghị sử dụng Python 3.10 trở lên:
 ```bash
 pip install -r requirements.txt
 ```
 
-### Bước 2: Chạy tuần tự 3 Notebooks
-Mở và thực thi các Notebook theo đúng thứ tự chuyển giao dữ liệu:
-1. **Chạy Notebook 1:** Khám phá dữ liệu và sinh ra tệp `data/processed/clean_product_sales.csv`.
-   ```bash
-   jupyter notebook notebooks/01_data_cleaning_and_eda.ipynb
-   ```
-2. **Chạy Notebook 2:** Tạo đặc trưng, chia Train/Test, lọc đa cộng tuyến và lưu Pipeline.
-   ```bash
-   jupyter notebook notebooks/02_feature_engineering_and_pipeline.ipynb
-   ```
-3. **Chạy Notebook 3:** Huấn luyện mô hình, kiểm định chéo 5-Fold, đánh giá Test và xuất `best_model.joblib`.
-   ```bash
-   jupyter notebook notebooks/03_model_training_evaluation_and_explain.ipynb
-   ```
+### Bước 2: Thực thi dự án
+Có 2 phương thức chạy linh hoạt:
 
-### Bước 3: Khởi chạy Ứng dụng Web Demo Streamlit
+* **Cách A — Chạy tự động toàn bộ Pipeline (Khuyến nghị cho CLI):**
+  ```bash
+  python scripts/run_pipeline.py
+  ```
+
+* **Cách B — Mở và chạy từng Notebook (Khuyến nghị cho nghiên cứu trực quan):**
+  1. `jupyter notebook notebooks/01_data_cleaning_and_eda.ipynb`
+  2. `jupyter notebook notebooks/02_feature_engineering_and_pipeline.ipynb`
+  3. `jupyter notebook notebooks/03_model_training_evaluation_and_explain.ipynb`
+
+### Bước 3: Thử nghiệm tương tác với Demo
+Mở notebook demo để nhập đơn hàng bất kỳ và kiểm tra khả năng dự đoán doanh số tức thì:
 ```bash
-streamlit run app.py
+jupyter notebook notebooks/demo.ipynb
 ```
+
+### Bước 4: Chạy bộ kiểm thử tự động toàn diện
+Hỗ trợ kiểm tra tính toàn vẹn cú pháp và logic của toàn bộ 8 nhóm thành phần trong dự án:
+
+* **Chạy kiểm thử riêng từng bước theo nhiệm vụ từng thành viên (1–8):**
+  ```bash
+  python scripts/test_all_components.py --step 1   # Tiền xử lý (Nguyễn Minh Nhật)
+  python scripts/test_all_components.py --step 4   # 3 thuật toán Scratch (Cả 7 thành viên)
+  ```
+* **Chạy kiểm thử toàn bộ hệ thống (Kiểm tra tích hợp):**
+  ```bash
+  python scripts/test_all_components.py
+  ```
 
 ---
 
-## 📂 4. CẤU TRÚC THƯ MỤC CHUẨN
+## 📁 5. CẤU TRÚC THƯ MỤC DỰ ÁN
+
 ```text
 PRACTICE 2_PREDICTING_PRODUCT_SALES/
 ├── data/
-│   ├── raw/sales_data.csv                    # Dữ liệu nguồn về doanh số bán hàng
-│   └── processed/clean_product_sales.csv     # Dữ liệu sạch sau tiền xử lý (Output NB1)
-├── docs/                                     # Bộ tài liệu đặc tả dự án
-│   ├── project_description.md                # 7 mục đặc tả dự án chuẩn (dưới 200 từ)
-│   ├── project_design.md                     # Thiết kế hệ thống theo 4 tính năng (dưới 200 từ)
-│   └── TASKS.md                              # Phân công 7 thành viên theo 3 Notebooks
-├── models/                                   # Nơi lưu trữ pipeline và mô hình
-│   ├── preprocessor.joblib                   # Pipeline tiền xử lý đã fit trên tập Train (Output NB2)
-│   ├── best_model.joblib                     # Mô hình tối ưu nhất dùng cho web app (Output NB3)
-│   ├── linear_regression.joblib              # Mô hình 1: Linear Regression
-│   ├── decision_tree.joblib                  # Mô hình 2: Decision Tree Regressor
-│   ├── random_forest.joblib                  # Mô hình 3: Random Forest Regressor
-│   └── metadata.json                         # Kết quả đối sánh MSE, RMSE, MAE, R2
-├── notebooks/                                # KHÔNG GIAN 3 NOTEBOOKS WALKTHROUGH
-│   ├── 01_data_cleaning_and_eda.ipynb        # [TV1, TV2, TV3] Khám phá & Làm sạch
-│   ├── 02_feature_engineering_and_pipeline.ipynb # [TV4, TV5] Tạo biến & Pipeline
-│   └── 03_model_training_evaluation_and_explain.ipynb # [TV6, TV7] Huấn luyện, Đánh giá & Giải thích
-├── scripts/
-│   └── run_predict.py                        # [TV1] Ô Chat dòng lệnh tương tác suy luận nhanh
-├── app.py                                    # [TV1] Web Demo Streamlit trực quan dự đoán doanh số
-├── requirements.txt                          # Danh sách thư viện cần thiết
-└── README.md                                 # Hướng dẫn tổng quan bài thực hành (file này)
+│   ├── raw/                      # Dữ liệu gốc (Amazon Sale Report.csv, .zip)
+│   ├── processed/                # Dữ liệu sạch (clean_amazon_sales.csv, train.csv, test.csv, train_test_data.joblib)
+│   └── scripts/                  # Module tiền xử lý (data_preprocessing.py, eda.py)
+├── docs/
+│   ├── description/              # Tài liệu thiết kế (project_description.md, project_design.md, TASKS.md)
+│   ├── algorithms/               # Lý thuyết 3 thuật toán Scratch (linear_regression.md, decision_tree_regressor.md, ...)
+│   ├── images/                   # Biểu đồ trực quan hóa EDA và kết quả mô hình
+│   └── report/                   # Báo cáo kỹ thuật độc lập
+├── models/
+│   ├── algorithms/               # Mã nguồn 3 thuật toán Scratch (linear_regression.py, decision_tree.py, random_forest.py)
+│   └── saved_models/             # Mô hình tối ưu đã lưu (best_model.joblib, preprocessor.joblib, metadata.json)
+├── notebooks/                    # 4 Notebooks thực hành tuần tự và Demo
+├── scripts/                      # Các kịch bản chạy tự động (run_pipeline.py, feature_engineering.py, test_all_components.py)
+├── README.md
+└── requirements.txt
 ```
