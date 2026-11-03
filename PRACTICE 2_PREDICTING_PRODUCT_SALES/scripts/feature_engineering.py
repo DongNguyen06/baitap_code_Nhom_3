@@ -43,8 +43,22 @@ CATEGORY_LOOKUP = {
 
 
 # =============================================================================
-# PHẦN 1: TRƯƠNG THÀNH CÔNG — TRÍCH XUẤT ĐẶC TRƯNG MIỀN (TODO)
+# PHẦN 1: TRƯƠNG THÀNH CÔNG — TRÍCH XUẤT ĐẶC TRƯNG MIỀN 
 # =============================================================================
+from pathlib import Path
+from typing import List, Optional, Tuple, Union
+
+import numpy as np
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+
+# Top 10 bang có số đơn lớn nhất (viết HOA để khớp với bước chuẩn hóa bên dưới).
+# Nếu file của bạn đã định nghĩa TOP_10_STATES thì dùng bản có sẵn, đừng khai báo lại.
+TOP_10_STATES: List[str] = [
+    "MAHARASHTRA", "KARNATAKA", "TAMIL NADU", "TELANGANA", "UTTAR PRADESH",
+    "DELHI", "KERALA", "WEST BENGAL", "ANDHRA PRADESH", "GUJARAT",
+]
+
 
 def extract_domain_features(
     df: pd.DataFrame,
@@ -60,10 +74,51 @@ def extract_domain_features(
     Trả về:
         pd.DataFrame: DataFrame có thêm các cột đặc trưng mới.
     """
-    # TODO: [Trương Thành Công] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Trương Thành Công cần hoàn thiện hàm 'extract_domain_features' theo phân công trong docs/description/TASKS.md"
-    )
+    # TODO: [Trương Thành Công]
+    df_features = df.copy()
+
+    # --- Đặc trưng thời gian: month, day_of_week, is_weekend ---
+    if "Date" in df_features.columns:
+        dates = pd.to_datetime(df_features["Date"], format="mixed", errors="coerce")
+        day_of_week = dates.dt.dayofweek
+        df_features["month"] = dates.dt.month
+        df_features["day_of_week"] = day_of_week
+        df_features["is_weekend"] = day_of_week.isin([5, 6]).astype(int)
+    else:
+        df_features["month"] = np.nan
+        df_features["day_of_week"] = np.nan
+        df_features["is_weekend"] = 0
+
+    # --- Cờ khuyến mãi: is_promoted ---
+    if "promotion-ids" in df_features.columns:
+        promotions = df_features["promotion-ids"].astype("string").str.strip()
+        df_features["is_promoted"] = (
+            promotions.notna()
+            & promotions.ne("")
+            & promotions.str.casefold().ne("no_promotion")
+        ).astype(int)
+    else:
+        df_features["is_promoted"] = 0
+
+    # --- Cờ khách sỉ: is_b2b ---
+    if "B2B" in df_features.columns:
+        b2b = df_features["B2B"].astype("string").str.strip().str.casefold()
+        df_features["is_b2b"] = b2b.isin({"true", "1", "1.0", "yes", "y"}).astype(int)
+    else:
+        df_features["is_b2b"] = 0
+
+    # --- Gom nhóm địa phương: Top 10 bang + 'Other' ---
+    states = top_states if top_states is not None else TOP_10_STATES
+    normalized_states = {str(state).strip().upper() for state in states}
+    if "ship-state" in df_features.columns:
+        ship_states = df_features["ship-state"].astype("string").str.strip().str.upper()
+        df_features["state_grouped"] = ship_states.where(
+            ship_states.isin(normalized_states), "Other"
+        ).fillna("Other")   
+    else:
+        df_features["state_grouped"] = "Other"
+
+    return df_features
 
 
 def transform_target_log(
@@ -78,12 +133,21 @@ def transform_target_log(
     Trả về:
         np.ndarray: Mảng giá trị sau khi áp dụng phép biến đổi log1p.
     """
-    # TODO: [Trương Thành Công] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Trương Thành Công cần hoàn thiện hàm 'transform_target_log' theo phân công trong docs/description/TASKS.md"
-    )
+    # TODO: [Trương Thành Công] 
 
 
+if __name__ == "__main__":
+    sample = pd.DataFrame({
+        "Date": ["04-30-22", "05-01-22", "not-a-date", None],
+        "promotion-ids": ["No_Promotion", "PROMO1", "", None],
+        "B2B": [False, True, 1, None],
+        "ship-state": ["maharashtra", "Unknown", "KARNATAKA", None],
+        "Amount": [0.0, 9.0, 99.0, 999.0],
+    })
+    out = extract_domain_features(sample)
+    print(out[["Date", "month", "day_of_week", "is_weekend",
+               "is_promoted", "is_b2b", "state_grouped"]])
+    print(transform_target_log(sample["Amount"]))
 # =============================================================================
 # PHẦN 2: VÕ THANH PHÚ — ĐA CỘNG TUYẾN, TRAIN/TEST SPLIT & COLUMNTRANSFORMER (TODO)
 # =============================================================================
