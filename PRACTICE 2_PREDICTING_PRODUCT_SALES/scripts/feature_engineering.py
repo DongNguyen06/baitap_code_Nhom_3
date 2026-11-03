@@ -43,7 +43,7 @@ CATEGORY_LOOKUP = {
 
 
 # =============================================================================
-# PHẦN 1: TRƯƠNG THÀNH CÔNG — TRÍCH XUẤT ĐẶC TRƯNG MIỀN
+# PHẦN 1: TRƯƠNG THÀNH CÔNG — TRÍCH XUẤT ĐẶC TRƯNG MIỀN 
 # =============================================================================
 from pathlib import Path
 from typing import List, Optional, Tuple, Union
@@ -74,7 +74,7 @@ def extract_domain_features(
     Trả về:
         pd.DataFrame: DataFrame có thêm các cột đặc trưng mới.
     """
-    # TODO: TRƯƠNG THÀNH CÔNG
+    # TODO: [Trương Thành Công]
     df_features = df.copy()
 
     # --- Đặc trưng thời gian: month, day_of_week, is_weekend ---
@@ -114,7 +114,7 @@ def extract_domain_features(
         ship_states = df_features["ship-state"].astype("string").str.strip().str.upper()
         df_features["state_grouped"] = ship_states.where(
             ship_states.isin(normalized_states), "Other"
-        ).fillna("Other")
+        ).fillna("Other")   
     else:
         df_features["state_grouped"] = "Other"
 
@@ -133,8 +133,7 @@ def transform_target_log(
     Trả về:
         np.ndarray: Mảng giá trị sau khi áp dụng phép biến đổi log1p.
     """
-    # TODO: TRƯƠNG THÀNH CÔNG
-    return np.log1p(np.asarray(target, dtype=float))
+    # TODO: [Trương Thành Công] 
 
 
 if __name__ == "__main__":
