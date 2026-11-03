@@ -85,8 +85,9 @@ def transform_target_log(
 
 
 # =============================================================================
-# PHẦN 2: VÕ THANH PHÚ — ĐA CỘNG TUYẾN, TRAIN/TEST SPLIT & COLUMNTRANSFORMER (TODO)
+# PHẦN 2: VÕ THANH PHÚ — ĐA CỘNG TUYẾN, TRAIN/TEST SPLIT & COLUMNTRANSFORMER (Đã hoành thành)
 # =============================================================================
+
 
 def detect_collinear_features(
     df_features: pd.DataFrame,
@@ -102,10 +103,27 @@ def detect_collinear_features(
     Trả về:
         List[Tuple[str, str, float]]: Danh sách các bộ ba (tên_biến_1, tên_biến_2, hệ_số_r).
     """
-    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'detect_collinear_features' theo phân công trong docs/description/TASKS.md"
+    # Tính tương quan Pearson giữa các biến số
+    numeric_df = df_features.select_dtypes(include=[np.number])
+
+    corr_matrix = numeric_df.corr(method="pearson")
+
+    upper_triangle = corr_matrix.where(
+        np.triu(np.ones(corr_matrix.shape), k=1).astype(bool)
     )
+
+    collinear_pairs = []
+
+    for col in upper_triangle.columns:
+        for row in upper_triangle.index:
+            correlation = upper_triangle.loc[row, col]
+
+            if pd.notna(correlation) and abs(correlation) > threshold:
+                collinear_pairs.append(
+                    (row, col, float(correlation))
+                )
+
+    return collinear_pairs
 
 
 def split_train_test(
@@ -124,9 +142,32 @@ def split_train_test(
     Trả về:
         Tuple: (X_train, X_test, y_train, y_test, y_train_raw, y_test_raw)
     """
-    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'split_train_test' theo phân công trong docs/description/TASKS.md"
+    from sklearn.model_selection import train_test_split
+
+     # Tách đặc trưng và biến mục tiêu Amount
+    if "Amount" not in df.columns:
+        raise ValueError("Không tìm thấy cột Amount trong dữ liệu.")
+
+    X = df.drop(columns=["Amount"])
+    y = df["Amount"]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=test_size,
+        random_state=random_state
+    )
+
+    y_train_raw = y_train.to_numpy()
+    y_test_raw = y_test.to_numpy()
+
+    return (
+        X_train,
+        X_test,
+        y_train,
+        y_test,
+        y_train_raw,
+        y_test_raw
     )
 
 
@@ -144,10 +185,33 @@ def build_column_transformer(
     Trả về:
         ColumnTransformer: Bộ tiền xử lý hoàn chỉnh sẵn sàng ghép vào Pipeline.
     """
-    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'build_column_transformer' theo phân công trong docs/description/TASKS.md"
+    from sklearn.preprocessing import StandardScaler, OneHotEncoder
+    # Thiết lập bộ tiền xử lý cho từng loại dữ liệu
+    transformers = []
+
+    if numeric_cols:
+        transformers.append(
+            ("num", StandardScaler(), numeric_cols)
+        )
+
+    if categorical_cols:
+        transformers.append(
+            (
+                "cat",
+                OneHotEncoder(handle_unknown="ignore"),
+                categorical_cols
+            )
+        )
+
+    if not transformers:
+        raise ValueError("Không có cột nào để tiền xử lý.")
+
+    preprocessor = ColumnTransformer(
+        transformers=transformers,
+        remainder="drop"
     )
+
+    return preprocessor
 
 
 def export_train_test_csv(
@@ -168,10 +232,29 @@ def export_train_test_csv(
     Trả về:
         Tuple[Path, Path]: (đường_dẫn_train_csv, đường_dẫn_test_csv).
     """
-    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'export_train_test_csv' theo phân công trong docs/description/TASKS.md"
-    )
+    # Chuẩn bị dữ liệu và thư mục lưu CSV
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    train_data = X_train.copy()
+    test_data = X_test.copy()
+
+    if len(train_data) != len(y_train_raw):
+        raise ValueError("Số lượng X_train và y_train_raw không khớp.")
+
+    if len(test_data) != len(y_test_raw):
+        raise ValueError("Số lượng X_test và y_test_raw không khớp.")
+
+    train_data["Amount"] = np.asarray(y_train_raw).reshape(-1)
+    test_data["Amount"] = np.asarray(y_test_raw).reshape(-1)
+
+    train_path = output_dir / "train.csv"
+    test_path = output_dir / "test.csv"
+
+    train_data.to_csv(train_path, index=False)
+    test_data.to_csv(test_path, index=False)
+
+    return train_path, test_path
 
 
 # =============================================================================
