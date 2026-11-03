@@ -1,25 +1,22 @@
 """
 Thuật toán: Linear Regression (From Scratch thuần túy với Normal Equation và Gradient Descent L2)
 Dự án: Practice 2: Predicting Product Sales — Group 3
-Phân công: Cả 7 thành viên cùng tham gia nghiên cứu cơ sở lý thuyết toán học và cài đặt bằng NumPy thuần túy.
-Kế thừa: BaseEstimator, RegressorMixin (để tương thích hoàn toàn với scikit-learn Pipeline & GridSearchCV).
+Cài đặt: Thuần túy bằng Python và NumPy.
+Kế thừa: BaseEstimator, RegressorMixin (tương thích hoàn toàn với scikit-learn Pipeline & GridSearchCV).
 Đặc tả chi tiết lý thuyết toán học: docs/description/algorithms/linear_regression.md
 """
 from typing import Optional, Dict, Any
 import numpy as np
 from scipy import sparse
 from sklearn.base import BaseEstimator, RegressorMixin
-from sklearn.metrics import r2_score
 
 
 class LinearRegressionScratch(BaseEstimator, RegressorMixin):
     """
     Mô hình Hồi quy Tuyến tính tự cài đặt thuần túy bằng NumPy.
     Hỗ trợ 2 phương pháp giải:
-    - 'normal_equation': Nghiệm đóng OLS kèm điều chuẩn Ridge L2: theta = (X^T X + lambda I)^(-1) X^T y
+    - 'normal_equation': Nghiệm đóng OLS kèm điều chuẩn ổn định Ridge L2: theta = (X^T X + lambda I)^(-1) X^T y
     - 'gradient_descent': Tối ưu hóa hạ độ dốc lặp: theta := theta - alpha * grad
-
-    Nhiệm vụ chung: Cả 7 thành viên cùng thực hiện.
     """
 
     def __init__(
@@ -65,38 +62,80 @@ class LinearRegressionScratch(BaseEstimator, RegressorMixin):
     def fit(self, X, y):
         """
         Huấn luyện mô hình Linear Regression bằng NumPy.
-
-        Thuật toán Normal Equation:
-        1. Ghép bias column 1 vào ma trận X: X_b = [1, X] (nếu fit_intercept=True)
-        2. Tạo ma trận phạt L2: reg_matrix = l2 * I (với reg_matrix[0,0] = 0 để không phạt bias)
-        3. Giải hệ phương trình tuyến tính: (X_b^T X_b + reg_matrix) * theta = X_b^T y
-        4. Tách theta thành self.intercept_ = theta[0] và self.coef_ = theta[1:]
-
-        Nhiệm vụ chung: Cả 7 thành viên cùng tham gia hoàn thiện.
         """
-        # TODO: [Cả 7 thành viên] Lập trình thuật toán Linear Regression From Scratch:
-        # Xem tài liệu đặc tả toán học tại: docs/description/algorithms/linear_regression.md
-        raise NotImplementedError(
-            "Chưa cài đặt - Cả 7 thành viên cần cùng hoàn thiện thuật toán LinearRegressionScratch theo docs/description/algorithms/linear_regression.md"
-        )
+        X_mat = self._to_dense(X)
+        y_vec = np.asarray(y, dtype=np.float64).ravel()
+        n_samples, n_features = X_mat.shape
 
-    def predict(self, X):
-        """
-        Dự đoán đầu ra: y_pred = X @ coef_ + intercept_
+        if self.method == "normal_equation":
+            if self.fit_intercept:
+                # Ghép cột số 1 vào đầu ma trận: X_b = [1, X]
+                ones = np.ones((n_samples, 1), dtype=np.float64)
+                X_b = np.hstack([ones, X_mat])
+                dim = n_features + 1
+                reg_matrix = self.l2 * np.eye(dim, dtype=np.float64)
+                reg_matrix[0, 0] = 0.0  # Không phạt bias
 
-        Nhiệm vụ chung: Cả 7 thành viên cùng tham gia hoàn thiện.
-        """
-        if hasattr(self, "coef_") and hasattr(self, "intercept_"):
-            X_mat = self._to_dense(X)
-            return X_mat @ self.coef_ + self.intercept_
+                XtX = np.dot(X_b.T, X_b) + reg_matrix
+                Xty = np.dot(X_b.T, y_vec)
+                try:
+                    theta = np.linalg.solve(XtX, Xty)
+                except np.linalg.LinAlgError:
+                    theta = np.linalg.lstsq(XtX, Xty, rcond=None)[0]
 
-        # TODO: [Cả 7 thành viên] Lập trình hàm dự đoán:
-        raise NotImplementedError(
-            "Chưa cài đặt - Cả 7 thành viên cần cùng hoàn thiện hàm predict của LinearRegressionScratch"
-        )
+                self.intercept_ = float(theta[0])
+                self.coef_ = theta[1:]
+            else:
+                reg_matrix = self.l2 * np.eye(n_features, dtype=np.float64)
+                XtX = np.dot(X_mat.T, X_mat) + reg_matrix
+                Xty = np.dot(X_mat.T, y_vec)
+                try:
+                    theta = np.linalg.solve(XtX, Xty)
+                except np.linalg.LinAlgError:
+                    theta = np.linalg.lstsq(XtX, Xty, rcond=None)[0]
 
-    def score(self, X, y):
-        """Hệ số xác định R2 score."""
-        y_pred = self.predict(X)
+                self.intercept_ = 0.0
+                self.coef_ = theta
+
+            self.losses_ = []
+
+        elif self.method == "gradient_descent":
+            w = np.zeros(n_features, dtype=np.float64)
+            b = 0.0
+            self.losses_ = []
+
+            for _ in range(self.n_iters):
+                y_pred = np.dot(X_mat, w) + (b if self.fit_intercept else 0.0)
+                error = y_pred - y_vec
+
+                grad_w = (np.dot(X_mat.T, error) / n_samples) + (self.l2 * w)
+                w -= self.learning_rate * grad_w
+
+                if self.fit_intercept:
+                    grad_b = float(np.mean(error))
+                    b -= self.learning_rate * grad_b
+
+                mse_loss = float(np.mean(error ** 2) + 0.5 * self.l2 * np.sum(w ** 2))
+                self.losses_.append(mse_loss)
+
+            self.coef_ = w
+            self.intercept_ = float(b) if self.fit_intercept else 0.0
+        else:
+            raise ValueError(f"Phương thức '{self.method}' không hợp lệ. Chọn 'normal_equation' hoặc 'gradient_descent'.")
+
+        return self
+
+    def predict(self, X) -> np.ndarray:
+        """Dự đoán giá trị doanh số thực tế y_hat."""
+        X_mat = self._to_dense(X)
+        return np.dot(X_mat, self.coef_) + self.intercept_
+
+    def score(self, X, y) -> float:
+        """Tính hệ số xác định R2."""
         y_true = np.asarray(y, dtype=np.float64).ravel()
-        return float(r2_score(y_true, y_pred))
+        y_pred = self.predict(X)
+        ss_res = np.sum((y_true - y_pred) ** 2)
+        ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
+        if ss_tot == 0:
+            return 1.0 if ss_res == 0 else 0.0
+        return float(1.0 - (ss_res / ss_tot))

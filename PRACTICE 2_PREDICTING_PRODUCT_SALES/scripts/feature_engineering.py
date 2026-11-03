@@ -2,9 +2,9 @@
 Module: feature_engineering.py
 Dự án: Practice 2: Predicting Product Sales — Group 3
 Phân công nhiệm vụ:
-- Trương Thành Công (14%): Trích xuất đặc trưng miền (extract_domain_features: mùa vụ, is_promoted, is_b2b, state_grouped).
-- Võ Thanh Phú (14%): Phân chia Train/Test 80/20 (split_train_test, export_train_test_csv), quét đa cộng tuyến (detect_collinear_features), đóng gói ColumnTransformer (build_column_transformer).
-- Nguyễn Xuân Đông (Trưởng nhóm - 16%): Chuẩn bị mẫu suy luận demo (prepare_sample_from_dict) & Nạp dữ liệu (load_pipeline_and_splits).
+- Trương Thành Công: Trích xuất đặc trưng miền (extract_domain_features, transform_target_log).
+- Võ Thanh Phú: Lọc đa cộng tuyến (detect_collinear_features), phân chia Train/Test 80/20 (split_train_test, export_train_test_csv), ColumnTransformer (build_column_transformer).
+- Nguyễn Xuân Đông (Trưởng nhóm): Chuẩn bị mẫu suy luận demo (prepare_sample_from_dict) & Nạp dữ liệu (load_pipeline_and_splits).
 """
 from pathlib import Path
 import sys
@@ -43,7 +43,7 @@ CATEGORY_LOOKUP = {
 
 
 # =============================================================================
-# PHẦN 1: TRƯƠNG THÀNH CÔNG (14%) — TRÍCH XUẤT ĐẶC TRƯNG MIỀN (TODO)
+# PHẦN 1: TRƯƠNG THÀNH CÔNG — TRÍCH XUẤT ĐẶC TRƯNG MIỀN (TODO)
 # =============================================================================
 
 def extract_domain_features(
@@ -51,14 +51,7 @@ def extract_domain_features(
     top_states: Optional[List[str]] = None
 ) -> pd.DataFrame:
     """
-    Trích xuất các đặc trưng miền chuyên sâu ngành Thương mại điện tử:
-    1. Thời gian & Mùa vụ: month, day_of_week, is_weekend (từ cột 'Date')
-    2. Gom nhóm địa lý: ship-state thuộc Top 10 bang lớn giữ nguyên, ngoài ra gán là 'Other'
-    3. Cờ nhị phân nghiệp vụ:
-       - is_promoted: 1 nếu có khuyến mãi (!= 'No_Promotion' và notna), ngược lại 0
-       - is_b2b: 1 nếu khách hàng sỉ B2B (True), ngược lại 0
-
-    Phụ trách chính: Trương Thành Công (14%)
+    Trích xuất các đặc trưng miền chuyên sâu ngành Thương mại điện tử (thời gian, địa lý, cờ nghiệp vụ).
 
     Tham số:
         df (pd.DataFrame): DataFrame dữ liệu đầu vào.
@@ -67,22 +60,9 @@ def extract_domain_features(
     Trả về:
         pd.DataFrame: DataFrame có thêm các cột đặc trưng mới.
     """
-    # TODO: [Trương Thành Công - 14%] Lập trình trích xuất đặc trưng miền:
-    # 1. Tạo bản sao: df_feat = df.copy()
-    # 2. Xử lý thời gian từ 'Date':
-    #    dt_series = pd.to_datetime(df_feat['Date'], format='mixed', errors='coerce')
-    #    df_feat['month'] = dt_series.dt.month.fillna(4).astype(int)
-    #    df_feat['day_of_week'] = dt_series.dt.dayofweek.fillna(0).astype(int)
-    #    df_feat['is_weekend'] = (df_feat['day_of_week'] >= 5).astype(int)
-    # 3. Gom nhóm địa phương:
-    #    valid_top = set(top_states) if top_states is not None else set(TOP_10_STATES)
-    #    df_feat['state_grouped'] = df_feat['ship-state'].apply(
-    #        lambda s: str(s).strip().upper() if str(s).strip().upper() in valid_top else 'Other'
-    #    )
-    # 4. Tạo cờ nhị phân is_promoted và is_b2b
-    # 5. Trả về df_feat
+    # TODO: [Trương Thành Công] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Trương Thành Công (14%) cần hoàn thiện hàm 'extract_domain_features' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Trương Thành Công cần hoàn thiện hàm 'extract_domain_features' theo phân công trong docs/description/TASKS.md"
     )
 
 
@@ -90,9 +70,7 @@ def transform_target_log(
     target: Union[pd.Series, np.ndarray]
 ) -> np.ndarray:
     """
-    Biến đổi log1p trên biến mục tiêu doanh số Amount để ổn định số học và giảm độ lệch:
-        y_log = log(1 + target)
-    Phụ trách chính: Trương Thành Công (14%)
+    Biến đổi log1p trên biến mục tiêu doanh số Amount để ổn định số học và giảm độ lệch: y_log = log(1 + target).
 
     Tham số:
         target (pd.Series | np.ndarray): Chuỗi giá trị doanh số thực tế (Amount).
@@ -100,17 +78,14 @@ def transform_target_log(
     Trả về:
         np.ndarray: Mảng giá trị sau khi áp dụng phép biến đổi log1p.
     """
-    # TODO: [Trương Thành Công - 14%] Lập trình biến đổi Log cho biến mục tiêu:
-    # 1. Chuyển đổi target sang dạng numpy array kiểu float: y_arr = np.asarray(target, dtype=np.float64)
-    # 2. Áp dụng np.log1p(y_arr)
-    # 3. Trả về mảng y_log
+    # TODO: [Trương Thành Công] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Trương Thành Công (14%) cần hoàn thiện hàm 'transform_target_log' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Trương Thành Công cần hoàn thiện hàm 'transform_target_log' theo phân công trong docs/description/TASKS.md"
     )
 
 
 # =============================================================================
-# PHẦN 2: VÕ THANH PHÚ (14%) — ĐA CỘNG TUYẾN, TRAIN/TEST SPLIT & COLUMNTRANSFORMER (TODO)
+# PHẦN 2: VÕ THANH PHÚ — ĐA CỘNG TUYẾN, TRAIN/TEST SPLIT & COLUMNTRANSFORMER (TODO)
 # =============================================================================
 
 def detect_collinear_features(
@@ -118,27 +93,18 @@ def detect_collinear_features(
     threshold: float = 0.6
 ) -> List[Tuple[str, str, float]]:
     """
-    Kỹ thuật Cô Tiên: Quét ma trận tương quan Pearson trên các biến số
-    để phát hiện các cặp đặc trưng có hiện tượng đa cộng tuyến (|r| > threshold).
-
-    Phụ trách chính: Võ Thanh Phú (14%)
+    Quét ma trận tương quan Pearson trên các biến số để phát hiện các cặp đặc trưng đa cộng tuyến (|r| > threshold).
 
     Tham số:
-        df_features (pd.DataFrame): DataFrame chứa các đặc trưng.
+        df_features (pd.DataFrame): DataFrame chứa các đặc trưng số.
         threshold (float): Ngưỡng tương quan Pearson xem là đa cộng tuyến (mặc định: 0.6).
 
     Trả về:
         List[Tuple[str, str, float]]: Danh sách các bộ ba (tên_biến_1, tên_biến_2, hệ_số_r).
     """
-    # TODO: [Võ Thanh Phú - 14%] Lập trình hàm phát hiện đa cộng tuyến:
-    # 1. Lọc các cột số: num_cols = df_features.select_dtypes(include=[np.number]).columns
-    # 2. Tính ma trận tương quan: corr_matrix = df_features[num_cols].corr()
-    # 3. Lặp qua các cặp biến (i, j với j > i):
-    #    Nếu abs(corr_matrix.iloc[i, j]) > threshold:
-    #        thêm (col_i, col_j, round(r, 4)) vào danh sách kết quả
-    # 4. Trả về collinear_pairs
+    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú (14%) cần hoàn thiện hàm 'detect_collinear_features' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'detect_collinear_features' theo phân công trong docs/description/TASKS.md"
     )
 
 
@@ -148,13 +114,7 @@ def split_train_test(
     random_state: int = 42
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, np.ndarray, np.ndarray]:
     """
-    Phân chia Train / Test theo tỷ lệ 80/20 (82.281 train / 20.571 test) làm hàng rào chống rò rỉ dữ liệu.
-
-    Target:
-    - y_train, y_test: np.log1p(Amount) dùng để huấn luyện mô hình ổn định số học
-    - y_train_raw, y_test_raw: Amount gốc tính bằng INR để đối chiếu nghiệm thu thực tế
-
-    Phụ trách chính: Võ Thanh Phú (14%)
+    Phân chia Train / Test theo tỷ lệ 80/20 chống rò rỉ dữ liệu.
 
     Tham số:
         df (pd.DataFrame): DataFrame dữ liệu sau khi trích xuất đặc trưng.
@@ -164,18 +124,9 @@ def split_train_test(
     Trả về:
         Tuple: (X_train, X_test, y_train, y_test, y_train_raw, y_test_raw)
     """
-    # TODO: [Võ Thanh Phú - 14%] Lập trình phân tách Train/Test 80/20:
-    # 1. Định nghĩa feature_cols = [
-    #        'Qty', 'month', 'day_of_week', 'is_promoted', 'is_b2b',
-    #        'Category', 'Size', 'Fulfilment', 'ship-service-level',
-    #        'Courier Status', 'state_grouped'
-    #    ]
-    # 2. Lấy X = df[valid_feature_cols].copy()
-    # 3. Lấy y_raw = df['Amount'].values và y_log = np.log1p(df['Amount'])
-    # 4. Phân chia bằng train_test_split(X, y_log, y_raw, test_size=test_size, random_state=random_state)
-    # 5. Trả về (X_train, X_test, y_train, y_test, y_train_raw, y_test_raw)
+    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú (14%) cần hoàn thiện hàm 'split_train_test' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'split_train_test' theo phân công trong docs/description/TASKS.md"
     )
 
 
@@ -184,11 +135,7 @@ def build_column_transformer(
     categorical_cols: List[str]
 ) -> ColumnTransformer:
     """
-    Thiết lập ColumnTransformer chuẩn scikit-learn:
-    - StandardScaler cho các biến số độc lập
-    - OneHotEncoder(handle_unknown='ignore', sparse_output=False) cho biến phân loại
-
-    Phụ trách chính: Võ Thanh Phú (14%)
+    Thiết lập ColumnTransformer chuẩn scikit-learn (StandardScaler cho biến số, OneHotEncoder cho biến phân loại).
 
     Tham số:
         numeric_cols (List[str]): Danh sách tên cột số.
@@ -197,16 +144,9 @@ def build_column_transformer(
     Trả về:
         ColumnTransformer: Bộ tiền xử lý hoàn chỉnh sẵn sàng ghép vào Pipeline.
     """
-    # TODO: [Võ Thanh Phú - 14%] Lập trình bộ ColumnTransformer:
-    # 1. numeric_transformer = StandardScaler()
-    # 2. categorical_transformer = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
-    # 3. preprocessor = ColumnTransformer(transformers=[
-    #        ('num', numeric_transformer, numeric_cols),
-    #        ('cat', categorical_transformer, categorical_cols)
-    #    ])
-    # 4. Trả về preprocessor
+    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú (14%) cần hoàn thiện hàm 'build_column_transformer' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'build_column_transformer' theo phân công trong docs/description/TASKS.md"
     )
 
 
@@ -218,8 +158,7 @@ def export_train_test_csv(
     output_dir: Union[str, Path]
 ) -> Tuple[Path, Path]:
     """
-    Xuất hai tệp train.csv và test.csv kèm cột Amount thực tế phục vụ mở Excel trực quan.
-    Phụ trách chính: Võ Thanh Phú (14%)
+    Xuất hai tệp train.csv và test.csv kèm cột Amount thực tế phục vụ trực quan hóa và kiểm tra.
 
     Tham số:
         X_train, X_test: DataFrame đặc trưng của tập Train và Test.
@@ -229,27 +168,21 @@ def export_train_test_csv(
     Trả về:
         Tuple[Path, Path]: (đường_dẫn_train_csv, đường_dẫn_test_csv).
     """
-    # TODO: [Võ Thanh Phú - 14%] Lập trình xuất dữ liệu train.csv và test.csv:
-    # 1. Tạo thư mục output_dir nếu chưa có: out_dir = Path(output_dir); out_dir.mkdir(parents=True, exist_ok=True)
-    # 2. Ghép cột Amount: train_df = X_train.copy(); train_df['Amount'] = y_train_raw
-    # 3. Xuất train.csv: train_df.to_csv(out_dir / "train.csv", index=False, encoding='utf-8')
-    # 4. Ghép cột Amount: test_df = X_test.copy(); test_df['Amount'] = y_test_raw
-    # 5. Xuất test.csv: test_df.to_csv(out_dir / "test.csv", index=False, encoding='utf-8')
-    # 6. Trả về (train_path, test_path)
+    # TODO: [Võ Thanh Phú] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
     raise NotImplementedError(
-        "Chưa cài đặt - Võ Thanh Phú (14%) cần hoàn thiện hàm 'export_train_test_csv' theo phân công trong docs/description/TASKS.md"
+        "Chưa cài đặt - Võ Thanh Phú cần hoàn thiện hàm 'export_train_test_csv' theo phân công trong docs/description/TASKS.md"
     )
 
 
 # =============================================================================
-# PHẦN 3: NGUYỄN XUÂN ĐÔNG (TRƯỞNG NHÓM - 16%) — HỖ TRỢ SUY LUẬN DEMO (ĐÃ HOÀN THIỆN)
+# PHẦN 3: NGUYỄN XUÂN ĐÔNG (TRƯỞNG NHÓM) — HỖ TRỢ SUY LUẬN DEMO (ĐÃ HOÀN THIỆN)
 # =============================================================================
 
 def prepare_sample_from_dict(sample_dict: Dict[str, Any]) -> pd.DataFrame:
     """
     Chuẩn bị DataFrame từ thông tin một đơn hàng thô để suy luận thời gian thực.
     Tự động chuẩn hóa casing khớp với OneHotEncoder đã học từ dữ liệu.
-    Tác giả: Nguyễn Xuân Đông (Trưởng nhóm - 16%)
+    Tác giả: Nguyễn Xuân Đông (Trưởng nhóm)
     """
     df_raw = pd.DataFrame([sample_dict])
 
@@ -323,7 +256,7 @@ def load_pipeline_and_splits(
 ) -> Dict[str, Any]:
     """
     Nạp dữ liệu đã chia và đối tượng preprocessor từ đĩa.
-    Tác giả: Nguyễn Xuân Đông (Trưởng nhóm - 16%)
+    Tác giả: Nguyễn Xuân Đông (Trưởng nhóm)
     """
     data_p = Path(data_path)
     if not data_p.exists():

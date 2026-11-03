@@ -21,18 +21,17 @@ Quy trình thực hiện được chia thành 4 Notebooks chuyên sâu:
 
 ---
 
-## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG ĐÓNG GÓP (TỔNG: 100%)
+## 👥 2. THÀNH VIÊN VÀ PHÂN CÔNG ĐÓNG GÓP
 
-| STT | Thành viên | Vai trò | Tỷ lệ | Module / Tệp phụ trách | Sản phẩm nghiệm thu chính |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| **1** | **Nguyễn Xuân Đông** | **Trưởng nhóm** | **16%** | `data/scripts/eda.py`<br>`notebooks/demo.ipynb`<br>`scripts/test_all_components.py` | Quản trị Git, cấu trúc dự án, đơn biến Amount, Demo suy luận và bộ test tự động. |
-| **2** | **Mai An Thịnh** | Thành viên | **14%** | `data/scripts/eda.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Phân tích đa biến, tương quan địa lý/mùa vụ, quét ngoại lai IQR và Bảng kết luận EDA. |
-| **3** | **Nguyễn Minh Nhật** | Thành viên | **14%** | `data/scripts/data_preprocessing.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Lọc đơn hủy, khử rò rỉ dữ liệu, xử lý missing và xuất `clean_amazon_sales.csv` (102.852 dòng). |
-| **4** | **Trương Thành Công** | Thành viên | **14%** | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Trích xuất đặc trưng mùa vụ (`Date`), cờ khuyến mãi (`is_promoted`), khách sỉ (`is_b2b`), Top 10 bang. |
-| **5** | **Võ Thanh Phú** | Thành viên | **14%** | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Tách Train/Test 80/20, quét đa cộng tuyến ($|r| > 0.6$), `ColumnTransformer` (Scaler + OneHot). |
-| **6** | **Võ Khôi Nguyên** | Thành viên | **14%** | `scripts/model_training.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đóng gói Pipeline hồi quy, kiểm định chéo 5-Fold Cross Validation trên tập Train. |
-| **7** | **Mai Hoàng Danh** | Thành viên | **14%** | `scripts/model_evaluation.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đánh giá độc lập 20.571 mẫu Test set (nghịch đảo expm1), Residual Plot, Feature Importances. |
-| **TỔNG** | **7 thành viên** | | **100%** | | **Cả 7 thành viên cùng nghiên cứu & cài đặt 3 thuật toán Scratch thuần NumPy** |
+| STT | Thành viên | Vai trò | Module / Tệp phụ trách | Sản phẩm nghiệm thu chính |
+| :---: | :--- | :--- | :--- | :--- |
+| **1** | **Nguyễn Xuân Đông** | **Trưởng nhóm** | `data/scripts/eda.py`<br>`notebooks/demo.ipynb`<br>`scripts/test_all_components.py` | Quản trị Git, cấu trúc dự án, đơn biến Amount, Demo suy luận và bộ test tự động. |
+| **2** | **Mai An Thịnh** | Thành viên | `data/scripts/eda.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Phân tích đa biến, tương quan địa lý/mùa vụ, quét ngoại lai IQR và Bảng kết luận EDA. |
+| **3** | **Nguyễn Minh Nhật** | Thành viên | `data/scripts/data_preprocessing.py`<br>`notebooks/01_data_cleaning_and_eda.ipynb` | Lọc đơn hủy, khử rò rỉ dữ liệu, xử lý missing và xuất `clean_amazon_sales.csv` (102.852 dòng). |
+| **4** | **Trương Thành Công** | Thành viên | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Trích xuất đặc trưng mùa vụ (`Date`), cờ khuyến mãi (`is_promoted`), khách sỉ (`is_b2b`), Top 10 bang. |
+| **5** | **Võ Thanh Phú** | Thành viên | `scripts/feature_engineering.py`<br>`notebooks/02_feature_engineering_and_pipeline.ipynb` | Tách Train/Test 80/20, quét đa cộng tuyến ($|r| > 0.6$), `ColumnTransformer` (Scaler + OneHot). |
+| **6** | **Võ Khôi Nguyên** | Thành viên | `scripts/model_training.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đóng gói Pipeline hồi quy, kiểm định chéo 5-Fold Cross Validation trên tập Train. |
+| **7** | **Mai Hoàng Danh** | Thành viên | `scripts/model_evaluation.py`<br>`notebooks/03_model_training_evaluation_and_explain.ipynb` | Đánh giá độc lập 20.571 mẫu Test set (nghịch đảo expm1), Residual Plot, Feature Importances. |
 
 ---
 
@@ -79,7 +78,7 @@ Hỗ trợ kiểm tra tính toàn vẹn cú pháp và logic của toàn bộ 8 n
 * **Chạy kiểm thử riêng từng bước theo nhiệm vụ từng thành viên (1–8):**
   ```bash
   python scripts/test_all_components.py --step 1   # Tiền xử lý (Nguyễn Minh Nhật)
-  python scripts/test_all_components.py --step 4   # 3 thuật toán Scratch (Cả 7 thành viên)
+  python scripts/test_all_components.py --step 4   # 3 thuật toán Scratch NumPy (Đã hoàn thiện)
   ```
 * **Chạy kiểm thử toàn bộ hệ thống (Kiểm tra tích hợp):**
   ```bash

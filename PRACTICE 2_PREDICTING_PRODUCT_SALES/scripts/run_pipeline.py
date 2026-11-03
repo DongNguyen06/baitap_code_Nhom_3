@@ -1,7 +1,7 @@
 """
 Kịch bản Tự động hóa Toàn bộ Quy trình Học máy (End-to-End Automated Pipeline)
 Dự án: Practice 2: Predicting Product Sales — Group 3 (Khoa CNTT - UTH)
-Trưởng nhóm điều phối: Nguyễn Xuân Đông (16%)
+Trưởng nhóm điều phối: Nguyễn Xuân Đông
 Thực thi toàn bộ chu trình 4 chặng: Tiền xử lý -> Kỹ thuật đặc trưng -> Huấn luyện 5-Fold CV -> Đánh giá Test & Lưu Artifacts
 """
 from pathlib import Path
@@ -51,9 +51,9 @@ def run_full_pipeline():
     print("=" * 80)
 
     # -------------------------------------------------------------------------
-    # CHẶNG 1: NẠP VÀ LÀM SẠCH DỮ LIỆU THÔ (Nguyễn Minh Nhật - 14%)
+    # CHẶNG 1: NẠP VÀ LÀM SẠCH DỮ LIỆU THÔ (Nguyễn Minh Nhật)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 1/4] Làm sạch dữ liệu và khử trùng lặp (Nguyễn Minh Nhật - 14%)...")
+    print("\n[Chặng 1/4] Làm sạch dữ liệu và khử trùng lặp (Nguyễn Minh Nhật)...")
     raw_csv = BASE_DIR / "data" / "raw" / "Amazon Sale Report.csv"
     clean_csv = BASE_DIR / "data" / "processed" / "clean_amazon_sales.csv"
 
@@ -67,9 +67,9 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & CHIA TẬP (Trương Thành Công & Võ Thanh Phú - 14%)
+    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & CHIA TẬP (Trương Thành Công & Võ Thanh Phú)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 2/4] Trích xuất đặc trưng & ColumnTransformer (Thành Công & Thanh Phú - 14%)...")
+    print("\n[Chặng 2/4] Trích xuất đặc trưng & ColumnTransformer (Thành Công & Thanh Phú)...")
     try:
         t0 = time.time()
         df_feat = extract_domain_features(df_clean)
@@ -109,9 +109,9 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 3: HUẤN LUYỆN VÀ ĐÁNH GIÁ CHÉO 5-FOLD CV (Võ Khôi Nguyên - 14%)
+    # CHẶNG 3: HUẤN LUYỆN VÀ ĐÁNH GIÁ CHÉO 5-FOLD CV (Võ Khôi Nguyên)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 3/4] Huấn luyện mô hình Scratch & 5-Fold CV (Võ Khôi Nguyên - 14%)...")
+    print("\n[Chặng 3/4] Huấn luyện mô hình Scratch & 5-Fold CV (Võ Khôi Nguyên)...")
     try:
         t0 = time.time()
         pipelines = build_training_pipelines(preprocessor)
@@ -126,9 +126,9 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 4: ĐÁNH GIÁ KIỂM THỬ ĐỘC LẬP & LƯU SIÊU DỮ LIỆU (Mai Hoàng Danh - 14%)
+    # CHẶNG 4: ĐÁNH GIÁ KIỂM THỬ ĐỘC LẬP & LƯU SIÊU DỮ LIỆU (Mai Hoàng Danh)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 4/4] Đánh giá kiểm thử Test & Nghịch đảo expm1 (Mai Hoàng Danh - 14%)...")
+    print("\n[Chặng 4/4] Đánh giá kiểm thử Test & Nghịch đảo expm1 (Mai Hoàng Danh)...")
     try:
         t0 = time.time()
         eval_df = evaluate_holdout_test(trained_pipelines, X_test, y_test, y_test_raw)

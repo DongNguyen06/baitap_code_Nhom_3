@@ -1,7 +1,7 @@
 """
 Thuật toán: Random Forest Regressor (From Scratch thuần túy với Bagging & Random Subspace)
 Dự án: Practice 2: Predicting Product Sales — Group 3
-Phân công: Cả 7 thành viên cùng tham gia nghiên cứu cơ sở lý thuyết toán học và cài đặt bằng NumPy thuần túy.
+Cài đặt: Thuần túy bằng Python và NumPy.
 Kế thừa: BaseEstimator, RegressorMixin.
 Đặc tả chi tiết lý thuyết toán học: docs/description/algorithms/random_forest_regressor.md
 """
@@ -9,7 +9,6 @@ from typing import Optional, Union, Dict, Any, List
 import numpy as np
 from scipy import sparse
 from sklearn.base import BaseEstimator, RegressorMixin
-from sklearn.metrics import r2_score
 from .decision_tree import DecisionTreeRegressorScratch
 
 
@@ -17,8 +16,6 @@ class RandomForestRegressorScratch(BaseEstimator, RegressorMixin):
     """
     Rừng ngẫu nhiên hồi quy tự cài đặt bằng NumPy thuần túy.
     Áp dụng học kết hợp Bagging (Bootstrap Aggregation) và Không gian đặc trưng ngẫu nhiên (Random Subspace).
-
-    Nhiệm vụ chung: Cả 7 thành viên cùng tham gia hoàn thiện.
     """
 
     def __init__(
@@ -42,7 +39,7 @@ class RandomForestRegressorScratch(BaseEstimator, RegressorMixin):
         self.random_state = int(random_state)
 
     def get_params(self, deep: bool = True) -> Dict[str, Any]:
-        """Trả về tham số mô hình tương thích scikit-learn."""
+        """Trả về tham số mô hình."""
         return {
             "n_estimators": self.n_estimators,
             "max_depth": self.max_depth,
@@ -55,7 +52,7 @@ class RandomForestRegressorScratch(BaseEstimator, RegressorMixin):
         }
 
     def set_params(self, **params):
-        """Cập nhật tham số mô hình tương thích scikit-learn."""
+        """Cập nhật tham số mô hình."""
         for key, value in params.items():
             setattr(self, key, value)
         return self
@@ -71,43 +68,64 @@ class RandomForestRegressorScratch(BaseEstimator, RegressorMixin):
         return X_mat
 
     def fit(self, X, y):
-        """
-        Huấn luyện Rừng ngẫu nhiên hồi quy:
-        1. Khởi tạo danh sách self.trees_ = []
-        2. Với mỗi cây t = 1..n_estimators:
-           a. Lấy mẫu bootstrap có hoàn lại n_samples dòng từ (X, y) (nếu bootstrap=True)
-           b. Khởi tạo cây con DecisionTreeRegressorScratch với max_features = sqrt(n_features)
-           c. Huấn luyện cây con trên mẫu bootstrap
-           d. Thêm cây vào self.trees_
-        3. Tính toán trọng số đặc trưng trung bình của toàn rừng (self.feature_importances_)
+        """Huấn luyện tập hợp n_estimators cây quyết định hồi quy."""
+        X_mat = self._to_dense(X)
+        y_vec = np.asarray(y, dtype=np.float64).ravel()
+        n_samples, n_features = X_mat.shape
 
-        Nhiệm vụ chung: Cả 7 thành viên cùng tham gia hoàn thiện.
-        """
-        # TODO: [Cả 7 thành viên] Lập trình thuật toán Random Forest Regressor From Scratch:
-        # Xem tài liệu đặc tả toán học tại: docs/description/algorithms/random_forest_regressor.md
-        raise NotImplementedError(
-            "Chưa cài đặt - Cả 7 thành viên cần cùng hoàn thiện thuật toán RandomForestRegressorScratch theo docs/description/algorithms/random_forest_regressor.md"
-        )
+        self.n_features_in_ = n_features
+        self.trees_: List[DecisionTreeRegressorScratch] = []
+        self.rng_ = np.random.RandomState(self.random_state)
 
-    def predict(self, X):
-        """
-        Dự đoán đầu ra bằng cách lấy trung bình cộng dự đoán từ toàn bộ các cây con trong rừng:
-        y_pred = (1 / n_estimators) * sum(tree.predict(X) for tree in trees_)
+        importances_sum = np.zeros(n_features, dtype=np.float64)
 
-        Nhiệm vụ chung: Cả 7 thành viên cùng tham gia hoàn thiện.
-        """
-        if hasattr(self, "trees_") and self.trees_:
-            X_mat = self._to_dense(X)
-            preds = np.array([tree.predict(X_mat) for tree in self.trees_])
-            return np.mean(preds, axis=0)
+        for i in range(self.n_estimators):
+            tree_seed = self.rng_.randint(0, 1_000_000)
 
-        # TODO: [Cả 7 thành viên] Lập trình hàm dự đoán tổng hợp (Bagging aggregation):
-        raise NotImplementedError(
-            "Chưa cài đặt - Cả 7 thành viên cần cùng hoàn thiện hàm predict của RandomForestRegressorScratch"
-        )
+            # Lấy mẫu có hoàn lại (Bootstrap)
+            if self.bootstrap:
+                boot_idx = self.rng_.choice(n_samples, size=n_samples, replace=True)
+                X_b, y_b = X_mat[boot_idx], y_vec[boot_idx]
+            else:
+                X_b, y_b = X_mat, y_vec
 
-    def score(self, X, y):
-        """Hệ số xác định R2 score."""
-        y_pred = self.predict(X)
+            tree = DecisionTreeRegressorScratch(
+                max_depth=self.max_depth,
+                min_samples_split=self.min_samples_split,
+                min_samples_leaf=self.min_samples_leaf,
+                max_features=self.max_features,
+                n_quantiles=self.n_quantiles,
+                random_state=tree_seed
+            )
+            tree.fit(X_b, y_b)
+            self.trees_.append(tree)
+
+            importances_sum += tree.feature_importances_
+
+        # Tính feature importances trung bình của cả rừng
+        tot = np.sum(importances_sum)
+        if tot > 0:
+            self.feature_importances_ = importances_sum / tot
+        else:
+            self.feature_importances_ = np.ones(n_features, dtype=np.float64) / n_features
+
+        return self
+
+    def predict(self, X) -> np.ndarray:
+        """Dự đoán giá trị doanh số thực tế bằng trung bình cộng các cây."""
+        X_mat = self._to_dense(X)
+        if not hasattr(self, "trees_") or len(self.trees_) == 0:
+            raise ValueError("Mô hình chưa được fit!")
+
+        all_preds = np.array([tree.predict(X_mat) for tree in self.trees_])
+        return np.mean(all_preds, axis=0)
+
+    def score(self, X, y) -> float:
+        """Tính hệ số xác định R2."""
         y_true = np.asarray(y, dtype=np.float64).ravel()
-        return float(r2_score(y_true, y_pred))
+        y_pred = self.predict(X)
+        ss_res = np.sum((y_true - y_pred) ** 2)
+        ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
+        if ss_tot == 0:
+            return 1.0 if ss_res == 0 else 0.0
+        return float(1.0 - (ss_res / ss_tot))
