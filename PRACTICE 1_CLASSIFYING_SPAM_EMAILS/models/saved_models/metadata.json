@@ -1,0 +1,122 @@
+{
+  "project_name": "Practice 1: Classifying Spam Emails — Group 3",
+  "team": "Nhóm 3",
+  "created_at": "2026-11-02 20:12:01",
+  "best_model": "Support Vector Machine (Linear SVM)",
+  "test_metrics": {
+    "accuracy_percent": 98.73,
+    "precision_percent": 98.71,
+    "recall_percent": 98.62,
+    "f1_score_percent": 98.67
+  },
+  "models_comparison": [
+    {
+      "Model": "Naive Bayes",
+      "Accuracy (%)": 96.34,
+      "Precision (%)": 99.31,
+      "Recall (%)": 92.96,
+      "F1-Score (%)": 96.03,
+      "FP": 20,
+      "FN": 219
+    },
+    {
+      "Model": "Logistic Regression (L2)",
+      "Accuracy (%)": 97.69,
+      "Precision (%)": 97.05,
+      "Recall (%)": 98.14,
+      "F1-Score (%)": 97.59,
+      "FP": 93,
+      "FN": 58
+    },
+    {
+      "Model": "Support Vector Machine (Linear SVM)",
+      "Accuracy (%)": 98.73,
+      "Precision (%)": 98.71,
+      "Recall (%)": 98.62,
+      "F1-Score (%)": 98.67,
+      "FP": 40,
+      "FN": 43
+    }
+  ],
+  "pipeline_steps": [
+    "preprocessor (ColumnTransformer: TF-IDF + Chi-Square + MinMaxScaler)",
+    "classifier (LinearSVMScratch)"
+  ],
+  "top_15_keywords": [
+    {
+      "rank": 1,
+      "keyword": "prince",
+      "weight": 2.3465
+    },
+    {
+      "rank": 2,
+      "keyword": "bismarck",
+      "weight": 2.2206
+    },
+    {
+      "rank": 3,
+      "keyword": "love",
+      "weight": 1.6532
+    },
+    {
+      "rank": 4,
+      "keyword": "increase",
+      "weight": 1.5531
+    },
+    {
+      "rank": 5,
+      "keyword": "penis",
+      "weight": 1.4861
+    },
+    {
+      "rank": 6,
+      "keyword": "girl",
+      "weight": 1.4119
+    },
+    {
+      "rank": 7,
+      "keyword": "replica",
+      "weight": 1.3743
+    },
+    {
+      "rank": 8,
+      "keyword": "american",
+      "weight": 1.2844
+    },
+    {
+      "rank": 9,
+      "keyword": "cnn",
+      "weight": 1.277
+    },
+    {
+      "rank": 10,
+      "keyword": "life",
+      "weight": 1.2575
+    },
+    {
+      "rank": 11,
+      "keyword": "sex",
+      "weight": 1.2194
+    },
+    {
+      "rank": 12,
+      "keyword": "mexico",
+      "weight": 1.1601
+    },
+    {
+      "rank": 13,
+      "keyword": "men",
+      "weight": 1.1583
+    },
+    {
+      "rank": 14,
+      "keyword": "man",
+      "weight": 1.1342
+    },
+    {
+      "rank": 15,
+      "keyword": "watches",
+      "weight": 1.1308
+    }
+  ]
+}

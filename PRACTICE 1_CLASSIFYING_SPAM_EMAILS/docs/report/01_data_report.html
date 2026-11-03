@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo 01: Khám Phá & Làm Sạch Dữ Liệu — Nhóm 3</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 32px 20px; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .nav-link { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .header { margin-bottom: 32px; }
+        .badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        h1 { font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        h2 { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 10px; }
+        p, li { font-size: 14.5px; color: #334155; margin-bottom: 10px; }
+        ul { padding-left: 20px; margin-bottom: 14px; }
+        .table-wrap { overflow-x: auto; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; color: #475569; font-weight: 600; }
+        .img-box { text-align: center; margin: 20px 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+        .img-box img { max-width: 100%; height: auto; border-radius: 6px; }
+        .img-caption { font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+        .highlight-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-title { font-weight: 700; color: #166534; font-size: 14px; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="index.html" class="nav-link">&larr; Bảng Điều Khiển Tổng Quan</a>
+            <a href="02_feature_pipeline_report.html" class="nav-link">Báo Cáo 02: Kỹ Thuật Đặc Trưng &rarr;</a>
+        </div>
+
+        <div class="header">
+            <span class="badge">CHẶNG 1 / 3 — DATA EXPLORATION & NLP CLEANING</span>
+            <h1>Báo Cáo Khám Phá Dữ Liệu & Làm Sạch Văn Bản</h1>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Phân tích tập dữ liệu thô CEAS_08, xử lý khuyết thiếu, bóc trần thủ thuật ngụy trang và khử trùng lặp (Zero Duplicate Leakage).</p>
+        </div>
+
+        <div class="card">
+            <h2>1. Khảo sát Cấu trúc Bộ Dữ liệu Thô CEAS_08</h2>
+            <p>Bộ dữ liệu gốc được cung cấp từ Hội nghị quốc tế về Chống thư rác (CEAS) gồm <strong>39.154 email</strong> với 7 thuộc tính cơ bản:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Thuộc tính</th><th>Ý nghĩa</th><th>Khuyết thiếu (Null)</th><th>Đánh giá chất lượng</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>sender</code></td><td>Địa chỉ email người gửi</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
+                        <tr><td><code>receiver</code></td><td>Địa chỉ email người nhận</td><td>462 dòng (1.18%)</td><td>Điền giá trị 'unknown'</td></tr>
+                        <tr><td><code>date</code></td><td>Thời điểm gửi thư</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
+                        <tr><td><code>subject</code></td><td>Tiêu đề email</td><td>28 dòng (0.07%)</td><td>Điền chuỗi rỗng '' an toàn</td></tr>
+                        <tr><td><code>body</code></td><td>Nội dung email</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
+                        <tr><td><code>label</code></td><td>Nhãn phân loại (0: Ham, 1: Spam)</td><td>0 dòng</td><td>Biến mục tiêu sạch</td></tr>
+                        <tr><td><code>urls</code></td><td>Có chứa đường dẫn liên kết hay không</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Phân tích Đơn biến (Univariate Analysis)</h2>
+            <p>Khảo sát độc lập 4 thuộc tính cốt lõi để nắm bắt đặc trưng phân bố:</p>
+            <div class="img-box">
+                <img src="../images/eda_01_univariate_analysis.png" alt="Phân tích đơn biến 4 thuộc tính">
+                <div class="img-caption">Hình 1: Tỷ lệ nhãn mục tiêu, sự hiện diện của URL, phân phối độ dài tiêu đề và Top người gửi.</div>
+            </div>
+            <ul>
+                <li><strong>Phân bố nhãn ở tập dữ liệu thô:</strong> Thư rác (Spam - 1) chiếm <strong>55.8%</strong> (21.842 email) và Thư thường (Ham - 0) chiếm <strong>44.2%</strong> (17.312 email). Tỷ lệ phân bố khá đồng đều, không bị mất cân bằng mẫu cực đoan, không cần áp dụng kỹ thuật bù trừ nhân tạo (SMOTE).</li>
+                <li><strong>Đường link (URL) không phải tín hiệu duy nhất:</strong> Khoảng <strong>67.0%</strong> email thô có chứa liên kết URL (26.233 email). Tỷ lệ xuất hiện URL ở thư thường (53.8%) và thư rác (56.8%) xấp xỉ nhau (chênh lệch &lt; 3%), cho thấy chỉ dựa vào URL là không đủ để nhận diện spam.</li>
+                <li><strong>Người gửi:</strong> Địa chỉ gửi lặp lại nhiều nhất chủ yếu đến từ Gmail (<code>gmail.com&gt;</code>), các tài khoản khuyết danh (<code>unknown</code>) và các hệ thống phát triển mã nguồn mở (<code>python.org&gt;</code>, <code>issues.apache.org</code>).</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>3. Phân tích Đa biến, Phân phối Độ dài & Ngoại lai IQR</h2>
+            <p>So sánh tương quan giữa độ dài văn bản với hành vi phát tán thư rác:</p>
+            <div class="img-box">
+                <img src="../images/eda_02_length_distribution_boxplot.png" alt="Phân phối độ dài và ngoại lai">
+                <div class="img-caption">Hình 2: Biểu đồ Boxplot so sánh độ dài tiêu đề và Log(Độ dài nội dung) giữa Ham và Spam.</div>
+            </div>
+            <ul>
+                <li><strong>Tiêu đề:</strong> Thư thường có xu hướng tiêu đề dài và chi tiết hơn (trung vị 45 ký tự) so với thư rác (trung vị 27 ký tự).</li>
+                <li><strong>Nội dung:</strong> Độ dài nội dung email bị lệch phải cực đoan. Phát hiện <strong>14.36% email ngoại lai siêu dài</strong> (&gt; 3.000 ký tự). Kẻ phát tán thư rác cố tình chèn văn bản dài vô nghĩa nhằm làm loãng từ khóa để đánh lừa bộ lọc xác suất (<em>Bayesian Poisoning</em>). Kỹ thuật cần dùng là nén hàm logarit <code>log1p</code> thay vì xóa bỏ.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>4. Làm Sạch Văn Bản NLP & Khử Trùng Lặp (Zero Duplicate Leakage)</h2>
+            <div class="highlight-box">
+                <div class="highlight-title">✓ Phát Hiện Quan Trọng: Thủ Thuật Ngụy Trang Của Giới Phát Tán Thư Rác</div>
+                <p style="margin: 0;">Khi so khớp toàn bộ cột thô ban đầu, tỷ lệ trùng lặp bằng 0. Tuy nhiên, spammer sử dụng kỹ thuật chèn ngẫu nhiên mã HTML ẩn và đổi tham số URL động. Khi hàm <code>clean_text</code> lột bỏ toàn bộ thẻ HTML và URL, hàng nghìn bức thư giống hệt nhau lộ diện.</p>
+            </div>
+            <p><strong>Kết quả xử lý:</strong></p>
+            <ul>
+                <li>Hàm <code>clean_text</code>: Giải mã ký tự HTML unescape, xóa thẻ HTML <code>&lt;...&gt;</code>, xóa link HTTP/HTTPS, xóa ký tự đặc biệt, chuyển chữ thường và lọc từ dừng Stopwords tiếng Anh.</li>
+                <li><strong>Nguyên tắc Zero Duplicate Leakage:</strong> Đã loại bỏ triệt để <strong>6.494 mẫu email trùng lặp nội dung sạch</strong>, ngăn chặn hoàn toàn nguy cơ rò rỉ dữ liệu giữa tập huấn luyện và kiểm thử.</li>
+                <li><strong>Dữ liệu bàn giao:</strong> Xuất thành công <strong>32.660 email sạch</strong> sang tệp <code>data/processed/clean_emails.csv</code> phục vụ Chặng 2. Sau khi lột sạch lớp ngụy trang trùng lặp, tỷ lệ nhãn đạt trạng thái cân bằng tự nhiên lý tưởng: <strong>Ham 52.3%</strong> (17.094 email) và <strong>Spam 47.7%</strong> (15.566 email).</li>
+            </ul>
+        </div>
+
+        <div style="text-align: right; margin-top: 24px;">
+            <a href="02_feature_pipeline_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 02 — Kỹ Thuật Đặc Trưng & Pipeline &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>
+
