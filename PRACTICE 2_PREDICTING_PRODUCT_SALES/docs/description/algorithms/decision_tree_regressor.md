@@ -2,12 +2,12 @@
 
 ### 1. Mục tiêu
 * Giải quyết bài toán **hồi quy phi tuyến tính**: Dự đoán giá trị số thực liên tục $y$ bằng cách chia nhỏ không gian dữ liệu phức tạp thành các vùng độc lập đơn giản.
-* Tạo ra mô hình có tính minh bạch và trực quan cao nhất trong Machine Learning: toàn bộ quá trình suy luận giống hệt như một sơ đồ cây các câu hỏi điều kiện "Nếu ... thì ..." (If-Else), giúp con người dễ dàng hiểu rõ lý do vì sao mô hình đưa ra con số dự đoán đó.
+* Tạo ra mô hình có tính minh bạch và trực quan cao nhất trong Machine Learning: toàn bộ quá trình suy luận giống hệt như một sơ đồ cây các câu hỏi điều kiện, giúp dễ dàng hiểu rõ lý do vì sao mô hình đưa ra con số dự đoán đó.
 
 ### 2. Input / Output
 * **Đầu vào (Input):** Bảng dữ liệu chứa các vector đặc trưng số $x = (x_1, x_2, \dots, x_n)$ và giá trị mục tiêu liên tục $y \in \mathbb{R}$.
 * **Đầu ra (Output):** Con số dự đoán cụ thể $\hat{y}$ (chính là giá trị trung bình cộng của các mẫu rơi vào cùng một nút lá).
-* **Tham số mô hình học:** Cấu trúc rẽ nhánh của cây (các cặp thuộc tính và ngưỡng phân tách: $x_j \le s$) cùng giá trị dự đoán tại từng nút lá $\bar{y}_{\text{leaf}}$.
+* **Tham số mô hình học:** Cấu trúc rẽ nhánh của cây cùng giá trị dự đoán tại từng nút lá $\bar{y}_{\text{leaf}}$.
 
 ### 3. Evaluation Metrics / Criteria (Tiêu chí & Độ đo)
 * **Tiêu chí tối ưu (Splitting Criterion):** 

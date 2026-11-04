@@ -2,7 +2,7 @@
 
 ### 1. Mục tiêu
 * Giải quyết bài toán **hồi quy dữ liệu bảng phức tạp**, khắc phục triệt để nhược điểm bất ổn định và dễ học vẹt của một cây quyết định đơn lẻ.
-* Áp dụng tư tưởng **học kết hợp (Ensemble Learning - Bagging)**: "Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao". Bằng cách tổng hợp ý kiến từ hàng chục cây quyết định mọc độc lập trên các góc nhìn dữ liệu ngẫu nhiên khác nhau, mô hình triệt tiêu phương sai (variance), mang lại kết quả dự đoán cực kỳ ổn định và chính xác.
+* Áp dụng **học kết hợp (Ensemble Learning - Bagging)**: Bằng cách tổng hợp ý kiến từ hàng chục cây quyết định mọc độc lập trên các góc nhìn dữ liệu ngẫu nhiên khác nhau, mô hình triệt tiêu phương sai (variance), mang lại kết quả dự đoán cực kỳ ổn định và chính xác.
 
 ### 2. Input / Output
 * **Đầu vào (Input):** Bảng dữ liệu chứa các vector đặc trưng số $x = (x_1, x_2, \dots, x_n)$ và giá trị mục tiêu liên tục $y \in \mathbb{R}$.

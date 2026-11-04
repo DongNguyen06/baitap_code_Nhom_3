@@ -37,7 +37,7 @@
 | Thành phần | Lựa chọn kỹ thuật trong dự án | Lý do lựa chọn |
 | :--- | :--- | :--- |
 | **Thư viện cốt lõi** | `numpy`, `pandas`, `scikit-learn`, `joblib`, `matplotlib`, `seaborn` | Bộ công cụ chuẩn mực cho tiền xử lý, tính toán ma trận và trực quan hóa. |
-| **3 Thuật toán Scratch** | 1. Multinomial Naive Bayes (Laplace $\alpha$)<br>2. Logistic Regression (L2 Regularization $C$)<br>3. Linear SVM (Hinge Loss, Pegasos $C$) | Tự code bằng NumPy để hiểu bản chất thuật toán. |
+| **3 Thuật toán Scratch** | 1. Multinomial Naive Bayes <br>2. Logistic Regression <br>3. Linear SVM  | Tự code bằng NumPy để hiểu bản chất thuật toán. |
 | **Thước đo đánh giá** | Accuracy, Precision, Recall, F1-Score & Ma trận nhầm lẫn (Confusion Matrix) | Đánh giá toàn diện năng lực nhận diện spam và đo đếm chính xác số ca bắt nhầm (FP). |
 | **Tiêu chí chọn Best Model** | Mô hình có **F1-Score cao nhất** kết hợp **Precision cao** (hạn chế tối đa FP) | Cân bằng hoàn hảo giữa khả năng bắt thư rác và độ an toàn cho thư thường. |
 

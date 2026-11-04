@@ -97,11 +97,28 @@ def export_model_artifacts(model_or_dict, test_results: list, top15_df: pd.DataF
     best_display_name = model_name_map.get(best_metrics["Mô hình"], best_metrics["Mô hình"])
     clf_class_name = best_model.named_steps["classifier"].__class__.__name__
 
+    # Trích xuất siêu tham số tối ưu của mô hình quán quân
+    best_params = {}
+    try:
+        clf_params = best_model.named_steps["classifier"].get_params()
+        for k, v in clf_params.items():
+            if isinstance(v, (int, float, str, bool)) or v is None:
+                best_params[f"classifier__{k}"] = v
+        if "preprocessor" in best_model.named_steps:
+            prep = best_model.named_steps["preprocessor"]
+            if hasattr(prep, "named_transformers_") and "text" in prep.named_transformers_:
+                text_pipe = prep.named_transformers_["text"]
+                if hasattr(text_pipe, "named_steps") and "select" in text_pipe.named_steps:
+                    best_params["preprocessor__text__select__k"] = text_pipe.named_steps["select"].k
+    except Exception:
+        pass
+
     metadata = {
         "project_name": "Practice 1: Classifying Spam Emails — Group 3",
         "team": "Nhóm 3",
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "best_model": best_display_name,
+        "best_params": best_params,
         "test_metrics": {
             "accuracy_percent": best_metrics["Accuracy (%)"],
             "precision_percent": best_metrics["Precision (%)"],

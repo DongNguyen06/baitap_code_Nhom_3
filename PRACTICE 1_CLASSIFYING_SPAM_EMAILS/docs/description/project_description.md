@@ -28,10 +28,9 @@ Phân loại nhị phân trên văn bản: xác định một email là Spam (1)
 
 ## 7. Algorithm / Evaluation
 - **Thuật toán:** Tự cài đặt 3 thuật toán From Scratch bằng NumPy:
-  1. *Multinomial Naive Bayes* (làm mượt Laplace $\alpha$).
-  2. *Logistic Regression* (tối ưu Gradient Descent với chuẩn hóa L2 hệ số $C$).
-  3. *Linear SVM* (tối ưu Pegasos Hinge Loss với hệ số phạt $C$, kết hợp hiệu chuẩn khoảng cách ra xác suất).
-  * Tinh chỉnh siêu tham số tối ưu bằng GridSearchCV kết hợp 5-Fold Stratified Cross-Validation.
+  1. *Multinomial Naive Bayes*.
+  2. *Logistic Regression*.
+  3. *Linear SVM*.
 - **Chia dữ liệu:** Phân tách Train/Test theo tỷ lệ 80/20 có phân tầng (`stratify=y`, `random_state=42`) bảo toàn cấu trúc nhãn, lưu cả dạng trực quan `.csv` và nạp nhanh `.joblib`.
 - **Đánh giá:** Accuracy, Precision, Recall, F1-Score và Ma trận nhầm lẫn (Confusion Matrix); đặt trọng tâm kiểm soát Precision và F1-Score để giảm thiểu tối đa số ca bắt nhầm thư thường (False Positive $\le 50$).
 - **Tiêu chí nghiệm thu:** Cả 3 mô hình đạt $\text{Accuracy, Precision, F1} \ge 95\%$ trên tập test

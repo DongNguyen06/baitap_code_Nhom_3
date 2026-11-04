@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo 01: Khám Phá & Làm Sạch Dữ Liệu — Nhóm 3</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1050px; margin: 0 auto; padding: 32px 20px; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .nav-link { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .header { margin-bottom: 32px; }
+        .badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        h1 { font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        h2 { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 10px; }
+        p, li { font-size: 14.5px; color: #334155; margin-bottom: 10px; }
+        ul { padding-left: 20px; margin-bottom: 14px; }
+        .table-wrap { overflow-x: auto; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; color: #475569; font-weight: 600; white-space: nowrap; }
+        .img-box { text-align: center; margin: 20px 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+        .img-box img { max-width: 100%; height: auto; border-radius: 6px; }
+        .img-caption { font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+        .highlight-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin: 16px 0; }
+        .highlight-title { font-weight: 700; color: #166534; font-size: 14px; margin-bottom: 6px; }
+        .tag-drop { display: inline-block; padding: 2px 6px; background: #fee2e2; color: #991b1b; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .tag-filter { display: inline-block; padding: 2px 6px; background: #fef3c7; color: #92400e; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .tag-impute { display: inline-block; padding: 2px 6px; background: #e0e7ff; color: #3730a3; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .tag-fe { display: inline-block; padding: 2px 6px; background: #dcfce7; color: #166534; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .tag-target { display: inline-block; padding: 2px 6px; background: #fae8ff; color: #86198f; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="index.html" class="nav-link">&larr; Bảng Điều Khiển Tổng Quan</a>
+            <a href="02_feature_pipeline_report.html" class="nav-link">Báo Cáo 02: Kỹ Thuật Đặc Trưng &rarr;</a>
+        </div>
+
+        <div class="header">
+            <span class="badge">CHẶNG 1 / 3 — DATA EXPLORATION & CLEANING</span>
+            <h1>Báo Cáo Khám Phá Dữ Liệu & Tiền Xử Lý</h1>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Khảo sát toàn diện 24 thuộc tính của 128.975 dòng Amazon Sale Report, phân tích đơn biến Amount, phân tích đa biến, quét ngoại lai IQR và khử trùng lặp (Zero Duplicate Leakage).</p>
+        </div>
+
+        <!-- MỤC 1: KHẢO SÁT CẤU TRÚC 24 THUỘC TÍNH THÔ -->
+        <div class="card">
+            <h2>1. Khảo sát Cấu trúc Bộ Dữ liệu Thô Amazon Sale Report</h2>
+            <p>Bộ dữ liệu gốc gồm <strong>128.975 đơn hàng</strong> với <strong>24 thuộc tính</strong> thông tin giao dịch tại sàn thương mại điện tử Amazon Ấn Độ:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên thuộc tính</th>
+                            <th>Kiểu dữ liệu (dtype)</th>
+                            <th>Khuyết thiếu (Null)</th>
+                            <th>Ý nghĩa kinh doanh</th>
+                            <th>Đánh giá sơ bộ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td><code>index</code></td><td>int64</td><td>0 dòng (0.00%)</td><td>Chỉ số dòng bản ghi ban đầu</td><td>Định danh thuần túy, không có giá trị học máy</td></tr>
+                        <tr><td>2</td><td><code>Order ID</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Mã định danh đơn hàng duy nhất</td><td>Định danh riêng lẻ, không mang tính quy luật</td></tr>
+                        <tr><td>3</td><td><code>Date</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Ngày phát sinh giao dịch (MM-DD-YY)</td><td>Đầy đủ 100%, phục vụ trích xuất tháng và thứ trong tuần</td></tr>
+                        <tr><td>4</td><td><code>Status</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Trạng thái giao hàng (Shipped, Cancelled,...)</td><td>Chứa 18.332 đơn hủy cần loại bỏ để tránh méo mó doanh số</td></tr>
+                        <tr><td>5</td><td><code>Fulfilment</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Kênh hoàn tất (Merchant vs Amazon FBA)</td><td>Phân loại nhị phân rõ rệt chi phối mạnh đến doanh thu</td></tr>
+                        <tr><td>6</td><td><code>Sales Channel</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Kênh bán hàng (100% Amazon.in)</td><td>Phương sai bằng 0, không có giá trị phân biệt</td></tr>
+                        <tr><td>7</td><td><code>ship-service-level</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Gói vận chuyển (Standard vs Expedited)</td><td>Hai cấp độ vận chuyển, đặc trưng phân loại quan trọng</td></tr>
+                        <tr><td>8</td><td><code>Style</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Mã kiểu dáng thiết kế trang phục</td><td>Hơn 1.300 kiểu dáng rời rạc, gây bùng nổ số chiều</td></tr>
+                        <tr><td>9</td><td><code>SKU</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Mã quản lý tồn kho chi tiết (Stock Keeping Unit)</td><td>Hơn 7.000 mã đơn lẻ, phương sai cá biệt quá cao</td></tr>
+                        <tr><td>10</td><td><code>Category</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Ngành hàng sản phẩm (Set, Kurta, Top,...)</td><td>9 nhóm ngành hàng chủ lực, phân khúc giá rất rõ ràng</td></tr>
+                        <tr><td>11</td><td><code>Size</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Kích cỡ trang phục (S, M, L, XL, XXL, Free,...)</td><td>Đặc trưng phân loại kích cỡ tiêu chuẩn</td></tr>
+                        <tr><td>12</td><td><code>ASIN</code></td><td>object</td><td>0 dòng (0.00%)</td><td>Mã sản phẩm chuẩn toàn cầu của Amazon</td><td>Định danh sản phẩm cá biệt, tương tự SKU</td></tr>
+                        <tr><td>13</td><td><code>Courier Status</code></td><td>object</td><td>6.872 dòng (5.33%)</td><td>Trạng thái bàn giao đơn vị vận chuyển</td><td>Cần điền giá trị mặc định 'Unshipped'</td></tr>
+                        <tr><td>14</td><td><code>Qty</code></td><td>int64</td><td>0 dòng (0.00%)</td><td>Số lượng sản phẩm trong đơn</td><td>Biến số lượng quan trọng chi phối trực tiếp doanh số</td></tr>
+                        <tr><td>15</td><td><code>currency</code></td><td>object</td><td>7.795 dòng (6.04%)</td><td>Đơn vị tiền tệ giao dịch (INR)</td><td>100% là đồng Rupee Ấn Độ khi có giá trị (phương sai 0)</td></tr>
+                        <tr><td>16</td><td><code>Amount</code></td><td>float64</td><td>7.795 dòng (6.04%)</td><td><strong>Biến mục tiêu: Doanh số thực nhận (INR)</strong></td><td>Phân phối lệch phải, chứa ngoại lai đơn hàng lớn</td></tr>
+                        <tr><td>17</td><td><code>ship-city</code></td><td>object</td><td>33 dòng (0.03%)</td><td>Thành phố giao hàng</td><td>Hơn 1.000 thành phố phân mảnh vi mô, dễ gây quá khớp</td></tr>
+                        <tr><td>18</td><td><code>ship-state</code></td><td>object</td><td>33 dòng (0.03%)</td><td>Bang giao hàng tại Ấn Độ</td><td>Điền Mode, gom Top 10 bang lớn chiếm > 75% doanh số</td></tr>
+                        <tr><td>19</td><td><code>ship-postal-code</code></td><td>float64</td><td>33 dòng (0.03%)</td><td>Mã bưu cục giao nhận</td><td>Mã số địa phương vi mô, không có tính khái quát</td></tr>
+                        <tr><td>20</td><td><code>ship-country</code></td><td>object</td><td>33 dòng (0.03%)</td><td>Quốc gia giao nhận (100% IN - Ấn Độ)</td><td>Phương sai bằng 0, không có tính năng phân biệt</td></tr>
+                        <tr><td>21</td><td><code>promotion-ids</code></td><td>object</td><td>49.153 dòng (38.11%)</td><td>Chuỗi mã khuyến mãi áp dụng cho đơn hàng</td><td>Điền 'No_Promotion', tạo cờ nhị phân có khuyến mãi hay không</td></tr>
+                        <tr><td>22</td><td><code>B2B</code></td><td>bool</td><td>0 dòng (0.00%)</td><td>Khách hàng doanh nghiệp sỉ (True) hay lẻ (False)</td><td>Đặc trưng nhị phân quan trọng nhận diện đơn hàng lớn</td></tr>
+                        <tr><td>23</td><td><code>fulfilled-by</code></td><td>object</td><td>89.698 dòng (69.55%)</td><td>Đơn vị vận chuyển nhánh phụ (Easy Ship)</td><td>Khuyết thiếu nặng gần 70%, thông tin đã nằm ở Fulfilment</td></tr>
+                        <tr><td>24</td><td><code>Unnamed: 22</code></td><td>object</td><td>49.050 dòng (38.03%)</td><td>Cột rác sinh ra do lỗi xuất tệp CSV dư dấu phẩy</td><td>Cột rác kỹ thuật 100%, bắt buộc loại bỏ</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MỤC 2: PHÂN TÍCH ĐƠN BIẾN AMOUNT -->
+        <div class="card">
+            <h2>2. Phân tích Đơn biến Biến Mục tiêu Amount & Lợi ích của Biến đổi Log</h2>
+            <p>Khảo sát biến mục tiêu <code>Amount</code> để nắm bắt đặc trưng phân bố và độ lệch:</p>
+            <div class="img-box">
+                <img src="../images/eda_01_amount_distribution.png" alt="Phân phối Amount trước và sau biến đổi Log1p">
+                <div class="img-caption">Hình 1.1: Đối chiếu phân phối doanh số Amount thô (trái, Skewness = 0.89) và sau biến đổi log1p (phải, Skewness = -0.32).</div>
+            </div>
+            <ul>
+                <li><strong>Phân bố lệch phải (Right-Skewed):</strong> Trung bình doanh số đạt <strong>648.56 INR</strong> cao hơn đáng kể so với trung vị <strong>605.00 INR</strong>. Hệ số độ lệch Skewness đạt <strong>0.89</strong> do sự xuất hiện của các đơn hàng giá trị cao kéo dài về phía đuôi phải.</li>
+                <li><strong>Biến đổi $\ln(1 + \text{Amount})$ đưa về phân phối chuẩn:</strong> Khi áp dụng hàm logarit tự nhiên, độ lệch được nén về mức <strong>-0.32</strong> (gần 0), đồ thị trở nên đối xứng và hình chuông chuẩn mực. Điều này giúp loại bỏ nguy cơ các giá trị cực đại bóp méo nghiệm OLS của mô hình Linear Regression.</li>
+            </ul>
+        </div>
+
+        <!-- MỤC 3: PHÂN TÍCH ĐA BIẾN & QUÉT NGOẠI LAI IQR -->
+        <div class="card">
+            <h2>3. Phân tích Đa biến, Phân khúc Ngành hàng & Quét Ngoại lai IQR</h2>
+            <p>Khảo sát doanh số theo các nhóm thuộc tính chính và kiểm định ngoại lai thống kê:</p>
+            
+            <div class="img-box">
+                <img src="../images/eda_02_bivariate_category_fulfilment.png" alt="Doanh số theo Ngành hàng và Kênh hoàn tất">
+                <div class="img-caption">Hình 1.2: Doanh số tích lũy theo Top ngành hàng (trái) và Phân bổ doanh số theo Kênh hoàn tất Fulfilment (phải).</div>
+            </div>
+            <ul>
+                <li><strong>Phân khúc ngành hàng:</strong> Ngành hàng <strong>Set</strong> (bộ trang phục) và <strong>Kurta</strong> thống trị sàn với tổng doanh thu chiếm hơn <strong>70%</strong> toàn bộ nền tảng. Giá bán trung vị của Set đạt trên 700 INR, trong khi Kurta dao động quanh 450 - 500 INR.</li>
+                <li><strong>Kênh hoàn tất (Fulfilment):</strong> Kênh Amazon FBA (giao từ kho Amazon) mang lại doanh thu áp đảo so với Merchant (người bán tự đóng gói), phản ánh mức độ tín nhiệm cao hơn của khách hàng đối với dịch vụ giao hàng nhanh của sàn.</li>
+            </ul>
+
+            <div class="img-box">
+                <img src="../images/eda_03_outliers_boxplot.png" alt="Biểu đồ Boxplot quét ngoại lai Amount theo IQR">
+                <div class="img-caption">Hình 1.3: Biểu đồ Boxplot xác định ngưỡng ngoại lai trên (Upper Bound) theo nguyên tắc IQR.</div>
+            </div>
+            <ul>
+                <li><strong>Thông số IQR:</strong> Khoảng tứ phân vị đạt $IQR = Q_3 - Q_1 = 788.0 - 449.0 = 339.0\text{ INR}$.</li>
+                <li><strong>Ngưỡng ngoại lai trên:</strong> $Q_3 + 1.5 \times IQR = 788.0 + 1.5 \times 339.0 = 1.296,50\text{ INR}$.</li>
+                <li><strong>Bản chất nghiệp vụ của ngoại lai:</strong> Có <strong>3.600 đơn hàng</strong> (2.97%) vượt ngưỡng 1.296,50 INR. Đối chiếu với cờ <code>B2B</code> và số lượng <code>Qty</code>, đây là các đơn hàng mua sỉ hợp lệ hoặc set thời trang cao cấp; do đó nhóm **giữ lại và nén logarit** thay vì xóa bỏ thô bạo.</li>
+            </ul>
+        </div>
+
+        <!-- MỤC 4: BẢNG TỔNG KẾT ĐỊNH HƯỚNG KỸ THUẬT SAU EDA (GIỐNG PRACTICE 1) -->
+        <div class="card">
+            <h2>4. Bảng Tổng Kết Quyết Định Kỹ Thuật Sau EDA (Actionable Insights)</h2>
+            <p>Từ các bằng chứng thực nghiệm thu được qua EDA, nhóm thiết lập bảng quy tắc xử lý dứt khoát cho toàn bộ 24 thuộc tính trước khi đưa vào dây chuyền huấn luyện:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nhóm hành động</th>
+                            <th>Số lượng</th>
+                            <th>Danh sách thuộc tính</th>
+                            <th>Căn cứ thực nghiệm EDA & Giải pháp xử lý</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="tag-drop">LOẠI BỎ (DROP)</span></td>
+                            <td><strong>12 cột</strong></td>
+                            <td><code>index</code>, <code>Order ID</code>, <code>ASIN</code>, <code>SKU</code>, <code>Style</code>, <code>Sales Channel</code>, <code>currency</code>, <code>ship-country</code>, <code>ship-city</code>, <code>ship-postal-code</code>, <code>fulfilled-by</code>, <code>Unnamed: 22</code></td>
+                            <td>Loại bỏ cột định danh cá biệt, cột có phương sai bằng 0 (chỉ 1 giá trị duy nhất), cột phân mảnh địa lý vi mô (> 1.000 thành phố gây quá khớp) và cột rác kỹ thuật.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-filter">LỌC BẢN GHI (FILTER)</span></td>
+                            <td><strong>3 cột</strong></td>
+                            <td><code>Status</code>, <code>Amount</code>, <code>Qty</code></td>
+                            <td>Loại bỏ 18.332 đơn hủy (<code>Cancelled</code>) và các đơn có <code>Amount &le; 0</code> hoặc <code>Qty &le; 0</code> để tránh nhiễu thông tin doanh thu rác.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-impute">ĐIỀN KHUYẾT (IMPUTE)</span></td>
+                            <td><strong>3 cột</strong></td>
+                            <td><code>promotion-ids</code>, <code>Courier Status</code>, <code>ship-state</code></td>
+                            <td>Điền <code>'No_Promotion'</code> cho khuyến mãi trống; điền <code>'Unshipped'</code> cho vận chuyển; điền giá trị xuất hiện nhiều nhất (Mode) cho 33 dòng bang khuyết.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-target">BIẾN ĐỔI MỤC TIÊU</span></td>
+                            <td><strong>1 cột</strong></td>
+                            <td><code>Amount</code></td>
+                            <td>Biến đổi $\ln(1 + \text{Amount})$ nhằm bảo toàn các đơn hàng giá trị cao (B2B sỉ) và đưa phân phối lệch phải (Skew 0.89) về phân phối chuẩn đối xứng (Skew -0.32).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="tag-fe">FEATURE ENGINEERING</span></td>
+                            <td><strong>5 cột</strong></td>
+                            <td><code>Date</code>, <code>B2B</code>, <code>promotion-ids</code>, <code>ship-state</code>, <code>Category</code>, <code>Fulfilment</code></td>
+                            <td>Bóc tách mùa vụ tháng (<code>month</code>), chu kỳ tuần (<code>day_of_week</code>), cờ bán sỉ (<code>is_b2b</code>), cờ khuyến mãi (<code>is_promoted</code>) và gom Top 10 bang lớn + 'Other'.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MỤC 5: NGHIỆM THU TIỀN XỬ LÝ (ZERO DUPLICATE LEAKAGE) -->
+        <div class="card">
+            <h2>5. Nghiệm Thu Tiền Xử Lý (Zero Duplicate Leakage)</h2>
+            <div class="highlight-box">
+                <div class="highlight-title">✓ NGUYÊN TẮC ZERO DUPLICATE LEAKAGE ĐẠT CHUẨN 100%:</div>
+                <p>• <strong>Loại bỏ 26.123 dòng rác & nhiễu:</strong> Bao gồm toàn bộ 18.332 đơn hàng bị hủy, các đơn thiếu biến mục tiêu và các bản ghi trùng lặp kỹ thuật.<br>
+                • <strong>Làm sạch triệt để:</strong> Tệp sạch hoàn toàn không còn bất kỳ ô trống (NaN) nào trên toàn bộ bảng dữ liệu.<br>
+                • <strong>Dữ liệu bàn giao:</strong> Xuất thành công <strong>102.852 đơn hàng chuẩn mực</strong> sang tệp <code>data/processed/clean_amazon_sales.csv</code> sẵn sàng cho Chặng 2.</p>
+            </div>
+        </div>
+
+        <div style="text-align: right; margin-top: 24px;">
+            <a href="02_feature_pipeline_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 02 — Kỹ Thuật Đặc Trưng & Pipeline &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

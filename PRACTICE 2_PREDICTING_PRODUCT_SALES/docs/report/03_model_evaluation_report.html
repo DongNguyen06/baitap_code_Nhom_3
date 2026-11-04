@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo 03: Huấn Luyện & Đánh Giá Mô Hình — Nhóm 3</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --champion: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 32px 20px; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .nav-link { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .header { margin-bottom: 32px; }
+        .badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
+        h1 { font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        h2 { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 10px; }
+        p, li { font-size: 14.5px; color: #334155; margin-bottom: 10px; }
+        ul { padding-left: 20px; margin-bottom: 14px; }
+        .table-wrap { overflow-x: auto; margin: 16px 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: #f1f5f9; color: #475569; font-weight: 600; }
+        tr.champion-row { background: #fefce8; font-weight: 600; }
+        tr.champion-row td { color: #854d0e; }
+        .img-box { text-align: center; margin: 20px 0; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+        .img-box img { max-width: 100%; height: auto; border-radius: 6px; }
+        .img-caption { font-size: 13px; color: var(--text-muted); margin-top: 8px; font-style: italic; }
+        .highlight-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 18px; margin: 16px 0; }
+        .highlight-title { font-weight: 700; color: #b45309; font-size: 15px; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="02_feature_pipeline_report.html" class="nav-link">&larr; Báo Cáo 02: Kỹ Thuật Đặc Trưng</a>
+            <a href="index.html" class="nav-link">Quay Lại Bảng Điều Khiển Tổng Quan &rarr;</a>
+        </div>
+
+        <div class="header">
+            <span class="badge">CHẶNG 3 / 3 — MODEL TRAINING & EVALUATION</span>
+            <h1>Báo Cáo Huấn Luyện & Đánh Giá Mô Hình Toàn Diện</h1>
+            <p style="color: var(--text-muted); font-size: 14.5px;">Bản chất toán học 3 thuật toán Scratch NumPy, kiểm định chéo 5-Fold CV, đánh giá độc lập Test set 20.571 mẫu, Residual Plot và Top 15 đặc trưng quan trọng.</p>
+        </div>
+
+        <div class="card">
+            <h2>1. Kiến Trúc 3 Thuật Toán Tự Cài Đặt (From Scratch thuần túy NumPy)</h2>
+            <ul>
+                <li><strong>Linear Regression (Scratch):</strong> Nghiệm đóng OLS Normal Equation kèm điều chuẩn Ridge L2: $\mathbf{\theta} = (\mathbf{X}^T \mathbf{X} + \lambda \mathbf{I})^{-1} \mathbf{X}^T \mathbf{y}$. Tốc độ ma trận cực nhanh.</li>
+                <li><strong>Decision Tree Regressor (Scratch):</strong> Tối ưu hóa nhát cắt giảm phương sai MSE kết hợp Phân vị (Quantile Splits 20 mốc) giúp huấn luyện 82.281 mẫu chỉ trong vài giây.</li>
+                <li><strong>Random Forest Regressor (Scratch):</strong> Học kết hợp Ensemble Bagging và Không gian đặc trưng ngẫu nhiên (Random Subspace) lấy mẫu có hoàn lại.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>2. Kết Quả Kiểm Định Chéo 5-Fold Cross Validation (Tập Train)</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Mô hình</th><th>CV R² (Mean)</th><th>CV R² (Std)</th><th>CV RMSE (Mean)</th><th>CV RMSE (Std)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Linear Regression</td><td>0.5475</td><td>± 0.0109</td><td>0.2593</td><td>± 0.0027</td></tr>
+                        <tr><td>Decision Tree Regressor</td><td>0.5413</td><td>± 0.0096</td><td>0.2610</td><td>± 0.0025</td></tr>
+                        <tr class="champion-row"><td><strong>Random Forest Regressor 🏆</strong></td><td><strong>0.5484</strong></td><td><strong>± 0.0092</strong></td><td><strong>0.2590</strong></td><td><strong>± 0.0021</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>Ghi chú: Random Forest dẫn đầu với độ lệch chuẩn nhỏ nhất (± 0.0092), chứng minh tính ổn định vượt trội khi kết hợp 20 cây Bagging.</em></p>
+        </div>
+
+        <div class="card">
+            <h2>3. Bảng Hiệu Năng Nghiệm Thu Trên Tập Test Độc Lập (20.571 mẫu)</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Thuật toán (Scratch)</th><th>R² (Thực tế)</th><th>R² (Log)</th><th>RMSE (INR)</th><th>MAE (INR)</th><th>MSE</th><th>Đánh giá & Xếp hạng</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="champion-row">
+                            <td>🥇 <strong>Random Forest Regressor</strong></td>
+                            <td><strong>0.4911</strong></td>
+                            <td><strong>0.5640</strong></td>
+                            <td><strong>195.58</strong></td>
+                            <td><strong>139.21</strong></td>
+                            <td><strong>38.250,21</strong></td>
+                            <td><strong>Quán quân (Best Model)</strong> — Dẫn đầu mọi chỉ số</td>
+                        </tr>
+                        <tr>
+                            <td>🥈 <strong>Decision Tree Regressor</strong></td>
+                            <td>0.4890</td>
+                            <td>0.5614</td>
+                            <td>195.99</td>
+                            <td>139.63</td>
+                            <td>38.412,08</td>
+                            <td>Á quân — Tối ưu hóa phân vị nhanh, giải thích rõ</td>
+                        </tr>
+                        <tr>
+                            <td>🥉 <strong>Linear Regression</strong></td>
+                            <td>-0.7196</td>
+                            <td>0.5566</td>
+                            <td>359.51</td>
+                            <td>142.01</td>
+                            <td>129.247,15</td>
+                            <td>Baseline đối chứng (OLS Normal Equation)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="img-box">
+                <img src="../images/model_03_performance_comparison.png" alt="Biểu đồ so sánh hiệu năng 3 mô hình">
+                <div class="img-caption">Hình 3.1: Biểu đồ đối sánh trực diện 3 chỉ số hiệu năng R² (Thực tế), RMSE (INR) và MAE (INR) trên tập Test.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4. Trực Quan Hóa Thực Tế vs Dự Đoán & Biểu Đồ Phần Dư</h2>
+            <div class="img-box">
+                <img src="../images/model_01_actual_vs_predicted.png" alt="Thực tế vs Dự đoán">
+                <div class="img-caption">Hình 4.1: Đối chiếu giữa doanh số thực tế (x) và doanh số dự đoán (y) kèm đường lý tưởng y = ŷ</div>
+            </div>
+            <div class="img-box">
+                <img src="../images/model_02_residuals.png" alt="Biểu đồ phần dư">
+                <div class="img-caption">Hình 4.2: Biểu đồ phần dư Residual Plot (ŷ vs e) phân bố đều quanh trục chuẩn e = 0</div>
+            </div>
+            <p><strong>Nhận xét:</strong> Phần dư trung bình xấp xỉ 0 INR chứng minh mô hình không có thiên lệch hệ thống. Các điểm dự báo tập trung cao độ quanh đường lý tưởng ở dải doanh số phổ thông 300 – 1.200 INR.</p>
+        </div>
+
+        <div class="card">
+            <h2>5. Bóc Tách Top 15 Đặc Trưng Quan Trọng Nhất (Feature Importances)</h2>
+            <div class="img-box">
+                <img src="../images/model_04_feature_importances.png" alt="Top 15 đặc trưng chi phối doanh số">
+                <div class="img-caption">Hình 5.1: Top 15 đặc trưng chi phối mạnh nhất quyết định dự đoán doanh số từ mô hình Quán quân.</div>
+            </div>
+            <p>Theo mô hình Random Forest Regressor, các yếu tố quyết định hàng đầu đến doanh số đơn hàng gồm:</p>
+            <ul>
+                <li><strong>Ngành hàng Kurta & Top:</strong> Đóng góp then chốt vào việc định hình mức giá cơ sở sản phẩm.</li>
+                <li><strong>Số lượng mua (Qty):</strong> Nhân tử tỷ lệ thuận trực tiếp với tổng hóa đơn đặt hàng.</li>
+                <li><strong>Thời gian (month, day_of_week):</strong> Phản ánh chu kỳ khuyến mãi đầu tháng và sức mua cuối tuần.</li>
+                <li><strong>Kênh vận chuyển & Hoàn tất:</strong> Fulfilment và Courier Status phản ánh dịch vụ giao hàng đáng tin cậy.</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

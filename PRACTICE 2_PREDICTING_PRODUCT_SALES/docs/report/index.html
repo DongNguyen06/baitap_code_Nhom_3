@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Tổng Hợp — Practice 2: Predicting Product Sales (Nhóm 3)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 32px 20px; }
+        header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; padding: 48px 32px; border-radius: 16px; margin-bottom: 36px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .badge { display: inline-block; background: rgba(37, 99, 235, 0.3); border: 1px solid var(--primary); color: #93c5fd; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        p.subtitle { color: #94a3b8; font-size: 15px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 36px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .stat-val { font-size: 26px; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+        .reports-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .report-card { background: var(--card-bg); border-radius: 14px; border: 1px solid var(--border); padding: 28px; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+        .report-card:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.08); border-color: var(--primary); }
+        .report-num { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .report-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); }
+        .report-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary); color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background 0.2s; }
+        .btn:hover { background: var(--primary-dark); }
+        .footer-info { text-align: center; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border); padding-top: 24px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="badge">MÔN HỌC MÁY (MACHINE LEARNING LAB) — NHÓM 3 (UTH)</span>
+            <h1>Báo Cáo Nghiệm Thu Toàn Diện Đồ Án</h1>
+            <p class="subtitle">Đề tài: Hồi quy dự đoán Doanh số Bán hàng Sản phẩm Amazon Ấn Độ bằng 3 thuật toán tự cài đặt From Scratch</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-val">102.852</div>
+                <div class="stat-label">Đơn hàng sạch (Khử 26.123 đơn hủy/lỗi/trùng)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">0.4911</div>
+                <div class="stat-label">R² Thực tế Quán quân (Random Forest)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">195.58 INR</div>
+                <div class="stat-label">RMSE Sai số (Tập Test 20.571 mẫu)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val">&lt; 0.01s</div>
+                <div class="stat-label">Thời gian suy luận / 1 đơn hàng</div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 20px;">Danh Mục Các Tệp Báo Cáo Chuyên Sâu</h2>
+        <div class="reports-grid">
+            <div class="report-card">
+                <div>
+                    <div class="report-num">Phần 01 / Data & EDA</div>
+                    <div class="report-title">01. Khám Phá & Làm Sạch Dữ Liệu</div>
+                    <div class="report-desc">Báo cáo khảo sát cấu trúc bộ dữ liệu thô 128.975 dòng Amazon Sale Report, phân tích đơn biến Amount lệch phải, đa biến địa phương/ngành hàng, quét ngoại lai IQR và khử trùng lặp triệt để.</div>
+                </div>
+                <a href="01_data_report.html" class="btn">Xem Báo Cáo Dữ Liệu &rarr;</a>
+            </div>
+
+            <div class="report-card">
+                <div>
+                    <div class="report-num">Phần 02 / Features & Pipeline</div>
+                    <div class="report-title">02. Kỹ Thuật Đặc Trưng & Pipeline</div>
+                    <div class="report-desc">Báo cáo trích xuất chuỗi thời gian mùa vụ, gom nhóm Top 10 bang lớn, lọc đa cộng tuyến (|r| > 0.6), phân chia Train/Test 80/20 và đóng gói ColumnTransformer 42 chiều đặc trưng.</div>
+                </div>
+                <a href="02_feature_pipeline_report.html" class="btn">Xem Báo Cáo Đặc Trưng &rarr;</a>
+            </div>
+
+            <div class="report-card">
+                <div>
+                    <div class="report-num">Phần 03 / Evaluation & Models</div>
+                    <div class="report-title">03. Huấn Luyện & Đánh Giá Mô Hình</div>
+                    <div class="report-desc">Báo cáo đối đầu 3 thuật toán Scratch NumPy, kết quả kiểm định chéo 5-Fold CV, đánh giá độc lập Test set với phép nghịch đảo expm1, Biểu đồ Thực tế vs Dự đoán, Residual Plot và Top 15 đặc trưng quan trọng.</div>
+                </div>
+                <a href="03_model_evaluation_report.html" class="btn">Xem Báo Cáo Đánh Giá &rarr;</a>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <p>Dự án: Practice 2 — Predicting Product Sales | Khoa Công Nghệ Thông Tin — Trường Đại học Giao thông vận tải TP.HCM (UTH)</p>
+            <p style="margin-top: 4px;">Hiện vật mô hình được lưu trữ tại: <code>models/saved_models/best_model.joblib</code> (~26 KB)</p>
+        </div>
+    </div>
+</body>
+</html>

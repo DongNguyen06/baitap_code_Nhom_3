@@ -1,15 +1,8 @@
-"""
-Kịch bản Tự động hóa Toàn bộ Quy trình Học máy (End-to-End Automated Pipeline)
-Dự án: Practice 2: Predicting Product Sales — Group 3 (Khoa CNTT - UTH)
-Trưởng nhóm điều phối: Nguyễn Xuân Đông
-Thực thi toàn bộ chu trình 4 chặng: Tiền xử lý -> Kỹ thuật đặc trưng -> Huấn luyện 5-Fold CV -> Đánh giá Test & Lưu Artifacts
-"""
 from pathlib import Path
 import sys
 import time
 import joblib
 import numpy as np
-import pandas as pd
 
 if sys.platform == "win32":
     try:
@@ -34,12 +27,16 @@ from scripts.model_training import (
     create_scratch_models,
     build_training_pipelines,
     evaluate_cv_models,
-    train_and_save_all_models
+    tune_grid_search
 )
 from scripts.model_evaluation import (
     evaluate_holdout_test,
     extract_feature_importances,
-    export_evaluation_artifacts
+    export_evaluation_artifacts,
+    plot_actual_vs_predicted,
+    plot_residuals,
+    plot_performance_comparison,
+    plot_feature_importances
 )
 
 
@@ -51,9 +48,9 @@ def run_full_pipeline():
     print("=" * 80)
 
     # -------------------------------------------------------------------------
-    # CHẶNG 1: NẠP VÀ LÀM SẠCH DỮ LIỆU THÔ (Nguyễn Minh Nhật)
+    # CHẶNG 1: NẠP VÀ LÀM SẠCH DỮ LIỆU THÔ (DATA CLEANING)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 1/4] Làm sạch dữ liệu và khử trùng lặp (Nguyễn Minh Nhật)...")
+    print("\n[Chặng 1/4] Làm sạch dữ liệu và khử trùng lặp (Zero Duplicate Leakage)...")
     raw_csv = BASE_DIR / "data" / "raw" / "Amazon Sale Report.csv"
     clean_csv = BASE_DIR / "data" / "processed" / "clean_amazon_sales.csv"
 
@@ -67,9 +64,9 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & CHIA TẬP (Trương Thành Công & Võ Thanh Phú)
+    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & CHIA TẬP (FEATURE ENGINEERING)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 2/4] Trích xuất đặc trưng & ColumnTransformer (Thành Công & Thanh Phú)...")
+    print("\n[Chặng 2/4] Trích xuất đặc trưng & Thiết lập ColumnTransformer...")
     try:
         t0 = time.time()
         df_feat = extract_domain_features(df_clean)
@@ -109,16 +106,25 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 3: HUẤN LUYỆN VÀ ĐÁNH GIÁ CHÉO 5-FOLD CV (Võ Khôi Nguyên)
+    # CHẶNG 3: HUẤN LUYỆN, ĐÁNH GIÁ CHÉO 5-FOLD CV & TINH CHỈNH SIÊU THAM SỐ
     # -------------------------------------------------------------------------
-    print("\n[Chặng 3/4] Huấn luyện mô hình Scratch & 5-Fold CV (Võ Khôi Nguyên)...")
+    print("\n[Chặng 3/4] Huấn luyện 3 mô hình Scratch, 5-Fold CV & Tinh chỉnh siêu tham số...")
     try:
         t0 = time.time()
-        pipelines = build_training_pipelines(preprocessor)
+        models = create_scratch_models()
+        pipelines = build_training_pipelines(preprocessor, models=models)
         cv_df = evaluate_cv_models(pipelines, X_train, y_train, cv=5, sample_size=10000)
         print(cv_df.to_string(index=False))
 
-        trained_pipelines = train_and_save_all_models(pipelines, X_train, y_train, saved_models_dir)
+        print("\n  • Đang tinh chỉnh siêu tham số (GridSearchCV 3-Fold trên 10.000 mẫu đại diện)...")
+        trained_pipelines = tune_grid_search(
+            pipelines,
+            X_train=X_train,
+            y_train=y_train,
+            cv=3,
+            subsample_size=10000,
+            models_dir=saved_models_dir
+        )
         print(f"  ✓ Đã hoàn tất huấn luyện và lưu mô hình tối ưu ({time.time() - t0:.2f}s).")
     except NotImplementedError as e:
         print(f"  ⏳ [CHỜ TRIỂN KHAI]: {e}")
@@ -126,23 +132,37 @@ def run_full_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # CHẶNG 4: ĐÁNH GIÁ KIỂM THỬ ĐỘC LẬP & LƯU SIÊU DỮ LIỆU (Mai Hoàng Danh)
+    # CHẶNG 4: ĐÁNH GIÁ KIỂM THỬ ĐỘC LẬP & LƯU SIÊU DỮ LIỆU (MODEL EVALUATION)
     # -------------------------------------------------------------------------
-    print("\n[Chặng 4/4] Đánh giá kiểm thử Test & Nghịch đảo expm1 (Mai Hoàng Danh)...")
+    print("\n[Chặng 4/4] Đánh giá kiểm thử Test & Nghịch đảo expm1...")
     try:
         t0 = time.time()
         eval_df = evaluate_holdout_test(trained_pipelines, X_test, y_test, y_test_raw)
         print(eval_df.to_string(index=False))
 
-        best_pipe = trained_pipelines["Decision Tree Regressor"]
-        top_feats = extract_feature_importances(best_pipe, top_n=10)
+        best_pipe = trained_pipelines["Random Forest Regressor"]
+        rf_metrics = eval_df[eval_df["Mô hình"] == "Random Forest Regressor"].iloc[0].to_dict()
+        top_feats = extract_feature_importances(best_pipe, top_n=15)
         meta_p = export_evaluation_artifacts(
-            model_name="Decision Tree Regressor (Optimized Scratch)",
-            metrics_dict=eval_df.iloc[0].to_dict(),
+            model_name="Random Forest Regressor (Ensemble Bagging Scratch)",
+            metrics_dict=rf_metrics,
             top_features=top_feats,
-            output_dir=saved_models_dir
+            output_dir=saved_models_dir,
+            models_comparison=eval_df
         )
         print(f"  ✓ Đã hoàn tất xuất siêu dữ liệu nghiệm thu tại '{meta_p.name}' ({time.time() - t0:.2f}s).")
+
+        images_dir = BASE_DIR / "docs" / "images"
+        images_dir.mkdir(parents=True, exist_ok=True)
+
+        y_pred_log = best_pipe.predict(X_test)
+        y_pred_inr = np.clip(np.expm1(np.clip(y_pred_log, -10.0, 15.0)), 0.0, None)
+
+        plot_actual_vs_predicted(y_test_raw, y_pred_inr, max_points=1000, save_path=images_dir / "model_01_actual_vs_predicted.png")
+        plot_residuals(y_test_raw, y_pred_inr, max_points=1000, save_path=images_dir / "model_02_residuals.png")
+        plot_performance_comparison(eval_df, save_path=images_dir / "model_03_performance_comparison.png")
+        plot_feature_importances(top_feats, top_n=15, save_path=images_dir / "model_04_feature_importances.png")
+        print("  ✓ Đã xuất các đồ thị trực quan hóa vào docs/images/.")
     except NotImplementedError as e:
         print(f"  ⏳ [CHỜ TRIỂN KHAI]: {e}")
         print("  👉 Bước 4 chưa được hoàn thiện. Đường ống tạm dừng tại Chặng 4.")

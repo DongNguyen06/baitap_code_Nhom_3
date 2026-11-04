@@ -2,14 +2,14 @@
 Bộ Kiểm thử Tự động Toàn diện Hệ thống (Comprehensive Component Tests)
 Dự án: Practice 1: Classifying Spam Emails — Group 3
 Phạm vi kiểm thử:
-1. data/scripts/data_preprocessing.py (Xử lý missing, clean_text NLP — Nguyễn Minh Nhật)
-2. data/scripts/eda.py (Cấu trúc dữ liệu, thống kê đơn biến, ngoại lai IQR — Nguyễn Xuân Đông & Mai An Thịnh)
-3. scripts/feature_engineering.py (7 đặc trưng miền, ColumnTransformer, Train/Test split — Trương Thành Công & Võ Thanh Phú)
-4. models/algorithms/ (3 Mô hình From Scratch thuần NumPy — Nhiệm vụ chung cả 7 thành viên)
-5. scripts/model_training.py (Tạo mô hình Scratch, Pipeline huấn luyện, 5-Fold CV — Võ Khôi Nguyên)
-6. scripts/model_evaluation.py (Đánh giá Hold-out test, Confusion Matrix, Top từ khóa — Mai Hoàng Danh)
-7. models/saved_models/ & notebooks/demo.ipynb (Mô hình tối ưu, metadata.json, Guardrails — Nguyễn Xuân Đông)
-8. Toàn vẹn cú pháp AST toàn bộ mã nguồn .py và các code cells trong Notebooks (Kiểm tra chung toàn dự án)
+1. data/scripts/data_preprocessing.py (Xử lý missing, clean_text NLP chuẩn hóa)
+2. data/scripts/eda.py (Cấu trúc dữ liệu, thống kê đơn biến, ngoại lai IQR)
+3. scripts/feature_engineering.py (7 đặc trưng miền, ColumnTransformer, Train/Test split)
+4. models/algorithms/ (3 Mô hình From Scratch thuần NumPy)
+5. scripts/model_training.py (Tạo mô hình Scratch, Pipeline huấn luyện, 5-Fold CV)
+6. scripts/model_evaluation.py (Đánh giá Hold-out test, Confusion Matrix, Top từ khóa)
+7. models/saved_models/ & notebooks/demo.ipynb (Mô hình tối ưu, metadata.json, Guardrails)
+8. Toàn vẹn cú pháp AST toàn bộ mã nguồn .py và các code cells trong Notebooks
 """
 import argparse
 import ast
@@ -292,13 +292,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     tests = {
-        1: ("data/scripts/data_preprocessing.py (Nguyễn Minh Nhật)", test_01_data_preprocessing),
-        2: ("data/scripts/eda.py (Nguyễn Xuân Đông & Mai An Thịnh)", test_02_eda),
-        3: ("scripts/feature_engineering.py (Trương Thành Công & Võ Thanh Phú)", test_03_feature_engineering),
-        4: ("models/algorithms/ 3 Thuật toán Scratch (Nhiệm vụ chung cả 7 thành viên)", test_04_scratch_algorithms),
-        5: ("scripts/model_training.py (Võ Khôi Nguyên)", test_05_training_module),
-        6: ("scripts/model_evaluation.py (Mai Hoàng Danh)", test_06_evaluation_module),
-        7: ("models/saved_models/ & notebooks/demo.ipynb (Nguyễn Xuân Đông)", test_07_artifacts_and_demo),
+        1: ("data/scripts/data_preprocessing.py (Tiền xử lý & Khử trùng lặp)", test_01_data_preprocessing),
+        2: ("data/scripts/eda.py (Phân tích EDA & Khảo sát ngoại lai)", test_02_eda),
+        3: ("scripts/feature_engineering.py (Kỹ thuật đặc trưng & Pipeline)", test_03_feature_engineering),
+        4: ("models/algorithms/ (3 Thuật toán Scratch thuần NumPy)", test_04_scratch_algorithms),
+        5: ("scripts/model_training.py (Huấn luyện Scratch & 5-Fold CV)", test_05_training_module),
+        6: ("scripts/model_evaluation.py (Đánh giá độc lập & Confusion Matrix)", test_06_evaluation_module),
+        7: ("models/saved_models/ & notebooks/demo.ipynb (Mô hình tối ưu & Demo)", test_07_artifacts_and_demo),
         8: ("Toàn vẹn cú pháp AST toàn bộ mã nguồn (Kiểm tra chung toàn dự án)", test_08_codebase_integrity),
     }
 

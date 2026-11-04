@@ -1,21 +1,13 @@
 """
 Bộ Kiểm thử Tự động Toàn diện Hệ thống (Comprehensive Component Tests & Assignment Verification)
-Dự án: Practice 2: Predicting Product Sales — Group 3 (Khoa CNTT - UTH)
-Trưởng nhóm: Nguyễn Xuân Đông
-
-Mục đích:
-- Phục vụ bàn giao bài tập khung (Assignment Starter Code) cho 6 thành viên trong nhóm.
-- Mỗi thành viên có thể kiểm tra tiến độ của riêng mình qua cờ: python scripts/test_all_components.py --step <1-8>
-- Trưởng nhóm có thể chạy toàn diện để giám sát tổng thể bài tập lớn: python scripts/test_all_components.py
-
 Phân công kiểm thử (8 Nhóm thành phần):
-1. data/scripts/data_preprocessing.py (Nguyễn Minh Nhật)
-2. data/scripts/eda.py (Nguyễn Xuân Đông & Mai An Thịnh)
-3. scripts/feature_engineering.py (Trương Thành Công & Võ Thanh Phú)
-4. models/algorithms/ (Thuật toán Scratch NumPy)
-5. scripts/model_training.py (Võ Khôi Nguyên)
-6. scripts/model_evaluation.py (Mai Hoàng Danh)
-7. models/saved_models/ & Demo tương tác (Nguyễn Xuân Đông - Trưởng nhóm)
+1. data/scripts/data_preprocessing.py 
+2. data/scripts/eda.py 
+3. scripts/feature_engineering.py 
+4. models/algorithms/ 
+5. scripts/model_training.py 
+6. scripts/model_evaluation.py 
+7. models/saved_models/ & Demo tương tác 
 8. Cú pháp AST toàn bộ file Python và code cells Notebooks (Toàn dự án)
 """
 import argparse
@@ -137,7 +129,7 @@ def test_02_eda():
     assert stats["min"] == 250.0 and stats["max"] == 800.0, "Lỗi thống kê đơn biến"
     stats_alias = get_amount_univariate_stats(df_sample, col="Amount")
     assert stats_alias["min"] == 250.0, "Lỗi alias get_amount_univariate_stats"
-    print("  ✓ [Nguyễn Xuân Đông] inspect_data_structure & get_univariate_stats: ĐẠT 100%.")
+    print("  ✓ inspect_data_structure & get_univariate_stats: ĐẠT 100%.")
 
     # 2. Kiểm thử phần Mai An Thịnh
     thinh_status = {}
@@ -220,10 +212,10 @@ def test_03_feature_engineering():
         assert "is_weekend" in df_feat.columns, "Lỗi trích xuất is_weekend"
         assert "is_promoted" in df_feat.columns, "Lỗi tạo cờ is_promoted"
         assert "is_b2b" in df_feat.columns, "Lỗi tạo cờ is_b2b"
-        print("  ✓ [Trương Thành Công] extract_domain_features: Trích xuất đặc trưng miền ĐẠT 100%.")
+        print("  ✓ extract_domain_features: Trích xuất đặc trưng miền ĐẠT 100%.")
         cong_status["extract_features"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ TRƯƠNG THÀNH CÔNG] extract_domain_features: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] extract_domain_features: {e}")
         cong_status["extract_features"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] extract_domain_features thất bại: {e}")
@@ -232,10 +224,10 @@ def test_03_feature_engineering():
     try:
         y_log_test = transform_target_log(df_sample["Amount"])
         assert len(y_log_test) == len(df_sample), "Lỗi kích thước transform_target_log"
-        print("  ✓ [Trương Thành Công] transform_target_log: Biến đổi log biến mục tiêu ĐẠT 100%.")
+        print("  ✓ transform_target_log: Biến đổi log biến mục tiêu ĐẠT 100%.")
         cong_status["log_transform"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ TRƯƠNG THÀNH CÔNG] transform_target_log: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] transform_target_log: {e}")
         cong_status["log_transform"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] transform_target_log thất bại: {e}")
@@ -261,10 +253,10 @@ def test_03_feature_engineering():
     try:
         collinear = detect_collinear_features(df_synthetic, threshold=0.5)
         assert isinstance(collinear, list), "Lỗi phát hiện đa cộng tuyến"
-        print("  ✓ [Võ Thanh Phú] detect_collinear_features: Quét đa cộng tuyến ĐẠT 100%.")
+        print("  ✓ detect_collinear_features: Quét đa cộng tuyến ĐẠT 100%.")
         phu_status["collinear"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ THANH PHÚ] detect_collinear_features: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] detect_collinear_features: {e}")
         phu_status["collinear"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] detect_collinear_features thất bại: {e}")
@@ -273,10 +265,10 @@ def test_03_feature_engineering():
     try:
         X_train, X_test, y_train, y_test, y_train_raw, y_test_raw = split_train_test(df_synthetic, test_size=0.4, random_state=42)
         assert len(X_train) == 3 and len(X_test) == 2, "Lỗi phân tách Train/Test"
-        print("  ✓ [Võ Thanh Phú] split_train_test: Phân chia Train/Test 80/20 ĐẠT 100%.")
+        print("  ✓ split_train_test: Phân chia Train/Test 80/20 ĐẠT 100%.")
         phu_status["split"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ THANH PHÚ] split_train_test: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] split_train_test: {e}")
         phu_status["split"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] split_train_test thất bại: {e}")
@@ -289,10 +281,10 @@ def test_03_feature_engineering():
         preprocessor.fit(df_synthetic[num_cols + cat_cols])
         trans = preprocessor.transform(df_synthetic[num_cols + cat_cols])
         assert trans.shape[0] == len(df_synthetic), "Lỗi transform ColumnTransformer"
-        print("  ✓ [Võ Thanh Phú] build_column_transformer: Thiết lập ColumnTransformer ĐẠT 100%.")
+        print("  ✓ build_column_transformer: Thiết lập ColumnTransformer ĐẠT 100%.")
         phu_status["transformer"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ THANH PHÚ] build_column_transformer: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] build_column_transformer: {e}")
         phu_status["transformer"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] build_column_transformer thất bại: {e}")
@@ -305,10 +297,10 @@ def test_03_feature_engineering():
         dummy_y = df_synthetic["Amount"].values
         p_train, p_test = export_train_test_csv(dummy_X, dummy_X, dummy_y, dummy_y, temp_dir)
         assert p_train.exists() and p_test.exists(), "Lỗi xuất file train.csv/test.csv"
-        print("  ✓ [Võ Thanh Phú] export_train_test_csv: Xuất tệp train.csv/test.csv ĐẠT 100%.")
+        print("  ✓ export_train_test_csv: Xuất tệp train.csv/test.csv ĐẠT 100%.")
         phu_status["export"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ THANH PHÚ] export_train_test_csv: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] export_train_test_csv: {e}")
         phu_status["export"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] export_train_test_csv thất bại: {e}")
@@ -319,12 +311,12 @@ def test_03_feature_engineering():
 
     all_statuses = list(cong_status.values()) + list(phu_status.values())
     if all(s == "PASSED" for s in all_statuses):
-        print("  ✓ [Thành Công & Thanh Phú] Toàn bộ module feature_engineering.py ĐẠT 100%.")
+        print("  ✓ Toàn bộ module feature_engineering.py ĐẠT 100%.")
         return "PASSED"
     elif any(s == "FAILED" for s in all_statuses):
         return "FAILED"
     else:
-        print("     👉 Trương Thành Công & Võ Thanh Phú cần mở 'scripts/feature_engineering.py' để hoàn thiện các hàm theo TODO.")
+        print("     👉 Cần mở 'scripts/feature_engineering.py' để hoàn thiện các hàm theo TODO.")
         return "TODO"
 
 
@@ -404,13 +396,13 @@ def test_04_algorithms():
 
 
 def test_05_model_training():
-    print("\n[5/8] Kiểm thử module scripts/model_training.py (Võ Khôi Nguyên)...")
+    print("\n[5/8] Kiểm thử module scripts/model_training.py ...")
     from scripts.model_training import (
         create_scratch_models,
         build_training_pipelines,
         evaluate_cv_models,
-        tune_hyperparameters,
-        train_and_save_all_models
+        get_default_param_grids,
+        tune_grid_search
     )
     from sklearn.linear_model import LinearRegression
     from sklearn.preprocessing import StandardScaler
@@ -428,13 +420,13 @@ def test_05_model_training():
         print("  ✓ create_scratch_models: Khởi tạo 3 mô hình Scratch ĐẠT 100%.")
         nguyen_status["create_models"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ KHÔI NGUYÊN] create_scratch_models: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] create_scratch_models: {e}")
         nguyen_status["create_models"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] create_scratch_models thất bại: {e}")
         nguyen_status["create_models"] = "FAILED"
 
-    # Dummy preprocessor và data để kiểm tra logic của Nguyên độc lập với Step 4
+    # Dummy preprocessor và data để kiểm tra logic
     df_dummy = pd.DataFrame({"x1": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0], "x2": [6.0, 5.0, 4.0, 3.0, 2.0, 1.0]})
     y_dummy = pd.Series([10.0, 12.0, 15.0, 18.0, 22.0, 25.0])
     dummy_prep = ColumnTransformer([("num", StandardScaler(), ["x1", "x2"])])
@@ -448,7 +440,7 @@ def test_05_model_training():
         print("  ✓ build_training_pipelines: Đóng gói Pipeline chuẩn scikit-learn ĐẠT 100%.")
         nguyen_status["build_pipelines"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ KHÔI NGUYÊN] build_training_pipelines: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] build_training_pipelines: {e}")
         nguyen_status["build_pipelines"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] build_training_pipelines thất bại: {e}")
@@ -459,62 +451,60 @@ def test_05_model_training():
         mock_pipes = {"Mock Linear": Pipeline([("preprocessor", dummy_prep), ("regressor", LinearRegression())])}
         cv_df = evaluate_cv_models(mock_pipes, df_dummy, y_dummy, cv=2, sample_size=None)
         assert len(cv_df) >= 1, "Lỗi kết quả Cross Validation"
-        assert "CV R2 (Mean)" in cv_df.columns, "Thiếu cột CV R2 (Mean)"
+        assert any("R2" in c or "R²" in c for c in cv_df.columns), "Thiếu cột CV R2"
         print("  ✓ evaluate_cv_models: Kiểm định chéo K-Fold Cross Validation ĐẠT 100%.")
         nguyen_status["evaluate_cv"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ KHÔI NGUYÊN] evaluate_cv_models: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] evaluate_cv_models: {e}")
         nguyen_status["evaluate_cv"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] evaluate_cv_models thất bại: {e}")
         nguyen_status["evaluate_cv"] = "FAILED"
 
-    # 4. tune_hyperparameters
-    try:
-        mock_pipe = Pipeline([("preprocessor", dummy_prep), ("regressor", LinearRegression())])
-        param_grid = {"regressor__fit_intercept": [True, False]}
-        grid = tune_hyperparameters(mock_pipe, param_grid, df_dummy, y_dummy, cv=2)
-        assert hasattr(grid, "best_params_"), "GridSearchCV chưa fit thành công"
-        print("  ✓ tune_hyperparameters: Tinh chỉnh siêu tham số GridSearchCV ĐẠT 100%.")
-        nguyen_status["tune"] = "PASSED"
-    except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ KHÔI NGUYÊN] tune_hyperparameters: {e}")
-        nguyen_status["tune"] = "TODO"
-    except Exception as e:
-        print(f"  ❌ [LỖI LOGIC] tune_hyperparameters thất bại: {e}")
-        nguyen_status["tune"] = "FAILED"
-
-    # 5. train_and_save_all_models
+    # 4. get_default_param_grids & tune_grid_search
     temp_dir = BASE_DIR / "models" / "saved_models" / "temp_train_test"
     try:
         temp_dir.mkdir(parents=True, exist_ok=True)
-        mock_pipes = {"Mock Linear": Pipeline([("preprocessor", dummy_prep), ("regressor", LinearRegression())])}
-        trained = train_and_save_all_models(mock_pipes, df_dummy, y_dummy, temp_dir)
-        assert "Mock Linear" in trained, "Lỗi train_and_save_all_models"
-        print("  ✓ train_and_save_all_models: Huấn luyện và lưu trữ mô hình ĐẠT 100%.")
-        nguyen_status["train_save"] = "PASSED"
+        param_grids = get_default_param_grids()
+        assert len(param_grids) == 3, "Thiếu lưới tham số mô hình"
+        mock_pipes = {"Linear Regression": Pipeline([("preprocessor", dummy_prep), ("regressor", LinearRegression())])}
+        mock_grid = {"Linear Regression": {"regressor__fit_intercept": [True]}}
+        tuned, summary = tune_grid_search(
+            mock_pipes,
+            param_grids=mock_grid,
+            X_train=df_dummy,
+            y_train=y_dummy,
+            cv=2,
+            subsample_size=None,
+            models_dir=temp_dir,
+            return_summary=True
+        )
+        assert "Linear Regression" in tuned, "Lỗi tune_grid_search"
+        assert len(summary) >= 1, "Lỗi bảng summary GridSearchCV"
+        print("  ✓ get_default_param_grids & tune_grid_search: Tinh chỉnh siêu tham số và đóng gói ĐẠT 100%.")
+        nguyen_status["tune_grid"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ VÕ KHÔI NGUYÊN] train_and_save_all_models: {e}")
-        nguyen_status["train_save"] = "TODO"
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] tune_grid_search: {e}")
+        nguyen_status["tune_grid"] = "TODO"
     except Exception as e:
-        print(f"  ❌ [LỖI LOGIC] train_and_save_all_models thất bại: {e}")
-        nguyen_status["train_save"] = "FAILED"
+        print(f"  ❌ [LỖI LOGIC] tune_grid_search thất bại: {e}")
+        nguyen_status["tune_grid"] = "FAILED"
     finally:
         if temp_dir.exists():
             shutil.rmtree(temp_dir)
 
     if all(s == "PASSED" for s in nguyen_status.values()):
-        print("  ✓ [Võ Khôi Nguyên] model_training.py: Toàn bộ module của Nguyên ĐẠT 100%.")
+        print("  ✓ model_training.py: Toàn bộ module ĐẠT 100%.")
         return "PASSED"
     elif any(s == "FAILED" for s in nguyen_status.values()):
         return "FAILED"
     else:
-        print("     👉 Võ Khôi Nguyên cần mở 'scripts/model_training.py' và hoàn thiện các hàm theo TODO.")
+        print("     👉 Cần mở 'scripts/model_training.py' và hoàn thiện các hàm theo TODO.")
         return "TODO"
 
 
 def test_06_model_evaluation():
-    print("\n[6/8] Kiểm thử module scripts/model_evaluation.py (Mai Hoàng Danh)...")
+    print("\n[6/8] Kiểm thử module scripts/model_evaluation.py ...")
     from scripts.model_evaluation import (
         evaluate_holdout_test,
         extract_feature_importances,
@@ -546,7 +536,7 @@ def test_06_model_evaluation():
         print("  ✓ evaluate_holdout_test: Đánh giá holdout test với nghịch đảo expm1 ĐẠT 100%.")
         danh_status["evaluate"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ MAI HOÀNG DANH] evaluate_holdout_test: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] evaluate_holdout_test: {e}")
         danh_status["evaluate"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] evaluate_holdout_test thất bại: {e}")
@@ -559,7 +549,7 @@ def test_06_model_evaluation():
         print("  ✓ extract_feature_importances: Trích xuất độ quan trọng đặc trưng ĐẠT 100%.")
         danh_status["importances"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ MAI HOÀNG DANH] extract_feature_importances: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] extract_feature_importances: {e}")
         danh_status["importances"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] extract_feature_importances thất bại: {e}")
@@ -576,7 +566,7 @@ def test_06_model_evaluation():
         print("  ✓ export_evaluation_artifacts: Xuất file metadata.json ĐẠT 100%.")
         danh_status["export_artifacts"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ MAI HOÀNG DANH] export_evaluation_artifacts: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] export_evaluation_artifacts: {e}")
         danh_status["export_artifacts"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] export_evaluation_artifacts thất bại: {e}")
@@ -591,7 +581,7 @@ def test_06_model_evaluation():
         print("  ✓ plot_actual_vs_predicted: Trực quan hóa Actual vs Predicted ĐẠT 100%.")
         danh_status["plot_actual"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ MAI HOÀNG DANH] plot_actual_vs_predicted: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] plot_actual_vs_predicted: {e}")
         danh_status["plot_actual"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] plot_actual_vs_predicted thất bại: {e}")
@@ -603,32 +593,38 @@ def test_06_model_evaluation():
         print("  ✓ plot_residuals: Trực quan hóa phần dư Residual Plot ĐẠT 100%.")
         danh_status["plot_residuals"] = "PASSED"
     except NotImplementedError as e:
-        print(f"  ⏳ [CHỜ MAI HOÀNG DANH] plot_residuals: {e}")
+        print(f"  ⏳ [CHỜ TRIỂN KHAI] plot_residuals: {e}")
         danh_status["plot_residuals"] = "TODO"
     except Exception as e:
         print(f"  ❌ [LỖI LOGIC] plot_residuals thất bại: {e}")
         danh_status["plot_residuals"] = "FAILED"
 
     if all(s == "PASSED" for s in danh_status.values()):
-        print("  ✓ [Mai Hoàng Danh] model_evaluation.py: Toàn bộ module của Danh ĐẠT 100%.")
+        print("  ✓ model_evaluation.py: Toàn bộ module ĐẠT 100%.")
         return "PASSED"
     elif any(s == "FAILED" for s in danh_status.values()):
         return "FAILED"
     else:
-        print("     👉 Mai Hoàng Danh cần mở 'scripts/model_evaluation.py' và hoàn thiện các hàm theo TODO.")
+        print("     👉 Cần mở 'scripts/model_evaluation.py' và hoàn thiện các hàm theo TODO.")
         return "TODO"
 
 
 def test_07_saved_models_and_demo():
-    print("\n[7/8] Kiểm thử Models đã lưu và Demo suy luận (Nguyễn Xuân Đông - Trưởng nhóm)...")
+    print("\n[7/8] Kiểm thử Models đã lưu và Demo suy luận ...")
     import joblib
 
     saved_dir = BASE_DIR / "models" / "saved_models"
     best_model_p = saved_dir / "best_model.joblib"
+    lr_p = saved_dir / "linear_regression.joblib"
+    dt_p = saved_dir / "decision_tree.joblib"
+    rf_p = saved_dir / "random_forest.joblib"
     prep_p = saved_dir / "preprocessor.joblib"
     meta_p = saved_dir / "metadata.json"
 
     assert best_model_p.exists(), f"Thiếu file: {best_model_p}"
+    assert lr_p.exists(), f"Thiếu file: {lr_p}"
+    assert dt_p.exists(), f"Thiếu file: {dt_p}"
+    assert rf_p.exists(), f"Thiếu file: {rf_p}"
     assert prep_p.exists(), f"Thiếu file: {prep_p}"
     assert meta_p.exists(), f"Thiếu file: {meta_p}"
 
@@ -639,7 +635,7 @@ def test_07_saved_models_and_demo():
         meta = json.load(f)
     assert "model_name" in meta and "test_metrics" in meta, "Cấu trúc metadata.json không hợp lệ"
 
-    # Kiểm tra suy luận trên 1 mẫu đơn hàng thực tế qua prepare_sample_from_dict
+    # Kiểm tra suy luận trên 1 mẫu đơn hàng thực tế qua prepare_sample_from_dict trên cả 3 mô hình
     from scripts.feature_engineering import prepare_sample_from_dict
     sample_dict = {
         "Qty": 1,
@@ -658,7 +654,14 @@ def test_07_saved_models_and_demo():
     pred_log = model.predict(sample)
     pred_inr = float(np.expm1(pred_log[0]))
     assert pred_inr > 0, f"Dự đoán không hợp lệ: {pred_inr} INR"
-    print(f"  ✓ [Nguyễn Xuân Đông] Artifact: {meta['model_name']}, Dự đoán mẫu thực tế: {pred_inr:.2f} INR (SẴN SÀNG 100%)")
+
+    demo_nb_path = BASE_DIR / "notebooks" / "demo.ipynb"
+    assert demo_nb_path.exists(), f"Thiếu notebook demo: {demo_nb_path}"
+    with open(demo_nb_path, "r", encoding="utf-8") as f:
+        demo_json = json.load(f)
+    assert len(demo_json["cells"]) >= 5, "demo.ipynb thiếu các code cells cần thiết"
+
+    print(f"  ✓ Lưu đủ 4 models .joblib, Artifact: {meta['model_name']}, Dự đoán: {pred_inr:.2f} INR (SẴN SÀNG 100%)")
     return "PASSED"
 
 
@@ -673,8 +676,7 @@ def test_08_ast_syntax_integrity():
         BASE_DIR / "scripts" / "feature_engineering.py",
         BASE_DIR / "scripts" / "model_training.py",
         BASE_DIR / "scripts" / "model_evaluation.py",
-        BASE_DIR / "scripts" / "run_pipeline.py",
-        BASE_DIR / "scripts" / "run_predict.py"
+        BASE_DIR / "scripts" / "run_pipeline.py"
     ]
 
     for p in py_files:
@@ -726,18 +728,18 @@ def main():
     args = parser.parse_args()
 
     steps = {
-        1: ("Nguyễn Minh Nhật", "data/scripts/data_preprocessing.py", test_01_data_preprocessing),
-        2: ("Mai An Thịnh & Nguyễn Xuân Đông", "data/scripts/eda.py", test_02_eda),
-        3: ("Trương Thành Công & Võ Thanh Phú", "scripts/feature_engineering.py", test_03_feature_engineering),
+        1: ("Tiền xử lý dữ liệu", "data/scripts/data_preprocessing.py", test_01_data_preprocessing),
+        2: ("Khám phá dữ liệu EDA", "data/scripts/eda.py", test_02_eda),
+        3: ("Kỹ thuật đặc trưng & Pipeline", "scripts/feature_engineering.py", test_03_feature_engineering),
         4: ("Thuật toán Scratch (NumPy)", "models/algorithms/", test_04_algorithms),
-        5: ("Võ Khôi Nguyên", "scripts/model_training.py", test_05_model_training),
-        6: ("Mai Hoàng Danh", "scripts/model_evaluation.py", test_06_model_evaluation),
-        7: ("Nguyễn Xuân Đông (Trưởng nhóm)", "models/saved_models/ & Demo", test_07_saved_models_and_demo),
-        8: ("Toàn bộ dự án", "Cú pháp AST & Notebooks", test_08_ast_syntax_integrity)
+        5: ("Huấn luyện mô hình & Đánh giá CV", "scripts/model_training.py", test_05_model_training),
+        6: ("Đánh giá Hold-out & Trực quan hóa", "scripts/model_evaluation.py", test_06_model_evaluation),
+        7: ("Mô hình đã lưu & Demo", "models/saved_models/ & Demo", test_07_saved_models_and_demo),
+        8: ("Cú pháp AST & Notebooks", "Toàn bộ mã nguồn dự án", test_08_ast_syntax_integrity)
     }
 
     print("=" * 80)
-    print("   BẮT ĐẦU KIỂM THỬ HỆ THỐNG MÃ NGUỒN & TIẾN ĐỘ THÀNH VIÊN — NHÓM 3 (PRACTICE 2)")
+    print("   BẮT ĐẦU KIỂM THỬ HỆ THỐNG MÃ NGUỒN TOÀN DIỆN — NHÓM 3 (PRACTICE 2)")
     print("=" * 80)
 
     if args.step:

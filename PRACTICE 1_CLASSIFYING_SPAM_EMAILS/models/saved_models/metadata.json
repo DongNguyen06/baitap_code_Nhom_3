@@ -1,8 +1,14 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails — Group 3",
   "team": "Nhóm 3",
-  "created_at": "2026-11-02 20:12:01",
+  "created_at": "2026-11-04 11:44:51",
   "best_model": "Support Vector Machine (Linear SVM)",
+  "best_params": {
+    "classifier__learning_rate": 8.0,
+    "classifier__lambda_param": 1e-05,
+    "classifier__n_iters": 300,
+    "preprocessor__text__select__k": 2000
+  },
   "test_metrics": {
     "accuracy_percent": 98.73,
     "precision_percent": 98.71,

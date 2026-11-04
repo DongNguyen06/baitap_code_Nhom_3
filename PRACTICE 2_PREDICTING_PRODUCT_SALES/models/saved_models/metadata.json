@@ -1,78 +1,103 @@
 {
-  "model_name": "Decision Tree Regressor (Scratch)",
+  "project_name": "Practice 2: Predicting Product Sales — Group 3",
+  "team": "Nhóm 3",
+  "created_at": "2026-11-04T13:44:57.057282",
+  "model_name": "Random Forest Regressor (Ensemble Bagging Scratch)",
+  "best_model": "Random Forest Regressor (Ensemble Bagging Scratch)",
   "test_metrics": {
-    "Mô hình": "Decision Tree Regressor",
-    "R2 (Thực tế)": 0.49,
-    "R2 (Log)": 0.5621,
-    "RMSE (INR)": 195.78,
-    "MAE (INR)": 139.55,
-    "MSE": 38331.17
+    "Mô hình": "Random Forest Regressor",
+    "R2 (Log)": 0.564,
+    "R2 (Thực tế)": 0.4911,
+    "RMSE (INR)": 195.58,
+    "MAE (INR)": 139.21,
+    "MSE": 38250.21
   },
-  "dataset_summary": {
-    "train_samples": 82281,
-    "test_samples": 20571,
-    "features_count": 42
-  },
+  "models_comparison": [
+    {
+      "Mô hình": "Linear Regression",
+      "R2 (Log)": 0.5566,
+      "R2 (Thực tế)": -0.7196,
+      "RMSE (INR)": 359.51,
+      "MAE (INR)": 142.01,
+      "MSE": 129247.15
+    },
+    {
+      "Mô hình": "Decision Tree Regressor",
+      "R2 (Log)": 0.5614,
+      "R2 (Thực tế)": 0.489,
+      "RMSE (INR)": 195.99,
+      "MAE (INR)": 139.63,
+      "MSE": 38411.21
+    },
+    {
+      "Mô hình": "Random Forest Regressor",
+      "R2 (Log)": 0.564,
+      "R2 (Thực tế)": 0.4911,
+      "RMSE (INR)": 195.58,
+      "MAE (INR)": 139.21,
+      "MSE": 38250.21
+    }
+  ],
   "top_features": [
     {
-      "Feature": "Category_kurta",
-      "Importance": 0.7071059543957868
+      "Đặc trưng": "cat__Category_kurta",
+      "Tầm quan trọng": 0.703089278318852
     },
     {
-      "Feature": "Category_Top",
-      "Importance": 0.15491298472574758
+      "Đặc trưng": "cat__Category_Top",
+      "Tầm quan trọng": 0.15481292168079697
     },
     {
-      "Feature": "Category_Bottom",
-      "Importance": 0.026394650035581616
+      "Đặc trưng": "cat__Category_Bottom",
+      "Tầm quan trọng": 0.027063579224480643
     },
     {
-      "Feature": "Qty",
-      "Importance": 0.020442368304677494
+      "Đặc trưng": "num__Qty",
+      "Tầm quan trọng": 0.020807886588379537
     },
     {
-      "Feature": "Size_6XL",
-      "Importance": 0.0182190343358881
+      "Đặc trưng": "cat__Size_6XL",
+      "Tầm quan trọng": 0.01788341985644763
     },
     {
-      "Feature": "Category_Blouse",
-      "Importance": 0.017646138589290906
+      "Đặc trưng": "cat__Category_Blouse",
+      "Tầm quan trọng": 0.017418315089368884
     },
     {
-      "Feature": "month",
-      "Importance": 0.015048006857996198
+      "Đặc trưng": "num__month",
+      "Tầm quan trọng": 0.015211813922826329
     },
     {
-      "Feature": "Size_5XL",
-      "Importance": 0.014482789385127632
+      "Đặc trưng": "cat__Size_5XL",
+      "Tầm quan trọng": 0.014445314152543213
     },
     {
-      "Feature": "Size_4XL",
-      "Importance": 0.009809731625770677
+      "Đặc trưng": "cat__Size_4XL",
+      "Tầm quan trọng": 0.010116911911734548
     },
     {
-      "Feature": "Category_Set",
-      "Importance": 0.005556511580003453
+      "Đặc trưng": "cat__Category_Set",
+      "Tầm quan trọng": 0.005509037148750954
     },
     {
-      "Feature": "is_promoted",
-      "Importance": 0.001919358040828496
+      "Đặc trưng": "num__is_promoted",
+      "Tầm quan trọng": 0.0020912144254277088
     },
     {
-      "Feature": "ship-service-level_Expedited",
-      "Importance": 0.0016631284060221194
+      "Đặc trưng": "num__day_of_week",
+      "Tầm quan trọng": 0.0016200957152642571
     },
     {
-      "Feature": "Size_Free",
-      "Importance": 0.001577909574290134
+      "Đặc trưng": "cat__Size_Free",
+      "Tầm quan trọng": 0.0015301167236185017
     },
     {
-      "Feature": "Fulfilment_Amazon",
-      "Importance": 0.0012708650485625283
+      "Đặc trưng": "cat__Fulfilment_Amazon",
+      "Tầm quan trọng": 0.0012962914492912596
     },
     {
-      "Feature": "day_of_week",
-      "Importance": 0.000984716861482147
+      "Đặc trưng": "cat__ship-service-level_Expedited",
+      "Tầm quan trọng": 0.0011650463863210826
     }
   ]
 }

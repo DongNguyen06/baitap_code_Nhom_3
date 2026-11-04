@@ -4,10 +4,10 @@
 ---
 
 ### 1. WHAT — LÀM CÁI GÌ?
-* **Bài toán:** Hồi quy dự đoán giá trị doanh số bán hàng ($y = \text{Amount} \in \mathbb{R}$) của đơn hàng thương mại điện tử trên nền tảng Amazon Ấn Độ.
+* **Bài toán:** Hồi quy dự đoán giá trị doanh số bán hàng của đơn hàng thương mại điện tử trên nền tảng Amazon Ấn Độ.
 * **Đầu vào / Đầu ra:**
   * *Đầu vào:* Thông tin chi tiết một đơn hàng: ngành hàng, kích cỡ trang phục, số lượng, cấp dịch vụ giao, kênh hoàn tất, bang nhận hàng, thời gian giao dịch, khuyến mãi và loại khách mua (sỉ/lẻ).
-  * *Đầu ra:* Doanh số dự đoán ($\hat{y}$, đơn vị INR).
+  * *Đầu ra:* Doanh số dự đoán.
 * **Dữ liệu thực nghiệm (`Amazon Sale Report.csv`):**
   * Gốc: 128.975 dòng, 24 cột.
   * Sau làm sạch & khử trùng lặp: Còn lại 102.852 dòng sạch, 12 cột đặc trưng then chốt.
@@ -36,37 +36,82 @@
 | Thành phần | Lựa chọn kỹ thuật trong dự án | Lý do lựa chọn |
 | :--- | :--- | :--- |
 | **Thư viện cốt lõi** | `numpy`, `pandas`, `scikit-learn`, `joblib`, `matplotlib`, `seaborn` | Hệ sinh thái chuẩn mực cho xử lý bảng số, đại số ma trận và trực quan hóa. |
-| **3 Thuật toán Scratch** | 1. Linear Regression (Normal Equation + L2)<br>2. Decision Tree Regressor (MSE Variance Reduction, Quantile Splits)<br>3. Random Forest Regressor (Ensemble Bagging & Subspace) | Tự viết 100% bằng NumPy thuần túy, kế thừa BaseEstimator/RegressorMixin. |
+| **3 Thuật toán Scratch** | 1. Linear Regression <br>2. Decision Tree Regressor <br>3. Random Forest Regressor  | Tự viết 100% bằng NumPy thuần túy, kế thừa BaseEstimator/RegressorMixin. |
 | **Thước đo đánh giá** | MSE, RMSE, MAE, Hệ số xác định $R^2$ & Residual Plot | Đo lường toàn diện độ lệch sai số thực tế và đánh giá tính không thiên lệch của phần dư. |
 | **Tiêu chí chọn Best Model** | Mô hình có **$R^2$ cao nhất** và **RMSE nhỏ nhất** trên tập Test | Năng lực giải thích biến thiên doanh số vượt trội và sai số dự báo thực tế thấp nhất. |
 
 #### WHEN — Tiến trình thực hiện & Điều kiện dừng
-* **Giai đoạn 1:** Khám phá & Làm sạch dữ liệu (`clean_amazon_sales.csv` đạt 102.852 dòng).
-* **Giai đoạn 2:** Trích xuất đặc trưng miền, lọc đa cộng tuyến, tách Train/Test 80/20 (`train.csv`, `test.csv`).
-* **Giai đoạn 3:** Huấn luyện 3 mô hình Scratch & Tinh chỉnh siêu tham số qua 5-Fold Cross Validation.
-* **Giai đoạn 4:** Đánh giá độc lập trên tập Test (20.571 mẫu), vẽ Residual Plot và trích xuất Top 15 đặc trưng quan trọng.
-* **Giai đoạn 5:** Đóng gói Pipeline vào `models/saved_models/` và dựng giao diện demo suy luận tương tác.
-* **Điều kiện dừng & Nghiệm thu:** Khi cả 3 mô hình hoàn tất kiểm thử, mô hình tốt nhất đạt $R^2 > 0.50$ và toàn bộ 8 bài test tự động đạt 100%.
+* **Giai đoạn 1 (Làm sạch & Khám phá dữ liệu):** Khảo sát 128.975 dòng dữ liệu thô, khử sạch 26.123 đơn hủy, đơn lỗi và trùng lặp kỹ thuật (Zero Duplicate Leakage) để xuất bản ghi sạch chuẩn mực `clean_amazon_sales.csv` (102.852 dòng); phân tích biến mục tiêu nén log1p và quét ngoại lai qua khoảng tứ phân vị IQR.
+* **Giai đoạn 2 (Kỹ thuật đặc trưng & Phân tách tập dữ liệu):** Trích xuất chuỗi thời gian (`month`, `day_of_week`), địa lý Top 10 bang + 'Other', loại bỏ biến đa cộng tuyến $|r| > 0.6$, chia tập Train (82.281 mẫu) và Test (20.571 mẫu) tỷ lệ 80/20 với `random_state=42`; đóng gói bộ biến đổi `ColumnTransformer` (`preprocessor.joblib`) và xuất `train.csv`, `test.csv`, `train_test_data.joblib`.
+* **Giai đoạn 3 (Huấn luyện Scratch & Tinh chỉnh siêu tham số):** Cài đặt thuần NumPy 3 thuật toán hồi quy (Linear Regression OLS + L2, Decision Tree Regressor và Random Forest Regressor); đánh giá chéo 5-Fold Cross Validation trên tập Train; lưu trữ độc lập cả 3 mô hình (`linear_regression.joblib`, `decision_tree.joblib`, `random_forest.joblib`) cùng Quán quân (`best_model.joblib`) vào `models/saved_models/`.
+* **Giai đoạn 4 (Đánh giá kiểm thử độc lập & Giải thích mô hình):** Đánh giá trên 20.571 mẫu Test, nghịch đảo `expm1` có chốt chặn chống tràn số, đo lường 4 chỉ số thực tế (MSE, RMSE, MAE, $R^2$); trực quan hóa biểu đồ Actual vs Predicted, Residual Plot; bóc tách Top 15 đặc trưng chi phối doanh số và xuất siêu dữ liệu `metadata.json`.
+* **Giai đoạn 5 (Đóng gói ứng dụng & Demo thời gian thực):** Tích hợp ứng dụng suy luận trong `demo.ipynb` kèm cơ chế Guardrail phòng vệ dữ liệu lỗi, hỗ trợ Playground tương tác tự do và Playground lựa chọn đa mô hình; xuất bản báo cáo nghiệm thu kỹ thuật HTML/Markdown tại `docs/report/`.
+* **Điều kiện dừng & Nghiệm thu:** 
+  - Toàn bộ bộ kiểm thử tự động `scripts/test_all_components.py` đạt **100% PASS** cho cả 8 bước.
+  - Mô hình Quán quân (Random Forest Regressor) đạt $R^2 \ge 0.48$ và $\text{RMSE} \le 200\text{ INR}$ trên tập Test thực tế.
+  - Đảm bảo an toàn số học: không có hiện tượng tràn số (Overflow `inf`) khi nghịch đảo `expm1`.
 
 #### WHERE — Cây thư mục tổ chức thực tế của dự án
 ```text
 PRACTICE 2_PREDICTING_PRODUCT_SALES/
 ├── data/
-│   ├── raw/                      # Dữ liệu gốc (Amazon Sale Report.csv, .zip)
-│   ├── processed/                # Dữ liệu sạch (clean_amazon_sales.csv, train.csv, test.csv, train_test_data.joblib)
-│   └── scripts/                  # Module tiền xử lý (data_preprocessing.py, eda.py)
+│   ├── raw/                      # Dữ liệu thương mại điện tử gốc
+│   │   ├── Amazon Sale Report.csv# Tập dữ liệu thô ban đầu (128.975 dòng)
+│   │   └── Amazon Sale Report.zip# Bản nén lưu trữ dữ liệu gốc
+│   ├── processed/                # Dữ liệu sạch đã tiền xử lý
+│   │   ├── clean_amazon_sales.csv# Dữ liệu sạch sau khử đơn hủy và trùng lặp (102.852 dòng)
+│   │   ├── train.csv             # Tập huấn luyện mở được bằng Excel (80% — 82.281 dòng)
+│   │   ├── test.csv              # Tập kiểm tra mở được bằng Excel (20% — 20.571 dòng)
+│   │   └── train_test_data.joblib# Tệp nhị phân lưu trữ toàn bộ dữ liệu phân tách
+│   └── scripts/                  # Kịch bản tiền xử lý và EDA
+│       ├── data_preprocessing.py # Module làm sạch khuyết thiếu và khử trùng lặp
+│       └── eda.py                # Module phân tích đơn biến, đa biến và quét IQR
 ├── docs/
-│   ├── description/              # Tài liệu thiết kế (project_description.md, project_design.md, TASKS.md)
-│   ├── algorithms/               # Lý thuyết 3 thuật toán Scratch hồi quy
+│   ├── description/              # Tài liệu phân tích và đặc tả dự án
+│   │   ├── algorithms/           # Cơ sở toán học & lý thuyết 3 thuật toán Scratch hồi quy
+│   │   │   ├── linear_regression.md
+│   │   │   ├── decision_tree_regressor.md
+│   │   │   └── random_forest_regressor.md
+│   │   ├── project_description.md# Mô tả tổng quan bài toán kinh doanh
+│   │   ├── project_design.md     # Bản thiết kế chi tiết 5W1H này
+│   │   └── TASKS.md              # Bảng phân công nhiệm vụ và tiến độ nhóm 3
 │   ├── images/                   # Biểu đồ trực quan hóa EDA và kết quả mô hình
-│   └── report/                   # Báo cáo nghiệm thu HTML/Markdown
+│   │   ├── eda_01_univariate_sales.png
+│   │   ├── model_01_actual_vs_predicted.png
+│   │   ├── model_02_residuals.png
+│   │   ├── model_03_performance_comparison.png
+│   │   └── model_04_feature_importances.png
+│   └── report/                   # Báo cáo kỹ thuật và bảng điều khiển nghiệm thu
+│       ├── index.html            # Bảng điều khiển trung tâm (Dashboard)
+│       ├── 01_data_report.html   # Báo cáo khám phá & làm sạch dữ liệu
+│       ├── 02_feature_pipeline_report.html # Báo cáo kỹ thuật đặc trưng & Pipeline
+│       ├── 03_model_evaluation_report.html # Báo cáo huấn luyện & đánh giá mô hình
+│       └── README.md             # Báo cáo nghiệm thu kỹ thuật Markdown
 ├── models/
-│   ├── algorithms/               # Mã nguồn 3 thuật toán Scratch (linear_regression.py, decision_tree.py, random_forest.py)
-│   └── saved_models/             # Mô hình tối ưu đã lưu (best_model.joblib, preprocessor.joblib, metadata.json)
-├── notebooks/                    # 4 Notebooks thực hành tuần tự và Demo
-├── scripts/                      # Các kịch bản chạy tự động (run_pipeline.py, feature_engineering.py, test_all_components.py)
-├── README.md
-└── requirements.txt
+│   ├── algorithms/               # Mã nguồn 3 thuật toán hồi quy From Scratch (NumPy thuần túy)
+│   │   ├── linear_regression.py  # Hồi quy tuyến tính OLS + L2 Ridge
+│   │   ├── decision_tree.py      # Cây quyết định hồi quy (Quantile Splits + Giảm phương sai)
+│   │   └── random_forest.py      # Rừng ngẫu nhiên hồi quy (Bootstrap Aggregating)
+│   └── saved_models/             # Mô hình tối ưu đã đóng gói và siêu dữ liệu
+│       ├── best_model.joblib     # Mô hình quán quân Random Forest Regressor
+│       ├── decision_tree.joblib  # Mô hình Cây quyết định hồi quy độc lập
+│       ├── linear_regression.joblib # Mô hình Hồi quy tuyến tính độc lập
+│       ├── random_forest.joblib  # Mô hình Rừng ngẫu nhiên hồi quy độc lập
+│       ├── preprocessor.joblib   # Pipeline biến đổi ColumnTransformer đã fit
+│       └── metadata.json         # Bảng thông số nghiệm thu và Top 15 đặc trưng chi phối
+├── notebooks/                    # 4 Notebooks Jupyter thực hành tuần tự và Demo
+│   ├── 01_data_cleaning_and_eda.ipynb
+│   ├── 02_feature_engineering_and_pipeline.ipynb
+│   ├── 03_model_training_evaluation_and_explain.ipynb
+│   └── demo.ipynb                # Demo suy luận doanh số thời gian thực đa mô hình có Guardrail
+├── scripts/                      # Kịch bản thực thi và công cụ hỗ trợ
+│   ├── feature_engineering.py    # Trích xuất đặc trưng & xây dựng Pipeline
+│   ├── model_training.py         # Huấn luyện 3 mô hình Scratch & 5-Fold CV
+│   ├── model_evaluation.py       # Đánh giá trên tập test, expm1 & xuất đồ thị
+│   ├── run_pipeline.py           # Kịch bản chạy tự động toàn bộ quy trình End-to-End
+│   └── test_all_components.py    # Bộ kiểm thử tự động 8 bước đạt chuẩn 100%
+├── README.md                     # Tài liệu hướng dẫn khởi chạy dự án
+└── requirements.txt              # Danh mục thư viện phụ thuộc
 ```
 
 ---

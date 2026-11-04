@@ -57,42 +57,89 @@ def run_cross_validation(pipelines: dict, X_train, y_train, cv=None, random_stat
 
 
 def get_default_param_grids() -> dict:
-    """Trả về lưới tham số tinh chỉnh toàn diện, tối ưu hiệu năng cao nhất cho các mô hình Scratch."""
+    """Trả về lưới tham số tinh chỉnh toàn diện, bao gồm chọn lọc đặc trưng và siêu tham số mô hình."""
     return {
         "naive_bayes": {
-            "classifier__alpha": [0.01, 0.1, 0.5, 1.0]
+            "preprocessor__text__select__k": [1500, 2000],
+            "classifier__alpha": [0.05, 0.1, 0.5, 1.0]
         },
         "logistic_regression": {
-            "classifier__learning_rate": [5.0, 10.0, 15.0],
-            "classifier__n_iters": [250, 300]
+            "preprocessor__text__select__k": [1500, 2000],
+            "classifier__learning_rate": [10.0, 15.0]
         },
         "linear_svm": {
-            "classifier__learning_rate": [2.0, 5.0, 8.0],
-            "classifier__lambda_param": [1e-5, 1e-4, 1e-3],
-            "classifier__n_iters": [200, 300]
+            "preprocessor__text__select__k": [1500, 2000],
+            "classifier__learning_rate": [5.0, 8.0]
         }
     }
 
 
 def tune_grid_search(pipelines: dict, param_grids: dict = None, X_train=None, y_train=None,
-                     cv=None, models_dir: str = None) -> dict:
-    """Thực hiện tinh chỉnh siêu tham số qua GridSearchCV và lưu trữ mô hình tối ưu vào models/saved_models/."""
+                     cv=None, subsample_size: int = 6000, random_state: int = 42,
+                     models_dir: str = None, return_summary: bool = False):
+    """
+    Thực hiện tinh chỉnh siêu tham số qua GridSearchCV trên tập mẫu đại diện (subsample 6.000 mẫu),
+    sau đó áp dụng siêu tham số tối ưu huấn luyện toàn diện trên toàn bộ tập Train (26.128 mẫu)
+    và lưu trữ mô hình tối ưu vào models/saved_models/.
+    
+    Tham số:
+        pipelines (dict): Từ điển chứa các Pipeline huấn luyện.
+        param_grids (dict, optional): Lưới không gian siêu tham số.
+        X_train, y_train: Dữ liệu huấn luyện.
+        cv: Chiến lược phân chia Cross Validation (mặc định 3-Fold Stratified CV).
+        subsample_size (int): Kích thước mẫu đại diện để quét siêu tham số nhanh (mặc định 6.000).
+        random_state (int): Hạt giống ngẫu nhiên (mặc định 42).
+        models_dir (str, optional): Thư mục lưu trữ mô hình.
+        return_summary (bool): Nếu True, trả về tuple (tuned_models, summary_df).
+        
+    Trả về:
+        dict hoặc tuple: Mô hình tối ưu (hoặc kèm DataFrame tổng hợp tham số).
+    """
     if param_grids is None:
         param_grids = get_default_param_grids()
     if cv is None:
-        cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
+        cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=random_state)
 
     save_dir = Path(models_dir) if models_dir else BASE_DIR / "models" / "saved_models"
     save_dir.mkdir(parents=True, exist_ok=True)
 
+    # Lấy mẫu đại diện để quét nhanh qua GridSearchCV
+    if subsample_size is not None and len(X_train) > subsample_size:
+        X_sub = X_train.iloc[:subsample_size]
+        y_sub = y_train[:subsample_size]
+    else:
+        X_sub = X_train
+        y_sub = y_train
+
     tuned_models = {}
+    summary_records = []
     for name, pipe in pipelines.items():
-        gs = GridSearchCV(pipe, param_grid=param_grids[name], cv=cv, scoring="f1", n_jobs=-1, verbose=0)
-        gs.fit(X_train, y_train)
-        best_est = gs.best_estimator_
-        tuned_models[name] = best_est
+        grid = param_grids.get(name, {})
+        if grid:
+            gs = GridSearchCV(pipe, param_grid=grid, cv=cv, scoring="f1", n_jobs=-1, verbose=0)
+            gs.fit(X_sub, y_sub)
+            best_p = gs.best_params_
+            best_f1 = gs.best_score_
+            pipe.set_params(**best_p)
+        else:
+            best_p = {}
+            best_f1 = 0.0
+
+        # Huấn luyện hoàn chỉnh mô hình tối ưu trên TOÀN BỘ 26.128 mẫu Train
+        pipe.fit(X_train, y_train)
+        tuned_models[name] = pipe
+
+        summary_records.append({
+            "Mô hình": name,
+            "Best CV F1 (Mẫu 6k)": f"{best_f1 * 100:.2f}%",
+            "Siêu tham số tối ưu (Best Params)": str(best_p)
+        })
+        print(f"  ✓ [{name}] Best F1 = {best_f1 * 100:.2f}% | Params: {best_p}")
 
         # Lưu độc quyền vào models/saved_models/
-        joblib.dump(best_est, save_dir / f"{name}.joblib")
+        joblib.dump(pipe, save_dir / f"{name}.joblib")
 
+    summary_df = pd.DataFrame(summary_records)
+    if return_summary:
+        return tuned_models, summary_df
     return tuned_models

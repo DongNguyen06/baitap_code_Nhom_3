@@ -1,12 +1,6 @@
-"""
-Module: model_training.py
-Dự án: Practice 2: Predicting Product Sales — Group 3
-Phụ trách chính: Võ Khôi Nguyên
-Nhiệm vụ: Khởi tạo mô hình Scratch, đóng gói Pipeline chuẩn chống rò rỉ dữ liệu, đánh giá 5-Fold Cross-Validation và huấn luyện.
-"""
 from pathlib import Path
 import sys
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Union
 import joblib
 import numpy as np
 import pandas as pd
@@ -32,36 +26,41 @@ from models.algorithms import (
 
 
 def create_scratch_models() -> Dict[str, Any]:
-    """
-    Khởi tạo từ điển 3 mô hình hồi quy From Scratch tự viết bằng NumPy thuần túy.
-
-    Trả về:
-        Dict[str, Any]: Từ điển chứa 3 đối tượng mô hình Scratch ('Linear Regression', 'Decision Tree Regressor', 'Random Forest Regressor').
-    """
-    # TODO: [Võ Khôi Nguyên] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Khôi Nguyên cần hoàn thiện hàm 'create_scratch_models' theo phân công trong docs/description/TASKS.md"
-    )
+    """Khởi tạo từ điển 3 mô hình hồi quy From Scratch tự viết bằng NumPy thuần túy."""
+    return {
+        "Linear Regression": LinearRegressionScratch(method="normal_equation"),
+        "Decision Tree Regressor": DecisionTreeRegressorScratch(
+            max_depth=6,
+            min_samples_split=10,
+            min_samples_leaf=5,
+            random_state=42
+        ),
+        "Random Forest Regressor": RandomForestRegressorScratch(
+            n_estimators=20,
+            max_depth=8,
+            min_samples_split=10,
+            min_samples_leaf=5,
+            max_features=None,
+            random_state=42
+        )
+    }
 
 
 def build_training_pipelines(
     preprocessor: Any,
     models: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Pipeline]:
-    """
-    Đóng gói Pipeline chuẩn chống rò rỉ dữ liệu kết hợp tiền xử lý và mô hình hồi quy.
+    """Đóng gói Pipeline chuẩn chống rò rỉ dữ liệu kết hợp ColumnTransformer và mô hình hồi quy."""
+    if models is None:
+        models = create_scratch_models()
 
-    Tham số:
-        preprocessor: Đối tượng ColumnTransformer tiền xử lý dữ liệu.
-        models (Dict[str, Any], optional): Từ điển mô hình. Mặc định gọi create_scratch_models().
-
-    Trả về:
-        Dict[str, Pipeline]: Từ điển chứa các Pipeline huấn luyện hoàn chỉnh.
-    """
-    # TODO: [Võ Khôi Nguyên] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Khôi Nguyên cần hoàn thiện hàm 'build_training_pipelines' theo phân công trong docs/description/TASKS.md"
-    )
+    pipelines = {}
+    for name, model in models.items():
+        pipelines[name] = Pipeline(steps=[
+            ("preprocessor", preprocessor),
+            ("regressor", model)
+        ])
+    return pipelines
 
 
 def evaluate_cv_models(
@@ -72,71 +71,118 @@ def evaluate_cv_models(
     sample_size: Optional[int] = 10000,
     random_state: int = 42
 ) -> pd.DataFrame:
-    """
-    Đánh giá chéo 5-Fold Cross Validation trên tập Train để đo lường độ ổn định mô hình.
+    """Đánh giá độ ổn định của các Pipeline qua K-Fold Cross Validation trên tập Train."""
+    if sample_size is not None and len(X_train) > sample_size:
+        X_eval = X_train.sample(n=sample_size, random_state=random_state)
+        y_eval = y_train.loc[X_eval.index]
+    else:
+        X_eval = X_train
+        y_eval = y_train
 
-    Tham số:
-        pipelines (Dict[str, Pipeline]): Từ điển các Pipeline cần đánh giá.
-        X_train (pd.DataFrame): Dữ liệu đặc trưng huấn luyện.
-        y_train (pd.Series): Biến mục tiêu log1p(Amount).
-        cv (int): Số fold chia tập kiểm định chéo (mặc định: 5).
-        sample_size (int, optional): Kích thước mẫu lấy ngẫu nhiên để CV nhanh (mặc định: 10.000).
-        random_state (int): Hạt giống ngẫu nhiên (mặc định: 42).
+    kf = KFold(n_splits=cv, shuffle=True, random_state=random_state)
+    records = []
 
-    Trả về:
-        pd.DataFrame: Bảng tổng hợp CV R2 (Mean, Std) và CV RMSE (Mean, Std).
-    """
-    # TODO: [Võ Khôi Nguyên] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Khôi Nguyên cần hoàn thiện hàm 'evaluate_cv_models' theo phân công trong docs/description/TASKS.md"
-    )
+    for name, pipe in pipelines.items():
+        scores = cross_validate(
+            pipe,
+            X_eval,
+            y_eval,
+            cv=kf,
+            scoring={"r2": "r2", "neg_rmse": "neg_root_mean_squared_error"},
+            n_jobs=1
+        )
+        r2_scores = scores["test_r2"]
+        rmse_scores = -scores["test_neg_rmse"]
 
+        records.append({
+            "Mô hình": name,
+            "CV R² (Mean)": f"{np.mean(r2_scores):.4f}",
+            "CV R² (Std)": f"± {np.std(r2_scores):.4f}",
+            "CV RMSE (Mean)": f"{np.mean(rmse_scores):.4f}",
+            "CV RMSE (Std)": f"± {np.std(rmse_scores):.4f}"
+        })
 
-def tune_hyperparameters(
-    pipeline: Pipeline,
-    param_grid: Dict[str, Any],
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    cv: int = 3
-) -> GridSearchCV:
-    """
-    Tinh chỉnh siêu tham số tối ưu thông qua GridSearchCV.
-
-    Tham số:
-        pipeline (Pipeline): Pipeline cần tinh chỉnh.
-        param_grid (dict): Lưới không gian siêu tham số.
-        X_train (pd.DataFrame): Dữ liệu đặc trưng huấn luyện.
-        y_train (pd.Series): Biến mục tiêu log.
-        cv (int): Số fold kiểm định chéo khi tinh chỉnh (mặc định: 3).
-
-    Trả về:
-        GridSearchCV: Đối tượng grid search đã fit.
-    """
-    # TODO: [Võ Khôi Nguyên] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Khôi Nguyên cần hoàn thiện hàm 'tune_hyperparameters' theo phân công trong docs/description/TASKS.md"
-    )
+    return pd.DataFrame(records)
 
 
-def train_and_save_all_models(
+def get_default_param_grids() -> Dict[str, Dict[str, Any]]:
+    """Trả về lưới tham số tinh chỉnh tối ưu cho các mô hình hồi quy Scratch."""
+    return {
+        "Linear Regression": {
+            "regressor__l2": [0.0, 0.0001, 0.001, 0.01]
+        },
+        "Decision Tree Regressor": {
+            "regressor__max_depth": [5, 6, 7],
+            "regressor__min_samples_split": [5, 10]
+        },
+        "Random Forest Regressor": {
+            "regressor__n_estimators": [15, 20],
+            "regressor__max_depth": [6, 8]
+        }
+    }
+
+
+def tune_grid_search(
     pipelines: Dict[str, Pipeline],
-    X_train: pd.DataFrame,
-    y_train: pd.Series,
-    output_dir: Path
-) -> Dict[str, Pipeline]:
-    """
-    Huấn luyện toàn bộ các Pipeline trên dữ liệu tập Train và lưu trữ mô hình tối ưu.
+    param_grids: Optional[Dict[str, Dict[str, Any]]] = None,
+    X_train: Optional[pd.DataFrame] = None,
+    y_train: Optional[pd.Series] = None,
+    cv: int = 3,
+    subsample_size: Optional[int] = 10000,
+    random_state: int = 42,
+    models_dir: Optional[Union[str, Path]] = None,
+    return_summary: bool = False
+):
+    """Tinh chỉnh siêu tham số qua GridSearchCV trên mẫu đại diện, sau đó huấn luyện mô hình tối ưu trên toàn bộ Train set."""
+    if param_grids is None:
+        param_grids = get_default_param_grids()
 
-    Tham số:
-        pipelines (Dict[str, Pipeline]): Từ điển các Pipeline.
-        X_train (pd.DataFrame): Dữ liệu đặc trưng huấn luyện.
-        y_train (pd.Series): Biến mục tiêu log.
-        output_dir (Path): Thư mục lưu mô hình (models/saved_models/).
+    save_dir = Path(models_dir) if models_dir else BASE_DIR / "models" / "saved_models"
+    save_dir.mkdir(parents=True, exist_ok=True)
 
-    Trả về:
-        Dict[str, Pipeline]: Từ điển các Pipeline đã fit hoàn chỉnh.
-    """
-    # TODO: [Võ Khôi Nguyên] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Võ Khôi Nguyên cần hoàn thiện hàm 'train_and_save_all_models' theo phân công trong docs/description/TASKS.md"
-    )
+    if subsample_size is not None and len(X_train) > subsample_size:
+        X_sub = X_train.sample(n=subsample_size, random_state=random_state)
+        y_sub = y_train.loc[X_sub.index]
+    else:
+        X_sub = X_train
+        y_sub = y_train
+
+    kf = KFold(n_splits=cv, shuffle=True, random_state=random_state)
+    tuned_models: Dict[str, Pipeline] = {}
+    summary_records = []
+
+    for name, pipe in pipelines.items():
+        grid = param_grids.get(name, {})
+        if grid:
+            gs = GridSearchCV(pipe, param_grid=grid, cv=kf, scoring="r2", n_jobs=1)
+            gs.fit(X_sub, y_sub)
+            best_p = gs.best_params_
+            best_score = gs.best_score_
+            pipe.set_params(**best_p)
+        else:
+            best_p = {}
+            best_score = float("nan")
+
+        pipe.fit(X_train, y_train)
+        tuned_models[name] = pipe
+
+        summary_records.append({
+            "Mô hình": name,
+            "Best CV R² (Subsample 10k)": f"{best_score:.4f}" if not np.isnan(best_score) else "N/A",
+            "Siêu tham số tối ưu (Best Params)": str(best_p) if best_p else "Mặc định"
+        })
+        print(f"  ✓ [{name}] Tinh chỉnh hoàn tất | R² = {best_score:.4f} | Params: {best_p}")
+
+        # Lưu riêng từng mô hình phục vụ suy luận độc lập
+        file_map = {
+            "Linear Regression": "linear_regression.joblib",
+            "Decision Tree Regressor": "decision_tree.joblib",
+            "Random Forest Regressor": "random_forest.joblib"
+        }
+        if name in file_map:
+            joblib.dump(pipe, save_dir / file_map[name])
+
+    summary_df = pd.DataFrame(summary_records)
+    if return_summary:
+        return tuned_models, summary_df
+    return tuned_models
