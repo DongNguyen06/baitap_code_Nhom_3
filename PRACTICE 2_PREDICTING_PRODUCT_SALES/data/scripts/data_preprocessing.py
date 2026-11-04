@@ -16,21 +16,38 @@ if sys.platform == "win32":
     except Exception:
         pass
 
+# Danh sách 12 cột cần giữ lại cho các bước sau
+KEEP_COLUMNS = [
+    "Date", "Status", "Fulfilment", "ship-service-level", "Category", "Size",
+    "Courier Status", "Qty", "Amount", "ship-state", "promotion-ids", "B2B",
+]
+
 
 def handle_missing_and_duplicates(df: pd.DataFrame) -> pd.DataFrame:
     """
     Khử trùng lặp bản ghi và điền khuyết thiếu cho các trường dữ liệu.
-
-    Tham số:
-        df (pd.DataFrame): DataFrame dữ liệu đầu vào.
-
-    Trả về:
-        pd.DataFrame: DataFrame đã được khử trùng lặp và điền khuyết thiếu.
     """
-    # TODO: [Nguyễn Minh Nhật] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Nguyễn Minh Nhật cần hoàn thiện hàm 'handle_missing_and_duplicates' theo phân công trong docs/description/TASKS.md"
-    )
+    # Xóa các cột rác (index, Unnamed) để drop_duplicates hoạt động chính xác
+    df = df.drop(columns=[c for c in df.columns if c == "index" or c.startswith("Unnamed")])
+    
+    # Chuẩn hóa text: Xóa khoảng trắng thừa và viết IN HOA cột ship-state
+    df["ship-state"] = df["ship-state"].str.strip().str.upper()
+    
+    # Khử trùng lặp
+    df = df.drop_duplicates()
+
+    # Điền giá trị mặc định cho 2 cột đặc thù
+    df["promotion-ids"] = df["promotion-ids"].fillna("No_Promotion")
+    df["Courier Status"] = df["Courier Status"].fillna("Unshipped")
+
+    # Tự động điền khuyết (Số -> trung vị, Chữ -> mode)
+    for col in df.columns[df.isna().any()]:
+        if pd.api.types.is_numeric_dtype(df[col]):
+            df[col] = df[col].fillna(df[col].median())
+        else:
+            df[col] = df[col].fillna(df[col].mode()[0])
+
+    return df.reset_index(drop=True)
 
 
 def clean_amazon_sales_data(
@@ -39,18 +56,29 @@ def clean_amazon_sales_data(
 ) -> pd.DataFrame:
     """
     Làm sạch toàn diện dữ liệu thô Amazon Sale Report và xuất tệp sạch.
-
-    Tham số:
-        raw_path (str | Path): Đường dẫn đến tệp CSV dữ liệu thô.
-        output_path (str | Path, optional): Đường dẫn lưu tệp CSV kết quả sạch.
-
-    Trả về:
-        pd.DataFrame: DataFrame dữ liệu sạch hoàn thiện.
     """
-    # TODO: [Nguyễn Minh Nhật] Hoàn thiện hàm này theo phân công trong docs/description/TASKS.md
-    raise NotImplementedError(
-        "Chưa cài đặt - Nguyễn Minh Nhật cần hoàn thiện hàm 'clean_amazon_sales_data' theo phân công trong docs/description/TASKS.md"
-    )
+    # 1. Đọc dữ liệu
+    df = pd.read_csv(raw_path, low_memory=False)
+    
+    # 2. Lọc đơn hủy và đơn rác (Amount, Qty <= 0)
+    df = df[~df["Status"].str.contains("Cancelled", case=False, na=False)]
+    df = df[(df["Amount"] > 0) & (df["Qty"] > 0)]
+
+    # 3. Làm sạch (Xóa trùng lặp, điền khuyết thiếu)
+    df = handle_missing_and_duplicates(df)
+    
+    # 4. Chỉ giữ lại 12 cột cần thiết
+    df = df[KEEP_COLUMNS]
+
+    # 5. Kiểm tra an toàn (không còn ô trống)
+    assert df.isna().sum().sum() == 0, "Dữ liệu sạch vẫn còn ô khuyết!"
+
+    # 6. Xuất file nếu có đường dẫn
+    if output_path:
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(output_path, index=False)
+        
+    return df
 
 
 if __name__ == "__main__":
