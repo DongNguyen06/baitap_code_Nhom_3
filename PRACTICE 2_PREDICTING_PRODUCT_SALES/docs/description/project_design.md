@@ -40,16 +40,12 @@
 | **Thước đo đánh giá** | MSE, RMSE, MAE, Hệ số xác định $R^2$ & Residual Plot | Đo lường toàn diện độ lệch sai số thực tế và đánh giá tính không thiên lệch của phần dư. |
 | **Tiêu chí chọn Best Model** | Mô hình có **$R^2$ cao nhất** và **RMSE nhỏ nhất** trên tập Test | Năng lực giải thích biến thiên doanh số vượt trội và sai số dự báo thực tế thấp nhất. |
 
-#### WHEN — Tiến trình thực hiện & Điều kiện dừng
-* **Giai đoạn 1 (Làm sạch & Khám phá dữ liệu):** Khảo sát 128.975 dòng dữ liệu thô, khử sạch 26.123 đơn hủy, đơn lỗi và trùng lặp kỹ thuật (Zero Duplicate Leakage) để xuất bản ghi sạch chuẩn mực `clean_amazon_sales.csv` (102.852 dòng); phân tích biến mục tiêu nén log1p và quét ngoại lai qua khoảng tứ phân vị IQR.
-* **Giai đoạn 2 (Kỹ thuật đặc trưng & Phân tách tập dữ liệu):** Trích xuất chuỗi thời gian (`month`, `day_of_week`), địa lý Top 10 bang + 'Other', loại bỏ biến đa cộng tuyến $|r| > 0.6$, chia tập Train (82.281 mẫu) và Test (20.571 mẫu) tỷ lệ 80/20 với `random_state=42`; đóng gói bộ biến đổi `ColumnTransformer` (`preprocessor.joblib`) và xuất `train.csv`, `test.csv`, `train_test_data.joblib`.
-* **Giai đoạn 3 (Huấn luyện Scratch & Tinh chỉnh siêu tham số):** Cài đặt thuần NumPy 3 thuật toán hồi quy (Linear Regression OLS + L2, Decision Tree Regressor và Random Forest Regressor); đánh giá chéo 5-Fold Cross Validation trên tập Train; lưu trữ độc lập cả 3 mô hình (`linear_regression.joblib`, `decision_tree.joblib`, `random_forest.joblib`) cùng Quán quân (`best_model.joblib`) vào `models/saved_models/`.
-* **Giai đoạn 4 (Đánh giá kiểm thử độc lập & Giải thích mô hình):** Đánh giá trên 20.571 mẫu Test, nghịch đảo `expm1` có chốt chặn chống tràn số, đo lường 4 chỉ số thực tế (MSE, RMSE, MAE, $R^2$); trực quan hóa biểu đồ Actual vs Predicted, Residual Plot; bóc tách Top 15 đặc trưng chi phối doanh số và xuất siêu dữ liệu `metadata.json`.
-* **Giai đoạn 5 (Đóng gói ứng dụng & Demo thời gian thực):** Tích hợp ứng dụng suy luận trong `demo.ipynb` kèm cơ chế Guardrail phòng vệ dữ liệu lỗi, hỗ trợ Playground tương tác tự do và Playground lựa chọn đa mô hình; xuất bản báo cáo nghiệm thu kỹ thuật HTML/Markdown tại `docs/report/`.
-* **Điều kiện dừng & Nghiệm thu:** 
-  - Toàn bộ bộ kiểm thử tự động `scripts/test_all_components.py` đạt **100% PASS** cho cả 8 bước.
-  - Mô hình Quán quân (Random Forest Regressor) đạt $R^2 \ge 0.48$ và $\text{RMSE} \le 200\text{ INR}$ trên tập Test thực tế.
-  - Đảm bảo an toàn số học: không có hiện tượng tràn số (Overflow `inf`) khi nghịch đảo `expm1`.
+#### WHEN — Tiến trình thực hiện
+* **Giai đoạn 1 (Làm sạch & Khám phá dữ liệu)
+* **Giai đoạn 2 (Kỹ thuật đặc trưng & Phân tách tập dữ liệu)
+* **Giai đoạn 3 (Huấn luyện Scratch & Tinh chỉnh siêu tham số)
+* **Giai đoạn 4 (Đánh giá kiểm thử độc lập & Giải thích mô hình)
+* **Giai đoạn 5 (Đóng gói mô hình & Demo thời gian thực)
 
 #### WHERE — Cây thư mục tổ chức thực tế của dự án
 ```text

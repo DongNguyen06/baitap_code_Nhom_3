@@ -41,13 +41,12 @@
 | **Thước đo đánh giá** | Accuracy, Precision, Recall, F1-Score & Ma trận nhầm lẫn (Confusion Matrix) | Đánh giá toàn diện năng lực nhận diện spam và đo đếm chính xác số ca bắt nhầm (FP). |
 | **Tiêu chí chọn Best Model** | Mô hình có **F1-Score cao nhất** kết hợp **Precision cao** (hạn chế tối đa FP) | Cân bằng hoàn hảo giữa khả năng bắt thư rác và độ an toàn cho thư thường. |
 
-#### WHEN — Tiến trình thực hiện & Điều kiện dừng
+#### WHEN — Tiến trình thực hiện
 * **Giai đoạn 1:** Khám phá & Làm sạch dữ liệu (`clean_emails.csv`).
 * **Giai đoạn 2:** Trích xuất đặc trưng kết hợp & Tách tập Train/Test 80/20 (`train.csv`, `test.csv`).
 * **Giai đoạn 3:** Huấn luyện 3 mô hình Scratch & Tinh chỉnh siêu tham số qua 5-Fold Stratified CV.
 * **Giai đoạn 4:** Đánh giá độc lập trên tập Test, vẽ Confusion Matrix và xuất Top 15 từ khóa spam.
 * **Giai đoạn 5:** Đóng gói Pipeline vào `models/saved_models/` và dựng giao diện thử nghiệm tương tác.
-* **Điều kiện dừng & Nghiệm thu:** Khi cả 3 mô hình vượt ngưỡng $\text{F1} \ge 95\%$, trong đó mô hình Quán quân kiểm soát số ca bắt nhầm $\text{FP} \le 50$ trên hơn 6.500 mẫu kiểm tra.
 
 #### WHERE — Cây thư mục tổ chức thực tế của dự án
 ```text
