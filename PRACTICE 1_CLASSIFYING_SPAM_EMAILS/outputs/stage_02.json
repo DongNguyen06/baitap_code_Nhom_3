@@ -1,0 +1,90 @@
+{
+  "stage": "02",
+  "status": "success",
+  "started_at": "2026-11-06T08:43:56.316209",
+  "finished_at": "2026-11-06T08:43:59.850911",
+  "duration_sec": 3.53,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_02_fe_20261106_084356.log",
+  "config": {
+    "test_size": 0.2,
+    "random_seed": 42,
+    "tfidf_max_features": 5000,
+    "k_best": 2000,
+    "ngram_range": [
+      1,
+      2
+    ],
+    "scaler": "MinMaxScaler"
+  },
+  "metrics": {
+    "total_samples": 32660,
+    "train_size": 26128,
+    "test_size": 6532,
+    "train_ham_count": 13675,
+    "train_spam_count": 12453,
+    "train_spam_ratio": 47.66,
+    "test_ham_count": 3419,
+    "test_spam_count": 3113,
+    "test_spam_ratio": 47.66,
+    "text_overlap_count": 0,
+    "text_features_dim": 2000,
+    "numeric_features_dim": 7,
+    "total_features_dim": 2007
+  },
+  "tables": {
+    "domain_features_stats": [
+      {
+        "feature": "caps_ratio",
+        "ham_mean": 0.0519,
+        "spam_mean": 0.0535,
+        "description": "Tỷ lệ ký tự IN HOA trong toàn bộ email"
+      },
+      {
+        "feature": "exclamation_count",
+        "ham_mean": 1.0676,
+        "spam_mean": 1.1329,
+        "description": "Số lượng dấu chấm than (!)"
+      },
+      {
+        "feature": "dollar_count",
+        "ham_mean": 1.2244,
+        "spam_mean": 0.1296,
+        "description": "Số lượng ký hiệu tiền tệ ($)"
+      },
+      {
+        "feature": "has_re_prefix",
+        "ham_mean": 0.5526,
+        "spam_mean": 0.0075,
+        "description": "Có tiền tố trả lời 'Re:' ở tiêu đề"
+      },
+      {
+        "feature": "subject_exclamation",
+        "ham_mean": 0.0217,
+        "spam_mean": 0.1106,
+        "description": "Tiêu đề có chứa dấu chấm than (!)"
+      },
+      {
+        "feature": "text_len",
+        "ham_mean": 1434.1327,
+        "spam_mean": 212.0428,
+        "description": "Chiều dài ký tự chuỗi văn bản sạch"
+      },
+      {
+        "feature": "log_text_len",
+        "ham_mean": 6.643,
+        "spam_mean": 5.052,
+        "description": "Biến đổi ln(1 + text_len) nén độ lệch"
+      }
+    ]
+  },
+  "figures": [],
+  "timings": {
+    "load_clean_data": 0.73,
+    "extract_domain_features": 2.05,
+    "train_test_split": 0.02,
+    "leakage_check": 0.03,
+    "build_preprocessor": 0.0,
+    "save_artifacts": 0.62
+  }
+}

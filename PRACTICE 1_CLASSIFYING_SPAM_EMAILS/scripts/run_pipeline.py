@@ -1,125 +1,124 @@
+import argparse
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
-import pandas as pd
 
-# Cấu hình UTF-8 cho console Windows tránh lỗi ký tự
-if sys.platform == "win32":
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
+# Thiết lập đường dẫn gốc cho dự án
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
-
-from data.scripts.data_preprocessing import process_and_save_clean_data
-from scripts.feature_engineering import (
-    extract_domain_features,
-    split_stratified_train_test,
-    build_column_transformer,
-    save_pipeline_and_splits
-)
-from scripts.model_training import (
-    create_scratch_models,
-    build_training_pipelines,
-    run_cross_validation,
-    tune_grid_search
-)
-from scripts.model_evaluation import (
-    evaluate_holdout_test,
-    get_top_spam_keywords,
-    select_best_model,
-    export_model_artifacts
-)
+from scripts.logger_utils import setup_logger, timed, log_environment
+from scripts.common import LOGS_DIR, REPORT_DIR
+import scripts.run_01_eda as stage_01
+import scripts.run_02_fe as stage_02
+import scripts.run_03_train as stage_03
+import scripts.run_04_eval as stage_04
+import scripts.report_builder as report_builder
 
 
-def run_full_pipeline():
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="🚀 BỘ ĐIỀU PHỐI QUY TRÌNH HỌC MÁY TOÀN DIỆN (END-TO-END PIPELINE ORCHESTRATOR) — NHÓM 3"
+    )
+    parser.add_argument(
+        "--quick", "-q", action="store_true",
+        help="Chạy ở chế độ rút gọn (Quick Mode) để demo hoặc kiểm tra luồng nhanh chóng."
+    )
+    return parser.parse_args()
+
+
+def run_full_pipeline(quick_mode: bool = False):
     start_total = time.time()
-    print("=" * 75)
-    print("   🚀 BẮT ĐẦU CHẠY TOÀN BỘ QUY TRÌNH HỌC MÁY (END-TO-END PIPELINE) — NHÓM 3")
-    print("=" * 75)
 
-    # -------------------------------------------------------------------------
-    # CHẶNG 1: NẠP VÀ LÀM SẠCH DỮ LIỆU THÔ (DATA CLEANING)
-    # -------------------------------------------------------------------------
-    print("\n[Chặng 1/4] Làm sạch dữ liệu và khử trùng lặp (Zero Duplicate Leakage)...")
-    t0 = time.time()
-    raw_csv = BASE_DIR / "data" / "raw" / "CEAS_08.csv"
-    clean_csv = BASE_DIR / "data" / "processed" / "clean_emails.csv"
+    # 1. Khởi tạo Logger chính cho toàn bộ quy trình và lấy file_handler để chia sẻ
+    logger, log_path = setup_logger(log_dir=LOGS_DIR, prefix="run_pipeline")
+    pipeline_handler = getattr(logger, "file_handler", None)
 
-    df_raw = pd.read_csv(raw_csv)
-    df_clean, n_removed, _ = process_and_save_clean_data(df_raw, str(clean_csv))
-    print(f"  ✓ Đã làm sạch và xuất {len(df_clean):,} email sạch sang '{clean_csv.name}' (loại {n_removed:,} bản trùng, {time.time() - t0:.2f}s).")
+    logger.info("=" * 85)
+    logger.info("   🚀 KHỞI ĐỘNG QUY TRÌNH HỌC MÁY TOÀN DIỆN (END-TO-END PIPELINE) — NHÓM 3 (UTH)")
+    logger.info(f"   Thời điểm bắt đầu: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"   Chế độ chạy: {'⚡ Rút gọn (Quick Mode)' if quick_mode else '🏆 Huấn luyện toàn diện (Full Benchmark)'}")
+    logger.info("=" * 85)
 
-    # -------------------------------------------------------------------------
-    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & CHIA TẬP PHÂN TẦNG (FEATURE ENGINEERING)
-    # -------------------------------------------------------------------------
-    print("\n[Chặng 2/4] Trích xuất 7 đặc trưng miền & Thiết lập ColumnTransformer...")
-    t0 = time.time()
-    df_feat = extract_domain_features(df_clean)
-    X_train, X_test, y_train, y_test = split_stratified_train_test(df_feat, test_size=0.2, random_state=42)
-    preprocessor = build_column_transformer(max_features=5000, k_best=2000)
+    log_environment(logger)
+    timings = {}
 
-    train_test_joblib = BASE_DIR / "data" / "processed" / "train_test_data.joblib"
-    prep_joblib = BASE_DIR / "models" / "saved_models" / "preprocessor.joblib"
-    save_pipeline_and_splits(preprocessor, X_train, X_test, y_train, y_test, str(prep_joblib), str(train_test_joblib))
-    print(f"  ✓ Train set: {len(X_train):,} mẫu | Test set: {len(X_test):,} mẫu (Phân tầng 80/20).")
-    print(f"  ✓ Đã lưu 'preprocessor.joblib' và 'train_test_data.joblib' ({time.time() - t0:.2f}s).")
+    # =========================================================================
+    # CHẶNG 1: KHÁM PHÁ & LÀM SẠCH DỮ LIỆU (EDA & DATA CLEANING)
+    # =========================================================================
+    logger.info("\n" + "=" * 85)
+    logger.info(">>> [CHẶNG 1/4] KHÁM PHÁ & LÀM SẠCH DỮ LIỆU THÔ (EDA & DATA CLEANING)...")
+    logger.info("=" * 85)
+    with timed(logger, "Thực thi Chặng 01 (EDA & Data Cleaning)"):
+        t0 = time.time()
+        stage_01.main(extra_handler=pipeline_handler)
+        timings["stage_01_sec"] = round(time.time() - t0, 2)
 
-    # -------------------------------------------------------------------------
-    # CHẶNG 3: HUẤN LUYỆN 3 MÔ HÌNH SCRATCH & 5-FOLD CV
-    # -------------------------------------------------------------------------
-    print("\n[Chặng 3/4] Huấn luyện 3 thuật toán Scratch & Kiểm định chéo 5-Fold Stratified CV...")
-    t0 = time.time()
-    models = create_scratch_models(random_state=42)
-    pipelines = build_training_pipelines(preprocessor, models)
+    # =========================================================================
+    # CHẶNG 2: KỸ THUẬT ĐẶC TRƯNG & PHÂN TÁCH DỮ LIỆU (FEATURE ENGINEERING)
+    # =========================================================================
+    logger.info("\n" + "=" * 85)
+    logger.info(">>> [CHẶNG 2/4] KỸ THUẬT ĐẶC TRƯNG & THIẾT LẬP PIPELINE TIỀN XỬ LÝ...")
+    logger.info("=" * 85)
+    with timed(logger, "Thực thi Chặng 02 (Feature Engineering & Train/Test Split)"):
+        t0 = time.time()
+        stage_02.main(extra_handler=pipeline_handler)
+        timings["stage_02_sec"] = round(time.time() - t0, 2)
 
-    print("  • Đang thực hiện 5-Fold Stratified Cross Validation...")
-    cv_summary_df = run_cross_validation(pipelines, X_train, y_train, random_state=42)
-    print("\n--- BẢNG KẾT QUẢ 5-FOLD STRATIFIED CV TRÊN TẬP TRAIN ---")
-    print(cv_summary_df.to_string(index=False))
+    # =========================================================================
+    # CHẶNG 3: HUẤN LUYỆN 3 MÔ HÌNH SCRATCH & KIỂM ĐỊNH CHÉO (TRAINING & CV)
+    # =========================================================================
+    logger.info("\n" + "=" * 85)
+    logger.info(">>> [CHẶNG 3/4] HUẤN LUYỆN 3 MÔ HÌNH SCRATCH & KIỂM ĐỊNH CHÉO STRATIFIED CV...")
+    logger.info("=" * 85)
+    with timed(logger, "Thực thi Chặng 03 (Scratch Models Training & GridSearchCV)"):
+        t0 = time.time()
+        stage_03.run_stage_03(quick_mode=quick_mode, extra_handler=pipeline_handler)
+        timings["stage_03_sec"] = round(time.time() - t0, 2)
 
-    print("\n  • Đang tinh chỉnh siêu tham số và đóng gói mô hình tối ưu...")
-    saved_models_dir = BASE_DIR / "models" / "saved_models"
-    tuned_models = tune_grid_search(pipelines, X_train=X_train, y_train=y_train, models_dir=str(saved_models_dir))
-    print(f"  ✓ Đã huấn luyện và tối ưu xong 3 mô hình ({time.time() - t0:.2f}s).")
+    # =========================================================================
+    # CHẶNG 4: ĐÁNH GIÁ ĐỘC LẬP TẬP TEST & XUẤT HIỆN VẬT TỐI ƯU (EVALUATION)
+    # =========================================================================
+    logger.info("\n" + "=" * 85)
+    logger.info(">>> [CHẶNG 4/4] ĐÁNH GIÁ ĐỘC LẬP TRÊN TEST SET & XUẤT BÁO CÁO NGHIỆM THU...")
+    logger.info("=" * 85)
+    with timed(logger, "Thực thi Chặng 04 (Hold-out Test Evaluation & Artifacts Export)"):
+        t0 = time.time()
+        stage_04.run_stage_04(quick_mode=quick_mode, extra_handler=pipeline_handler)
+        timings["stage_04_sec"] = round(time.time() - t0, 2)
 
-    # -------------------------------------------------------------------------
-    # CHẶNG 4: ĐÁNH GIÁ ĐỘC LẬP TẬP TEST & XUẤT HIỆN VẬT TỐI ƯU
-    # -------------------------------------------------------------------------
-    print("\n[Chặng 4/4] Đánh giá độc lập trên 6,532 mẫu Test set & Xuất best_model.joblib...")
-    t0 = time.time()
-    test_results, cms = evaluate_holdout_test(tuned_models, X_test, y_test)
-    best_name, best_model = select_best_model(tuned_models, test_results)
+    total_time = round(time.time() - start_total, 2)
+    logger.info("\n" + "=" * 85)
+    logger.info(f"🎉 TOÀN BỘ QUY TRÌNH HỌC MÁY ĐÃ HOÀN TẤT THÀNH CÔNG TRONG {total_time:.2f} GIÂY!")
+    logger.info("=" * 85)
+    logger.info(f"  • Thời lượng Chặng 01 (EDA & Làm sạch)      : {timings.get('stage_01_sec', 0)}s")
+    logger.info(f"  • Thời lượng Chặng 02 (Đặc trưng & Pipeline): {timings.get('stage_02_sec', 0)}s")
+    logger.info(f"  • Thời lượng Chặng 03 (Huấn luyện & CV)     : {timings.get('stage_03_sec', 0)}s")
+    logger.info(f"  • Thời lượng Chặng 04 (Đánh giá & Xuất model): {timings.get('stage_04_sec', 0)}s")
+    logger.info("-" * 85)
+    logger.info("👉 MỜI XEM BÁO CÁO NGHIỆM THU TỔNG HỢP TRỰC QUAN TẠI:")
+    logger.info(f"   file:///{REPORT_DIR.resolve() / 'index.html'}")
+    logger.info("👉 TRẢI NGHIỆM THỬ NGHIỆM EMAIL THỜI GIAN THỰC TẠI:")
+    logger.info("   notebooks/demo.ipynb")
+    logger.info("=" * 85)
 
-    # Trích xuất Top từ khóa nếu có mô hình tuyến tính
-    top15_df = get_top_spam_keywords(best_model, top_n=15)
+    # Đảm bảo flush log ra file trước khi dựng trang run_log.html
+    for h in logger.handlers:
+        try:
+            h.flush()
+        except Exception:
+            pass
 
-    best_path, meta_path = export_model_artifacts(best_model, test_results, top15_df, models_dir=str(saved_models_dir))
-    print(f"  ✓ Đã chọn mô hình Quán quân: '{best_name}'")
-    print(f"  ✓ Đã xuất 'best_model.joblib' và 'metadata.json' vào '{saved_models_dir.name}/' ({time.time() - t0:.2f}s).")
-
-    # -------------------------------------------------------------------------
-    # TỔNG KẾT BẢNG SO SÁNH HIỆU NĂNG TEST SET
-    # -------------------------------------------------------------------------
-    print("\n" + "=" * 75)
-    print("   🏆 BẢNG TỔNG KẾT HIỆU NĂNG KIỂM THỬ ĐỘC LẬP (HOLD-OUT TEST SET)")
-    print("=" * 75)
-    header = f"{'Mô hình':<22} | {'Accuracy (%)':<12} | {'Precision (%)':<13} | {'Recall (%)':<10} | {'F1-Score (%)':<12}"
-    print(header)
-    print("-" * 75)
-    for r in test_results:
-        print(f"{r['Mô hình']:<22} | {r['Accuracy (%)']:<12.2f} | {r['Precision (%)']:<13.2f} | {r['Recall (%)']:<10.2f} | {r['F1-Score (%)']:<12.2f}")
-    print("=" * 75)
-
-    total_time = time.time() - start_total
-    print(f"\n🎉 HOÀN TẤT TOÀN BỘ QUY TRÌNH HỌC MÁY THÀNH CÔNG TRONG {total_time:.2f} GIÂY!")
-    print(f"👉 Sẵn sàng thử nghiệm email thời gian thực tại: notebooks/demo.ipynb\n")
+    # =========================================================================
+    # ĐỒNG BỘ TOÀN BỘ BÁO CÁO HTML
+    # =========================================================================
+    logger.info("\n>>> ĐỒNG BỘ TOÀN BỘ BÁO CÁO HTML VÀ BẢNG ĐIỀU KHIỂN TỔNG HỢP...")
+    with timed(logger, "Tái tạo đồng bộ toàn bộ báo cáo HTML"):
+        report_builder.build_all()
 
 
 if __name__ == "__main__":
-    run_full_pipeline()
-
+    args = parse_args()
+    run_full_pipeline(quick_mode=args.quick)

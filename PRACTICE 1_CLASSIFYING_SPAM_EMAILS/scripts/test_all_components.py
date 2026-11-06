@@ -236,6 +236,13 @@ def test_08_codebase_integrity():
         BASE_DIR / "scripts" / "feature_engineering.py",
         BASE_DIR / "scripts" / "model_training.py",
         BASE_DIR / "scripts" / "model_evaluation.py",
+        BASE_DIR / "scripts" / "logger_utils.py",
+        BASE_DIR / "scripts" / "common.py",
+        BASE_DIR / "scripts" / "run_01_eda.py",
+        BASE_DIR / "scripts" / "run_02_fe.py",
+        BASE_DIR / "scripts" / "run_03_train.py",
+        BASE_DIR / "scripts" / "run_04_eval.py",
+        BASE_DIR / "scripts" / "report_builder.py",
         BASE_DIR / "data" / "scripts" / "data_preprocessing.py",
         BASE_DIR / "data" / "scripts" / "eda.py",
         BASE_DIR / "models" / "algorithms" / "naive_bayes.py",
@@ -278,6 +285,68 @@ def test_08_codebase_integrity():
                 raise AssertionError(f"Lỗi cú pháp Python AST tại {nb_path.name} cell #{idx+1}: {e}")
 
         print(f"  ✓ {nb_path.name}: Toàn bộ {len(code_cells)} code cells đã vượt qua kiểm định AST 100%.")
+
+    # Kiểm tra sự tồn tại và tính hợp lệ của các artifacts đã sinh
+    stage_01_json = BASE_DIR / "outputs" / "stage_01.json"
+    if stage_01_json.exists():
+        with open(stage_01_json, "r", encoding="utf-8") as f:
+            s1_data = json.load(f)
+        assert s1_data.get("status") == "success", "stage_01.json có trạng thái không hợp lệ"
+        assert s1_data.get("metrics", {}).get("clean_rows") == 32660, "Số lượng mẫu sạch không đúng 32,660"
+        print("  ✓ outputs/stage_01.json: Dữ liệu phong bì Chặng 1 hoàn chỉnh và số mẫu sạch đạt 32,660.")
+
+    report_01 = BASE_DIR / "docs" / "report" / "01_data_report.html"
+    index_html = BASE_DIR / "docs" / "report" / "index.html"
+    if report_01.exists() and index_html.exists():
+        assert report_01.stat().st_size > 1000, "01_data_report.html bị rỗng hoặc lỗi"
+        assert index_html.stat().st_size > 1000, "index.html bị rỗng hoặc lỗi"
+        print("  ✓ docs/report/: Các tệp 01_data_report.html và index.html đã được sinh tự động hợp lệ.")
+
+    stage_02_json = BASE_DIR / "outputs" / "stage_02.json"
+    if stage_02_json.exists():
+        with open(stage_02_json, "r", encoding="utf-8") as f:
+            s2_data = json.load(f)
+        assert s2_data.get("status") == "success", "stage_02.json có trạng thái không hợp lệ"
+        assert s2_data.get("metrics", {}).get("total_features_dim") == 2007, "Tổng số chiều đặc trưng không đúng 2,007"
+        assert s2_data.get("metrics", {}).get("text_overlap_count") == 0, "Có rò rỉ dữ liệu giữa Train và Test"
+        print("  ✓ outputs/stage_02.json: Dữ liệu phong bì Chặng 2 hoàn chỉnh (2,007 chiều, Zero Leakage).")
+
+    report_02 = BASE_DIR / "docs" / "report" / "02_feature_pipeline_report.html"
+    if report_02.exists():
+        assert report_02.stat().st_size > 1000, "02_feature_pipeline_report.html bị rỗng hoặc lỗi"
+        print("  ✓ docs/report/02_feature_pipeline_report.html: Báo cáo Chặng 2 đã sinh tự động hợp lệ.")
+
+    stage_03_json = BASE_DIR / "outputs" / "stage_03.json"
+    if stage_03_json.exists():
+        with open(stage_03_json, "r", encoding="utf-8") as f:
+            s3_data = json.load(f)
+        assert s3_data.get("status") == "success", "stage_03.json có trạng thái không hợp lệ"
+        assert s3_data.get("metrics", {}).get("models_count") == 3, "Số lượng mô hình huấn luyện không đúng 3"
+        print("  ✓ outputs/stage_03.json: Dữ liệu phong bì Chặng 3 hoàn chỉnh (3 mô hình Scratch, 5-Fold CV).")
+
+    stage_04_json = BASE_DIR / "outputs" / "stage_04.json"
+    if stage_04_json.exists():
+        with open(stage_04_json, "r", encoding="utf-8") as f:
+            s4_data = json.load(f)
+        assert s4_data.get("status") == "success", "stage_04.json có trạng thái không hợp lệ"
+        assert s4_data.get("metrics", {}).get("best_model") in ["linear_svm", "logistic_regression", "naive_bayes"]
+        assert len(s4_data.get("tables", {}).get("top_15_keywords", [])) == 15, "Top 15 từ khóa không đủ 15 phần tử"
+        print("  ✓ outputs/stage_04.json: Dữ liệu phong bì Chặng 4 hoàn chỉnh (Hold-out Test, Top 15 keywords).")
+
+    report_03 = BASE_DIR / "docs" / "report" / "03_model_training_report.html"
+    if report_03.exists():
+        assert report_03.stat().st_size > 1000, "03_model_training_report.html bị rỗng hoặc lỗi"
+        print("  ✓ docs/report/03_model_training_report.html: Báo cáo Chặng 3 (Training & CV) đã sinh tự động hợp lệ.")
+
+    report_04 = BASE_DIR / "docs" / "report" / "04_model_evaluation_report.html"
+    if report_04.exists():
+        assert report_04.stat().st_size > 1000, "04_model_evaluation_report.html bị rỗng hoặc lỗi"
+        print("  ✓ docs/report/04_model_evaluation_report.html: Báo cáo Chặng 4 (Evaluation & Test) đã sinh tự động hợp lệ.")
+
+    log_report = BASE_DIR / "docs" / "report" / "run_log.html"
+    if log_report.exists():
+        assert log_report.stat().st_size > 500, "run_log.html bị rỗng hoặc lỗi"
+        print("  ✓ docs/report/run_log.html: Trang nhật ký thực thi Zero-drift đã sinh tự động hợp lệ.")
 
 
 if __name__ == "__main__":

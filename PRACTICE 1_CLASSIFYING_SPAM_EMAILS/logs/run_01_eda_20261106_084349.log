@@ -1,0 +1,37 @@
+08:43:49 | INFO  | ===========================================================================
+08:43:49 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ & LÀM SẠCH DỮ LIỆU (EDA & NLP CLEANING)
+08:43:49 | INFO  | ===========================================================================
+08:43:49 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:43:49 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ CEAS_08.csv
+08:43:50 | INFO  | ✔ XONG: Nạp dữ liệu thô từ CEAS_08.csv (0.58s)
+08:43:50 | INFO  |   • Quy mô dữ liệu thô: 39,154 email (7 thuộc tính).
+08:43:50 | INFO  | ▶ BẮT ĐẦU: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật
+08:43:50 | INFO  | ✔ XONG: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật (0.29s)
+08:43:50 | INFO  |   • Khuyết thiếu: subject=28, receiver=462.
+08:43:50 | INFO  | ▶ BẮT ĐẦU: Thống kê đơn biến và tỷ lệ nhãn mục tiêu
+08:43:50 | INFO  | ✔ XONG: Thống kê đơn biến và tỷ lệ nhãn mục tiêu (0.01s)
+08:43:50 | INFO  |   • Phân phối nhãn: Ham=17,312 (44.2%), Spam=21,842 (55.8%).
+08:43:50 | INFO  |   • Sự hiện diện của URLs: 67.0% email có liên kết URL.
+08:43:50 | INFO  | ▶ BẮT ĐẦU: Phân tích ngoại lai IQR độ dài tiêu đề & nội dung
+08:43:50 | INFO  | ✔ XONG: Phân tích ngoại lai IQR độ dài tiêu đề & nội dung (0.04s)
+08:43:50 | INFO  |   • Ngoại lai IQR: Tiêu đề=932 (2.4%), Nội dung=5,622 (14.4%).
+08:43:50 | INFO  | ▶ BẮT ĐẦU: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re:
+08:43:50 | INFO  | ✔ XONG: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re: (0.19s)
+08:43:50 | INFO  |   • Tiền tố 'Re:' trong tiêu đề: Ham=56.3%, Spam=3.6%.
+08:43:50 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/
+08:43:51 | INFO  | ✔ XONG: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/ (1.07s)
+08:43:51 | INFO  |   ✔ Đã xuất biểu đồ: eda_01_univariate_analysis.png
+08:43:51 | INFO  |   ✔ Đã xuất biểu đồ: eda_02_length_distribution_boxplot.png
+08:43:51 | INFO  | ▶ BẮT ĐẦU: Làm sạch văn bản NLP và khử trùng lặp (Zero Duplicate Leakage)
+08:43:56 | INFO  | ✔ XONG: Làm sạch văn bản NLP và khử trùng lặp (Zero Duplicate Leakage) (4.37s)
+08:43:56 | INFO  |   • Đã loại bỏ 6,494 mẫu email trùng lặp nội dung sạch.
+08:43:56 | INFO  |   ✔ Đã xuất: clean_emails.csv (32,660 email sạch: Ham=17,094 (52.3%), Spam=15,566 (47.7%))
+08:43:56 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
+08:43:56 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
+08:43:56 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.00s)
+08:43:56 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
+08:43:56 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+08:43:56 | INFO  | ===========================================================================
+08:43:56 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 6.56 GIÂY!
+08:43:56 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
+08:43:56 | INFO  | ===========================================================================

@@ -1,0 +1,79 @@
+{
+  "stage": "03",
+  "status": "success",
+  "started_at": "2026-11-06T08:43:59.883013",
+  "finished_at": "2026-11-06T08:46:54.342755",
+  "duration_sec": 174.46,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_03_train_20261106_084359.log",
+  "config": {
+    "random_seed": 42,
+    "cv_splits": 5,
+    "subsample_size": 26128,
+    "models": [
+      "naive_bayes",
+      "logistic_regression",
+      "linear_svm"
+    ]
+  },
+  "metrics": {
+    "train_samples": 26128,
+    "cv_splits": 5,
+    "models_count": 3,
+    "models_trained": [
+      "naive_bayes",
+      "logistic_regression",
+      "linear_svm"
+    ]
+  },
+  "tables": {
+    "cv_summary": [
+      {
+        "Mô hình": "naive_bayes",
+        "Accuracy (%)": "96.10 ± 0.17",
+        "Precision (%)": "98.90 ± 0.27",
+        "Recall (%)": "92.85 ± 0.36",
+        "F1-Score (%)": "95.78 ± 0.19"
+      },
+      {
+        "Mô hình": "logistic_regression",
+        "Accuracy (%)": "97.38 ± 0.23",
+        "Precision (%)": "96.56 ± 0.42",
+        "Recall (%)": "98.00 ± 0.30",
+        "F1-Score (%)": "97.27 ± 0.24"
+      },
+      {
+        "Mô hình": "linear_svm",
+        "Accuracy (%)": "98.20 ± 0.20",
+        "Precision (%)": "97.85 ± 0.38",
+        "Recall (%)": "98.39 ± 0.26",
+        "F1-Score (%)": "98.12 ± 0.21"
+      }
+    ],
+    "grid_search_summary": [
+      {
+        "Mô hình": "naive_bayes",
+        "Best CV F1 (Toàn bộ Train)": "95.94%",
+        "Siêu tham số tối ưu (Best Params)": "{'classifier__alpha': 0.1, 'preprocessor__text__select__k': 2000}"
+      },
+      {
+        "Mô hình": "logistic_regression",
+        "Best CV F1 (Toàn bộ Train)": "97.43%",
+        "Siêu tham số tối ưu (Best Params)": "{'classifier__learning_rate': 15.0, 'preprocessor__text__select__k': 2000}"
+      },
+      {
+        "Mô hình": "linear_svm",
+        "Best CV F1 (Toàn bộ Train)": "98.43%",
+        "Siêu tham số tối ưu (Best Params)": "{'classifier__learning_rate': 8.0, 'preprocessor__text__select__k': 2000}"
+      }
+    ]
+  },
+  "figures": [],
+  "timings": {
+    "data_loading_sec": 0.024,
+    "pipeline_init_sec": 0.001,
+    "cross_validation_sec": 44.535,
+    "grid_search_train_sec": 129.865,
+    "total_stage_sec": 174.46
+  }
+}

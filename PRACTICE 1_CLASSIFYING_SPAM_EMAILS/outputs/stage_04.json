@@ -1,0 +1,168 @@
+{
+  "stage": "04",
+  "status": "success",
+  "started_at": "2026-11-06T08:46:54.414554",
+  "finished_at": "2026-11-06T08:46:58.329174",
+  "duration_sec": 3.91,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_04_eval_20261106_084654.log",
+  "config": {
+    "test_samples": 6532,
+    "best_model_name": "linear_svm"
+  },
+  "metrics": {
+    "test_samples": 6532,
+    "best_model": "linear_svm",
+    "best_accuracy": 98.73,
+    "best_precision": 98.71,
+    "best_recall": 98.62,
+    "best_f1": 98.67,
+    "missed_spam": 43,
+    "false_alarms": 40,
+    "inference_time_ms": 0.26,
+    "inference_time_str": "0.26 ms"
+  },
+  "tables": {
+    "test_results": [
+      {
+        "Mô hình": "naive_bayes",
+        "Accuracy (%)": 96.34,
+        "Precision (%)": 99.31,
+        "Recall (%)": 92.96,
+        "F1-Score (%)": 96.03,
+        "TP": 2894,
+        "TN": 3399,
+        "FP": 20,
+        "FN": 219
+      },
+      {
+        "Mô hình": "logistic_regression",
+        "Accuracy (%)": 97.69,
+        "Precision (%)": 97.05,
+        "Recall (%)": 98.14,
+        "F1-Score (%)": 97.59,
+        "TP": 3055,
+        "TN": 3326,
+        "FP": 93,
+        "FN": 58
+      },
+      {
+        "Mô hình": "linear_svm",
+        "Accuracy (%)": 98.73,
+        "Precision (%)": 98.71,
+        "Recall (%)": 98.62,
+        "F1-Score (%)": 98.67,
+        "TP": 3070,
+        "TN": 3379,
+        "FP": 40,
+        "FN": 43
+      }
+    ],
+    "top_15_keywords": [
+      {
+        "Từ khóa": "prince",
+        "Trọng số": 2.34646621937433
+      },
+      {
+        "Từ khóa": "bismarck",
+        "Trọng số": 2.2206287435174583
+      },
+      {
+        "Từ khóa": "love",
+        "Trọng số": 1.6532409222398576
+      },
+      {
+        "Từ khóa": "increase",
+        "Trọng số": 1.5530638867128117
+      },
+      {
+        "Từ khóa": "penis",
+        "Trọng số": 1.4860944757230055
+      },
+      {
+        "Từ khóa": "girl",
+        "Trọng số": 1.4118606535582112
+      },
+      {
+        "Từ khóa": "replica",
+        "Trọng số": 1.37431585578387
+      },
+      {
+        "Từ khóa": "american",
+        "Trọng số": 1.284422115056339
+      },
+      {
+        "Từ khóa": "cnn",
+        "Trọng số": 1.2770036649157297
+      },
+      {
+        "Từ khóa": "life",
+        "Trọng số": 1.2574854680793122
+      },
+      {
+        "Từ khóa": "sex",
+        "Trọng số": 1.2194316562421477
+      },
+      {
+        "Từ khóa": "mexico",
+        "Trọng số": 1.1601383661311335
+      },
+      {
+        "Từ khóa": "men",
+        "Trọng số": 1.1582591928864543
+      },
+      {
+        "Từ khóa": "man",
+        "Trọng số": 1.1341788114377258
+      },
+      {
+        "Từ khóa": "watches",
+        "Trọng số": 1.1307642079721711
+      }
+    ],
+    "confusion_matrices": {
+      "naive_bayes": [
+        [
+          3399,
+          20
+        ],
+        [
+          219,
+          2894
+        ]
+      ],
+      "logistic_regression": [
+        [
+          3326,
+          93
+        ],
+        [
+          58,
+          3055
+        ]
+      ],
+      "linear_svm": [
+        [
+          3379,
+          40
+        ],
+        [
+          43,
+          3070
+        ]
+      ]
+    }
+  },
+  "figures": [
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_01_confusion_matrices.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_02_top_15_spam_keywords.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_03_performance_comparison.png"
+  ],
+  "timings": {
+    "load_artifacts_sec": 0.168,
+    "evaluation_sec": 2.621,
+    "feature_weights_sec": 0.0,
+    "export_artifacts_sec": 0.092,
+    "total_stage_sec": 3.91
+  }
+}

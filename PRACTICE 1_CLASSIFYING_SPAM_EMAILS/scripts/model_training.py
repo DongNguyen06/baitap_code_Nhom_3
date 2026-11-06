@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 import joblib
 import pandas as pd
@@ -129,12 +130,13 @@ def tune_grid_search(pipelines: dict, param_grids: dict = None, X_train=None, y_
         pipe.fit(X_train, y_train)
         tuned_models[name] = pipe
 
+        f1_col = f"Best CV F1 (Mẫu {subsample_size:,})" if (subsample_size is not None and subsample_size < len(X_train)) else "Best CV F1 (Toàn bộ Train)"
         summary_records.append({
             "Mô hình": name,
-            "Best CV F1 (Mẫu 6k)": f"{best_f1 * 100:.2f}%",
+            f1_col: f"{best_f1 * 100:.2f}%",
             "Siêu tham số tối ưu (Best Params)": str(best_p)
         })
-        print(f"  ✓ [{name}] Best F1 = {best_f1 * 100:.2f}% | Params: {best_p}")
+        logging.getLogger("pipeline").info(f"  ✓ [{name}] Best F1 = {best_f1 * 100:.2f}% | Params: {best_p}")
 
         # Lưu độc quyền vào models/saved_models/
         joblib.dump(pipe, save_dir / f"{name}.joblib")

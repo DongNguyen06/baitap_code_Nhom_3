@@ -20,6 +20,10 @@ models/*.joblib
 
 # Logs & OS temp
 *.log
+!logs/
+!logs/*.log
+!outputs/
+!outputs/*.json
 .DS_Store
 Thumbs.db
 

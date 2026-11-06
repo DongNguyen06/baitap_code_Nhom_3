@@ -1,9 +1,3 @@
-"""
-Thuật toán: Multinomial Naive Bayes (From Scratch thuần túy)
-Dự án: Practice 1: Classifying Spam Emails — Group 3
-Cài đặt: 100% Python và NumPy thuần túy (Không kế thừa và không import từ Scikit-learn).
-Đặc tả chi tiết: docs/description/algorithms/naive_bayes_classifier.md
-"""
 import numpy as np
 from scipy import sparse
 from sklearn.base import BaseEstimator, ClassifierMixin

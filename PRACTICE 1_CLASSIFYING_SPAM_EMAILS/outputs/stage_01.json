@@ -1,0 +1,139 @@
+{
+  "stage": "01",
+  "status": "success",
+  "started_at": "2026-11-06T08:43:49.711445",
+  "finished_at": "2026-11-06T08:43:56.267587",
+  "duration_sec": 6.56,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_01_eda_20261106_084349.log",
+  "config": {
+    "raw_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\raw\\CEAS_08.csv",
+    "clean_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\processed\\clean_emails.csv",
+    "random_seed": 42
+  },
+  "metrics": {
+    "raw_rows": 39154,
+    "raw_cols": 7,
+    "clean_rows": 32660,
+    "clean_cols": 8,
+    "duplicates_removed": 6494,
+    "raw_ham_count": 17312,
+    "raw_spam_count": 21842,
+    "raw_ham_ratio": 44.22,
+    "raw_spam_ratio": 55.78,
+    "clean_ham_count": 17094,
+    "clean_spam_count": 15566,
+    "clean_ham_ratio": 52.34,
+    "clean_spam_ratio": 47.66,
+    "url_present_ratio": 67.0,
+    "subject_len_mean": 38.9,
+    "subject_len_median": 35.0,
+    "subject_outliers_count": 932,
+    "subject_outliers_ratio": 2.38,
+    "body_outliers_count": 5622,
+    "body_outliers_ratio": 14.36
+  },
+  "tables": {
+    "missing_values": {
+      "sender": 0,
+      "receiver": 462,
+      "date": 0,
+      "subject": 28,
+      "body": 0,
+      "label": 0,
+      "urls": 0
+    },
+    "top_keywords": [
+      {
+        "rank": 1,
+        "ham_word": "python",
+        "ham_count": 4560,
+        "spam_word": "cnn",
+        "spam_count": 4339
+      },
+      {
+        "rank": 2,
+        "ham_word": "opensuse",
+        "ham_count": 2514,
+        "spam_word": "daily",
+        "spam_count": 2937
+      },
+      {
+        "rank": 3,
+        "ham_word": "dev",
+        "ham_count": 2208,
+        "spam_word": "com",
+        "spam_count": 2931
+      },
+      {
+        "rank": 4,
+        "ham_word": "uai",
+        "ham_count": 1488,
+        "spam_word": "replica",
+        "spam_count": 2081
+      },
+      {
+        "rank": 5,
+        "ham_word": "new",
+        "ham_count": 725,
+        "spam_word": "watches",
+        "spam_count": 1486
+      },
+      {
+        "rank": 6,
+        "ham_word": "perl",
+        "ham_count": 717,
+        "spam_word": "alerts",
+        "spam_count": 1425
+      },
+      {
+        "rank": 7,
+        "ham_word": "bug",
+        "ham_count": 624,
+        "spam_word": "alert",
+        "spam_count": 1412
+      },
+      {
+        "rank": 8,
+        "ham_word": "ilug",
+        "ham_count": 570,
+        "spam_word": "custom",
+        "spam_count": 1406
+      },
+      {
+        "rank": 9,
+        "ham_word": "win",
+        "ham_count": 515,
+        "spam_word": "penis",
+        "spam_count": 807
+      },
+      {
+        "rank": 10,
+        "ham_word": "patch",
+        "ham_count": 420,
+        "spam_word": "rolex",
+        "spam_count": 703
+      }
+    ],
+    "re_duplicates": {
+      "n_duplicates": 4902,
+      "dup_ham": 4679,
+      "dup_spam": 223,
+      "re_ham_ratio": 56.284658040665434,
+      "re_spam_ratio": 3.616884900650123
+    }
+  },
+  "figures": [
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_01_univariate_analysis.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_02_length_distribution_boxplot.png"
+  ],
+  "timings": {
+    "load_raw_data": 0.58,
+    "inspect_structure": 0.29,
+    "univariate_stats": 0.01,
+    "iqr_outliers": 0.04,
+    "keywords_and_re": 0.19,
+    "export_figures": 1.07,
+    "nlp_cleaning_and_dedup": 4.37
+  }
+}

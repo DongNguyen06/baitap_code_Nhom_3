@@ -78,14 +78,22 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │   │   ├── model_02_top_15_spam_keywords.png
 │   │   └── model_03_performance_comparison.png
 │   └── report/                   # Các trang báo cáo HTML độc lập nộp giảng viên
-│       ├── index.html            # Bảng điều khiển trung tâm (Dashboard)
+│       ├── index.html            # Bảng điều khiển trung tâm (Dashboard tổng hợp 4 chặng)
 │       ├── 01_data_report.html   # Báo cáo khám phá & làm sạch dữ liệu
 │       ├── 02_feature_pipeline_report.html # Báo cáo kỹ thuật đặc trưng & Pipeline
-│       ├── 03_model_evaluation_report.html # Báo cáo huấn luyện & đánh giá mô hình
+│       ├── 03_model_training_report.html   # Báo cáo huấn luyện 3 mô hình & 5-Fold CV
+│       ├── 04_model_evaluation_report.html # Báo cáo đánh giá độc lập Hold-out Test
+│       └── run_log.html          # Báo cáo nhật ký thực thi Zero-drift của cả 4 chặng
+├── logs/                         # Nhật ký thực thi chi tiết (UTF-8 console + file log)
+│   ├── run_pipeline_*.log        # Nhật ký chạy toàn bộ pipeline
+│   ├── run_01_eda_*.log          # Nhật ký Chặng 1 (EDA)
+│   ├── run_02_fe_*.log           # Nhật ký Chặng 2 (Feature Engineering)
+│   ├── run_03_train_*.log        # Nhật ký Chặng 3 (Training & CV)
+│   └── run_04_eval_*.log         # Nhật ký Chặng 4 (Evaluation & Test)
 ├── models/
 │   ├── algorithms/               # Mã nguồn 3 thuật toán tự cài đặt From Scratch (NumPy)
 │   │   ├── logistic_regression.py
-│   │   ├── naive_bayes_classifier.py
+│   │   ├── naive_bayes.py
 │   │   └── support_vector_machine.py
 │   └── saved_models/             # Lưu trữ mô hình tối ưu và siêu dữ liệu
 │       ├── best_model.joblib     # Mô hình quán quân Linear SVM
@@ -94,17 +102,29 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │       ├── naive_bayes.joblib
 │       ├── preprocessor.joblib   # Pipeline biến đổi ColumnTransformer đã fit
 │       └── metadata.json         # Bảng chỉ số nghiệm thu và Top từ khóa spam
-├── notebooks/                    # 4 Notebooks thực hành tuần tự từng chặng
+├── notebooks/                    # 4 Notebooks thực hành trực quan demo (outputs: [])
 │   ├── 01_data_cleaning_and_eda.ipynb
 │   ├── 02_feature_engineering_and_pipeline.ipynb
 │   ├── 03_model_training_evaluation_and_explain.ipynb
 │   └── demo.ipynb                # Notebook thử nghiệm dự đoán email tương tác đa mô hình
-├── scripts/                      # Các module tái sử dụng và công cụ thực thi
+├── outputs/                      # Dữ liệu phong bì JSON giao tiếp giữa các chặng
+│   ├── stage_01.json             # Kết quả Chặng 1 (EDA & Làm sạch)
+│   ├── stage_02.json             # Kết quả Chặng 2 (Đặc trưng & Chia tập)
+│   ├── stage_03.json             # Kết quả Chặng 3 (Huấn luyện & CV)
+│   └── stage_04.json             # Kết quả Chặng 4 (Đánh giá Hold-out Test)
+├── scripts/                      # Các module tái sử dụng và kịch bản thực thi độc lập
+│   ├── common.py                 # Hằng số đường dẫn, quản lý phong bì JSON & lưu ảnh
+│   ├── logger_utils.py           # Hệ thống logging UTF-8 console + file log, timed block
 │   ├── feature_engineering.py    # Chuẩn bị dữ liệu & trích xuất đặc trưng
 │   ├── model_training.py         # Huấn luyện mô hình & tinh chỉnh GridSearchCV
 │   ├── model_evaluation.py       # Đánh giá trên tập test & trích xuất Top từ khóa
-│   ├── run_pipeline.py           # Kịch bản chạy tự động toàn bộ quy trình
-│   └── test_all_components.py    # Bộ kiểm thử tự động toàn diện hệ thống
+│   ├── report_builder.py         # Trình dựng báo cáo HTML Base64 standalone tự động
+│   ├── run_01_eda.py             # Kịch bản chạy độc lập Chặng 1
+│   ├── run_02_fe.py              # Kịch bản chạy độc lập Chặng 2
+│   ├── run_03_train.py           # Kịch bản chạy độc lập Chặng 3
+│   ├── run_04_eval.py            # Kịch bản chạy độc lập Chặng 4
+│   ├── run_pipeline.py           # Bộ điều phối chạy toàn bộ 4 chặng xuyên suốt
+│   └── test_all_components.py    # Bộ kiểm thử tự động toàn diện 8/8 thành phần
 ├── README.md
 └── requirements.txt
 ```
