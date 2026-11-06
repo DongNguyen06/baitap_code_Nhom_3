@@ -20,6 +20,10 @@ models/*.joblib
 
 # Logs & OS temp
 *.log
+!logs/
+!logs/*.log
+!outputs/
+!outputs/*.json
 .DS_Store
 Thumbs.db
 
@@ -27,4 +31,3 @@ Thumbs.db
 HUONG_DAN_CODE_CHI_TIET.md
 NHIEM_VU_THUC_HIEN_CODE.md
 PROJECT_MASTER_BLUEPRINT.md
-

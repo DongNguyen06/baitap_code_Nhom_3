@@ -68,7 +68,7 @@ def evaluate_cv_models(
     X_train: pd.DataFrame,
     y_train: pd.Series,
     cv: int = 5,
-    sample_size: Optional[int] = 10000,
+    sample_size: Optional[int] = None,
     random_state: int = 42
 ) -> pd.DataFrame:
     """Đánh giá độ ổn định của các Pipeline qua K-Fold Cross Validation trên tập Train."""
@@ -128,12 +128,12 @@ def tune_grid_search(
     X_train: Optional[pd.DataFrame] = None,
     y_train: Optional[pd.Series] = None,
     cv: int = 3,
-    subsample_size: Optional[int] = 10000,
+    subsample_size: Optional[int] = None,
     random_state: int = 42,
     models_dir: Optional[Union[str, Path]] = None,
     return_summary: bool = False
 ):
-    """Tinh chỉnh siêu tham số qua GridSearchCV trên mẫu đại diện, sau đó huấn luyện mô hình tối ưu trên toàn bộ Train set."""
+    """Tinh chỉnh siêu tham số qua GridSearchCV, sau đó huấn luyện mô hình tối ưu trên toàn bộ Train set."""
     if param_grids is None:
         param_grids = get_default_param_grids()
 
@@ -166,9 +166,10 @@ def tune_grid_search(
         pipe.fit(X_train, y_train)
         tuned_models[name] = pipe
 
+        sub_label = f"Subsample {subsample_size}" if subsample_size else "Full Train"
         summary_records.append({
             "Mô hình": name,
-            "Best CV R² (Subsample 10k)": f"{best_score:.4f}" if not np.isnan(best_score) else "N/A",
+            "Best CV R²": f"{best_score:.4f}" if not np.isnan(best_score) else "N/A",
             "Siêu tham số tối ưu (Best Params)": str(best_p) if best_p else "Mặc định"
         })
         print(f"  ✓ [{name}] Tinh chỉnh hoàn tất | R² = {best_score:.4f} | Params: {best_p}")

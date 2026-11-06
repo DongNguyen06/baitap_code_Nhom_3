@@ -1,158 +1,431 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo Cáo 02: Kỹ Thuật Đặc Trưng & Pipeline — Nhóm 3</title>
+    <meta charset="utf-8">
+    <title>Báo Cáo 02: Kỹ Thuật Đặc Trưng & Dây Chuyền Pipeline (Feature Engineering)</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.6; }
-        .container { max-width: 1050px; margin: 0 auto; padding: 32px 20px; }
-        .nav-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-        .nav-link { color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600; }
-        .header { margin-bottom: 32px; }
-        .badge { display: inline-block; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 12px; }
-        h1 { font-size: 26px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
-        .card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border); padding: 24px; margin-bottom: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        h2 { font-size: 18px; font-weight: 700; margin-bottom: 14px; color: #1e293b; border-left: 4px solid var(--primary); padding-left: 10px; }
-        p, li { font-size: 14.5px; color: #334155; margin-bottom: 10px; }
-        ul { padding-left: 20px; margin-bottom: 14px; }
-        .table-wrap { overflow-x: auto; margin: 16px 0; }
-        table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-        th, td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background: #f1f5f9; color: #475569; font-weight: 600; white-space: nowrap; }
-        .flow-box { background: #f1f5f9; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 13px; line-height: 1.8; margin: 16px 0; color: #1e293b; border-left: 4px solid #64748b; overflow-x: auto; }
-        .highlight-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin: 16px 0; }
-        .highlight-title { font-weight: 700; color: #1e40af; font-size: 14px; margin-bottom: 6px; }
-    </style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --bg-body: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg-body);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 30px 20px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .nav-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .nav-link:hover { text-decoration: underline; }
+    .header {
+        margin-bottom: 30px;
+    }
+    .header h1 {
+        font-size: 26px;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        background: #e0e7ff;
+        color: #3730a3;
+        margin-bottom: 10px;
+    }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .stat-card .title {
+        font-size: 13px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .stat-card .value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-top: 6px;
+    }
+    .stat-card .desc {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+    .card {
+        background: var(--card-bg);
+        padding: 26px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+    .card h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: #1e293b;
+        border-left: 4px solid var(--primary);
+        padding-left: 12px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    th, td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    th {
+        background: #f1f5f9;
+        font-weight: 600;
+        color: #334155;
+    }
+    tr:hover { background: #f8fafc; }
+    .img-box {
+        text-align: center;
+        margin: 20px 0;
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px;
+    }
+    .img-box img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .img-caption {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 10px;
+        font-style: italic;
+    }
+    .highlight-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 18px 0;
+    }
+    .highlight-title {
+        font-weight: 700;
+        color: #166534;
+        font-size: 14.5px;
+        margin-bottom: 6px;
+    }
+    ul {
+        padding-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+    li {
+        font-size: 14px;
+        color: #334155;
+        margin-bottom: 8px;
+        line-height: 1.65;
+    }
+    .banner-warning {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #92400e;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+</style>
 </head>
 <body>
     <div class="container">
         <div class="nav-bar">
-            <a href="01_data_report.html" class="nav-link">&larr; Báo Cáo 01: Dữ Liệu & EDA</a>
-            <a href="03_model_evaluation_report.html" class="nav-link">Báo Cáo 03: Đánh Giá & Mô Hình &rarr;</a>
+            <a href="01_data_report.html" class="nav-link">&larr; Báo Cáo 01: Khám Phá Dữ Liệu (EDA)</a>
+            <a href="index.html" class="nav-link">Bảng Điều Khiển Tổng Quan</a>
+            <a href="03_model_training_report.html" class="nav-link">Báo Cáo 03: Huấn Luyện Mô Hình &rarr;</a>
         </div>
-
         <div class="header">
-            <span class="badge">CHẶNG 2 / 3 — FEATURE ENGINEERING & PIPELINE</span>
-            <h1>Báo Cáo Kỹ Thuật Đặc Trưng & Dây Chuyền Pipeline</h1>
-            <p style="color: var(--text-muted); font-size: 14.5px;">Dẫn xuất đặc trưng miền từ kết quả EDA, xử lý triệt để đa cộng tuyến, phân chia Train/Test 80/20 chống rò rỉ và đóng gói ColumnTransformer 42 chiều.</p>
+            <span class="badge badge-success">CHẶNG 02: TIỀN XỬ LÝ & KỸ THUẬT ĐẶC TRƯNG</span>
+            <h1>Báo Cáo Dây Chuyền Kỹ Thuật Đặc Trưng & Tiền Xử Lý (Feature Engineering Pipeline)</h1>
+            <p style="color:var(--text-muted); font-size:14.5px;">
+                Chuẩn hóa toàn diện từ dữ liệu thô sang không gian đặc trưng 42 chiều, chia tách Train/Test 80/20, triệt tiêu đa cộng tuyến và bảo đảm chống rò rỉ dữ liệu tuyệt đối (Zero Data Leakage).
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:07:13.085360 (Thời lượng thực thi: <strong>6.34s</strong>).</em>
+            </p>
         </div>
 
-        <!-- MỤC 1: TRÍCH XUẤT ĐẶC TRƯNG TỪ PHÁT HIỆN EDA -->
-        <div class="card">
-            <h2>1. Trích Xuất Đặc Trưng Miền Nghiệp Vụ Dẫn Xuất Từ EDA (EDA-Driven Insights)</h2>
-            <p>Không thiết kế đặc trưng tùy tiện, toàn bộ 5 đặc trưng mới đều được dẫn xuất trực tiếp từ các bằng chứng thực nghiệm của Chặng 1 EDA:</p>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Đặc trưng</th>
-                            <th>Nguồn gốc phát hiện EDA</th>
-                            <th>Phương pháp kỹ thuật</th>
-                            <th>Ý nghĩa kinh doanh thực tiễn</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><code>month</code></td>
-                            <td>Doanh số tập trung đạt đỉnh vào quý 2 (tháng 4, 5, 6) do dịp lễ hội tại Ấn Độ</td>
-                            <td><code>dt.month</code> từ cột <code>Date</code></td>
-                            <td>Giúp mô hình bắt nhịp mùa vụ bán hàng cao điểm trong năm</td>
-                        </tr>
-                        <tr>
-                            <td><code>day_of_week</code></td>
-                            <td>Hành vi mua sắm có sự chuyển dịch rõ rệt giữa các ngày đầu tuần và cuối tuần</td>
-                            <td><code>dt.dayofweek</code> (0 = Thứ Hai, 6 = Chủ Nhật)</td>
-                            <td>Phản ánh chu kỳ mua sắm tuần của người tiêu dùng</td>
-                        </tr>
-                        <tr>
-                            <td><code>is_promoted</code></td>
-                            <td>Hơn 38% đơn hàng kích hoạt mã giảm giá nhằm kích cầu giỏ hàng lớn</td>
-                            <td><code>1</code> nếu <code>promotion-ids != 'No_Promotion'</code>, ngược lại <code>0</code></td>
-                            <td>Đo lường tác động kích cầu gián tiếp của khuyến mãi đến doanh thu</td>
-                        </tr>
-                        <tr>
-                            <td><code>is_b2b</code></td>
-                            <td>Khách hàng doanh nghiệp mua sỉ có giá trị đơn hàng vượt trội so với khách lẻ</td>
-                            <td><code>1</code> nếu <code>B2B == True</code>, ngược lại <code>0</code></td>
-                            <td>Nhận diện đơn hàng giá trị cao và quy mô mua sỉ</td>
-                        </tr>
-                        <tr>
-                            <td><code>state_grouped</code></td>
-                            <td>Toàn sàn có hơn 50 bang nhưng Top 10 bang lớn chiếm hơn <strong>75%</strong> tổng doanh số</td>
-                            <td>Giữ nguyên 10 bang lớn nhất, gom tất cả bang còn lại thành <code>'Other'</code></td>
-                            <td>Ngăn chặn bùng nổ số chiều và khử nhiễu mẫu hiếm khi One-Hot Encoding</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="title">Dữ Liệu Sạch Nghiệm Thu</div>
+                <div class="value">102,852</div>
+                <div class="desc">Lọc từ 128,975 dòng thô gốc</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Tập Huấn Luyện (Train 80%)</div>
+                <div class="value">82,281</div>
+                <div class="desc">Doanh số TB: 665.2 INR</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Tập Kiểm Thử (Test 20%)</div>
+                <div class="value">20,571</div>
+                <div class="desc">Doanh số TB: 666.9 INR</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Rò Rỉ Dữ Liệu (Data Leakage)</div>
+                <div class="value" style="color:var(--success);">0</div>
+                <div class="desc">Trùng lặp Train/Test: Tuyệt đối không</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Không Gian Đặc Trưng</div>
+                <div class="value">42 Chiều</div>
+                <div class="desc">5 biến số + 37 One-Hot</div>
             </div>
         </div>
 
-        <!-- MỤC 2: KIỂM TRA ĐA CỘNG TUYẾN -->
+        <!-- MỤC 1: LÀM SẠCH & KHỬ TRÙNG LẶP -->
         <div class="card">
-            <h2>2. Kỹ Thuật Kiểm Tra & Loại Bỏ Đa Cộng Tuyến (|r| > 0.6)</h2>
-            <p>Sau khi tạo các đặc trưng số học ban đầu, nhóm tiến hành quét ma trận tương quan Pearson để tầm soát rủi ro đa cộng tuyến:</p>
-            <ul>
-                <li><strong>Phát hiện hiện tượng đa cộng tuyến cao:</strong> Cặp đặc trưng <code>(day_of_week, is_weekend)</code> có hệ số tương quan đạt <strong>$r = 0.801$</strong>, vượt xa ngưỡng an toàn $0.6$. Điều này dễ hiểu vì ngày cuối tuần (thứ 7, CN) chỉ là tập con của biến 7 ngày trong tuần.</li>
-                <li><strong>Quyết định kỹ thuật dứt khoát:</strong> Loại bỏ hoàn toàn biến nhị phân <code>is_weekend</code>, chỉ giữ lại <code>day_of_week</code> (chứa trọn vẹn thông tin biến thiên của cả 7 ngày).</li>
-                <li><strong>Bảo vệ mô hình toán học:</strong> Việc loại bỏ biến đa cộng tuyến giúp ma trận hiệp phương sai $X^T X$ không bị suy biến số học (tránh ma trận gần kỳ dị), bảo đảm phương trình chuẩn OLS của Linear Regression tìm được nghiệm nghịch đảo ổn định tuyệt đối.</li>
-            </ul>
-        </div>
-
-        <!-- MỤC 3: HÀNG RÀO CHỐNG RÒ RỈ DỮ LIỆU -->
-        <div class="card">
-            <h2>3. Phân Chia Tập Train/Test 80/20 Chống Rò Rỉ Dữ Liệu (Zero Data Leakage)</h2>
+            <h2>1. Làm Sạch Dữ Liệu TMĐT & Khử Trùng Lặp Thô (Zero Duplicate Leakage)</h2>
             <div class="highlight-box">
-                <div class="highlight-title">✓ HÀNG RÀO CHỐNG RÒ RỈ DỮ LIỆU TUYỆT ĐỐI (ANTI-LEAKAGE BARRIER):</div>
-                <p style="margin: 0;">Mọi thống kê về giá trị trung bình $\mu$, độ lệch chuẩn $\sigma$ của bộ chuẩn hóa và toàn bộ danh mục từ điển One-Hot <strong>CHỈ ĐƯỢC PHÉP HỌC (FIT) TRÊN DUY NHẤT TẬP TRAIN</strong>. Tập Test hoàn toàn là dữ liệu chưa từng thấy (unseen data), chỉ được biến đổi (transform) theo các tham số đã cố định từ Train.</p>
+                <div class="highlight-title">✓ Nguyên Tắc Tiền Xử Lý Độc Lập Dòng (Row-level Processing)</div>
+                <p style="margin:0; font-size:13.5px; color:#14532d;">
+                    Bước 1 thực hiện các phép lọc hàng hoàn toàn dựa trên logic kinh doanh và tính toàn vẹn kỹ thuật, không tính toán bất kỳ tham số thống kê tổng thể nào (không học từ dữ liệu). Việc khử trùng lặp trước khi chia tập giúp triệt tiêu hoàn toàn nguy cơ cùng một đơn hàng xuất hiện đồng thời ở cả tập Train và tập Test.
+                </p>
             </div>
-            <p><strong>Kết quả phân chia tập dữ liệu:</strong></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Giai Đoạn Lọc</th>
+                        <th>Số Lượng Xử Lý</th>
+                        <th>Tỷ Lệ / Quy Mô</th>
+                        <th>Hành Động & Đánh Giá Kỹ Thuật</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dữ liệu thô ban đầu</strong></td>
+                        <td>128,975</td>
+                        <td>100.0%</td>
+                        <td>Bộ dữ liệu thô ban đầu <code>Amazon Sale Report.csv</code> với 24 thuộc tính</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đơn hủy (Status 'Cancelled')</strong></td>
+                        <td>18,332</td>
+                        <td>14.21%</td>
+                        <td><span class="badge badge-warning">Loại bỏ</span> Giao dịch bị hủy không tạo ra dòng tiền doanh thu thực</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đơn âm / khuyết Amount hoặc Qty</strong></td>
+                        <td>2,572</td>
+                        <td>1.99%</td>
+                        <td><span class="badge badge-warning">Loại bỏ</span> Hàng khuyến mãi tặng kèm (0 đồng) hoặc lỗi ghi nhận giá trị âm</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Đơn trùng lặp bản ghi (Duplicates)</strong></td>
+                        <td>5,219</td>
+                        <td>4.05%</td>
+                        <td><span class="badge badge-danger">Khử trùng</span> Bảo đảm nguyên tắc Zero Duplicate Leakage tuyệt đối</td>
+                    </tr>
+                    <tr style="background:#f0fdf4; font-weight:600;">
+                        <td><strong>Dữ liệu sạch thu được</strong></td>
+                        <td>102,852</td>
+                        <td>79.75%</td>
+                        <td><span class="badge badge-success">Sạch chuẩn</span> Xuất tệp <code>data/processed/clean_amazon_sales.csv</code> bàn giao</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- MỤC 2: TRÍCH XUẤT ĐẶC TRƯNG MIỀN TMĐT -->
+        <div class="card">
+            <h2>2. Trích Xuất 11 Đặc Trưng Miền Nghiệp Vụ TMĐT (Domain Features)</h2>
+            <p>Từ dữ liệu sạch, nhóm tiến hành phái sinh các thuộc tính thời gian, cờ tiếp thị, cờ B2B và gom nhóm địa lý nhằm nắm bắt bản chất hành vi mua sắm:</p>
+            <table>
+                <thead><tr><th>Tên Đặc Trưng</th><th>Kiểu Dữ Liệu</th><th>Ý Nghĩa Nghiệp Vụ & Vai Trò Dự Đoán</th></tr></thead>
+                <tbody><tr><td><code>Qty</code></td><td>Numeric (Số lượng)</td><td>Số lượng sản phẩm đặt mua trong đơn hàng</td></tr><tr><td><code>month</code></td><td>Numeric (Thời gian)</td><td>Tháng phát sinh giao dịch (Tháng 4, 5, 6)</td></tr><tr><td><code>day_of_week</code></td><td>Numeric (Thời gian)</td><td>Thứ trong tuần (0: Thứ 2 đến 6: Chủ nhật)</td></tr><tr><td><code>is_promoted</code></td><td>Binary Flag (Tiếp thị)</td><td>Cờ 1 nếu đơn hàng áp dụng voucher/mã khuyến mãi, 0 nếu không</td></tr><tr><td><code>is_b2b</code></td><td>Binary Flag (Nghiệp vụ)</td><td>Cờ 1 nếu là khách hàng doanh nghiệp sỉ B2B, 0 nếu khách lẻ</td></tr><tr><td><code>Category</code></td><td>Categorical (Ngành hàng)</td><td>Nhóm ngành hàng thời trang (Set, Kurta, Top, Western Dress...)</td></tr><tr><td><code>Size</code></td><td>Categorical (Kích cỡ)</td><td>Kích cỡ sản phẩm (XS, S, M, L, XL, XXL, 3XL...)</td></tr><tr><td><code>Fulfilment</code></td><td>Categorical (Vận hành)</td><td>Kênh hoàn tất đơn hàng (Merchant tự giao vs Amazon FBA)</td></tr><tr><td><code>ship-service-level</code></td><td>Categorical (Dịch vụ)</td><td>Mức độ dịch vụ giao hàng (Standard vs Expedited)</td></tr><tr><td><code>Courier Status</code></td><td>Categorical (Trạng thái)</td><td>Tình trạng chuyển phát qua bưu tá (Shipped, Unshipped)</td></tr><tr><td><code>state_grouped</code></td><td>Categorical (Địa lý)</td><td>Phân nhóm địa lý Top 10 bang lớn tại Ấn Độ hoặc &#x27;Other&#x27;</td></tr></tbody>
+            </table>
             <ul>
-                <li><strong>Tập Huấn luyện (Train set - 80%):</strong> <strong>82.281 mẫu</strong>.</li>
-                <li><strong>Tập Kiểm thử (Test set - 20%):</strong> <strong>20.571 mẫu</strong>.</li>
-                <li>Tập dữ liệu được phân chia ngẫu nhiên có kiểm soát với hạt giống cố định <code>RANDOM_SEED = 42</code>, bảo đảm 100% tính tái lập kết quả thực nghiệm.</li>
+                <li><strong>Biến đổi Logarit tự nhiên trên biến mục tiêu:</strong> Doanh số <code>Amount</code> được áp dụng hàm <code>y = ln(1 + Amount)</code>. Biến đổi này nén khoảng giá trị lớn từ hàng nghìn INR về khoảng [2, 8], đưa phân phối lệch phải (Skewness = 0.89) về dạng phân phối chuẩn đối xứng, giúp hàm tổn thất MSE trong hồi quy OLS và Decision Tree hội tụ ổn định và không bị nhiễu bởi các đơn hàng giá trị cao.</li>
             </ul>
         </div>
 
-        <!-- MỤC 4: THIẾT LẬP DÂY CHUYỀN COLUMNTRANSFORMER ĐA TẦNG -->
+        <!-- MỤC 3: PHÂN CHIA TRAIN/TEST 80/20 & CHỐNG RÒ RỈ -->
         <div class="card">
-            <h2>4. Thiết Lập Dây Chuyền Tiền Xử Lý Đa Tầng (ColumnTransformer)</h2>
-            <p>Dây chuyền xử lý tự động vận hành theo kiến trúc 2 nhánh song song, biến đổi đồng thời biến số học và biến danh mục:</p>
-            
-            <div class="flow-box">
-Input Đơn Hàng Sạch (102.852 dòng, 11 thuộc tính đầu vào)
-  │
-  ├── [Trích xuất miền nghiệp vụ]: month, day_of_week, is_promoted, is_b2b, state_grouped
-  │
-  ├── [Nhánh Biến Số Học (3 biến)]:
-  │     └── StandardScaler() ──────────────────────────────────> [Qty, month, day_of_week] (3 chiều, μ=0, σ=1)
-  │
-  └── [Nhánh Biến Định Tính (6 biến)]:
-        └── OneHotEncoder(drop='first', handle_unknown='ignore')
-              └──> [Fulfilment, ship-service-level, Category, Size, Courier Status, state_grouped]
-              │
-              ▼
-  Khối Ghép Nối Đa Chiều: ColumnTransformer ──────────────────> [Không gian đặc trưng 42 chiều chuẩn hóa]
+            <h2>3. Phân Chia Tập Train/Test 80/20 & Cơ Chế Chống Rò Rỉ Tuyệt Đối (Zero Data Leakage)</h2>
+            <div class="highlight-box">
+                <div class="highlight-title">✓ Ranh Giới Chống Rò Rỉ Tuyệt Đối (Zero Data Leakage Boundary)</div>
+                <p style="margin:0; font-size:13.5px; color:#14532d;">
+                    Từ Bước 3 trở đi, mọi thao tác học thống kê (tính giá trị trung bình &mu;, độ lệch chuẩn &sigma; của StandardScaler, và học từ điển nhãn của OneHotEncoder) chỉ được phép thực hiện (<code>.fit()</code>) DUY NHẤT trên tập Train <code>X_train</code>. Tập Test <code>X_test</code> chỉ được phép áp dụng biến đổi (<code>.transform()</code>) để đóng vai trò dữ liệu chưa từng thấy trong thực tế.
+                </p>
             </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chỉ Số Đối Soát</th>
+                        <th>Tập Huấn Luyện (Train Set - 80%)</th>
+                        <th>Tập Kiểm Thử (Test Set - 20%)</th>
+                        <th>Đánh Giá Rò Rỉ & Đại Diện</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Số lượng mẫu</strong></td>
+                        <td>82,281 đơn hàng</td>
+                        <td>20,571 đơn hàng</td>
+                        <td>Phân chia chuẩn 80/20 với <code>random_state = 42</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Doanh số trung bình (Mean)</strong></td>
+                        <td>665.20 INR</td>
+                        <td>666.94 INR</td>
+                        <td>Chênh lệch &lt; 0.3% &rarr; Phân phối đồng nhất hoàn hảo</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Độ lệch chuẩn doanh số (Std)</strong></td>
+                        <td>270.28 INR</td>
+                        <td>274.16 INR</td>
+                        <td>Phương sai giữa 2 tập bảo toàn tính đại diện tương đương</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Trùng lặp ranh giới (Index Overlap)</strong></td>
+                        <td colspan="2" style="text-align:center; font-weight:700; color:var(--success); font-size:15px;">
+                            0 MẪU TRÙNG LẶP (OVERLAP = 0)
+                        </td>
+                        <td><span class="badge badge-success">Zero Data Leakage 100%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            <ul>
-                <li><strong>Nhánh Số học (StandardScaler):</strong> Chuẩn hóa 3 biến định lượng (<code>Qty</code>, <code>month</code>, <code>day_of_week</code>) về phân phối có trung bình 0 và phương sai 1, giúp thuật toán hội tụ nhanh và loại bỏ sự chênh lệch đơn vị đo.</li>
-                <li><strong>Nhánh Định tính (OneHotEncoder):</strong> Mã hóa 6 biến phân loại quan trọng. Tham số <code>drop='first'</code> được kích hoạt để loại bỏ cột phân loại cơ sở đầu tiên, triệt tiêu hoàn toàn bẫy biến giả (<em>Dummy Variable Trap</em>) chống đa cộng tuyến hoàn hảo. Tham số <code>handle_unknown='ignore'</code> giúp hệ thống an toàn trước mọi giá trị lạ xuất hiện trong tương lai.</li>
-                <li><strong>Bàn giao tài nguyên hoàn chỉnh:</strong> Sau xử lý, tập dữ liệu đạt chuẩn kích thước <strong>42 chiều đặc trưng</strong>, được lưu trữ an toàn tại <code>data/processed/train_test_data.joblib</code> và <code>models/saved_models/preprocessor.joblib</code> sẵn sàng bàn giao cho Chặng 3 Huấn luyện mô hình.</li>
-            </ul>
+        <!-- MỤC 4: COLUMNTRANSFORMER & ĐA CỘNG TUYẾN -->
+        <div class="card">
+            <h2>4. Thiết Lập Dây Chuyền Tiền Xử Lý Đa Tầng (ColumnTransformer) & Khử Đa Cộng Tuyến</h2>
+            <p>Dây chuyền tiền xử lý tự động hóa gồm 2 nhánh chạy song song, biến đổi đồng thời biến số và biến phân loại:</p>
+            <table>
+                <thead><tr><th>Nhánh Tiền Xử Lý</th><th>Phương Pháp Kỹ Thuật</th><th>Danh Sách Thuộc Tính</th><th>Số Chiều Sau Biến Đổi</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nhánh Số (Numeric)</strong></td>
+                        <td><code>StandardScaler()</code> (Chuẩn hóa Z-score &mu; = 0, &sigma; = 1)</td>
+                        <td><code>['Qty', 'month', 'day_of_week', 'is_promoted', 'is_b2b']</code></td>
+                        <td>5 đặc trưng liên tục</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nhánh Phân Loại (Categorical)</strong></td>
+                        <td><code>OneHotEncoder(handle_unknown='ignore')</code></td>
+                        <td><code>['Category', 'Size', 'Fulfilment', 'ship-service-level', 'Courier Status', 'state_grouped']</code></td>
+                        <td>37 đặc trưng nhị phân One-Hot</td>
+                    </tr>
+                    <tr style="background:#f8fafc; font-weight:600;">
+                        <td><strong>Tổng không gian đặc trưng</strong></td>
+                        <td>Đóng gói hợp nhất qua <code>ColumnTransformer</code></td>
+                        <td>11 thuộc tính đầu vào gốc</td>
+                        <td><strong>42 chiều ma trận</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box" style="margin-top:16px;">
+                <div class="highlight-title">🔍 Phát Hiện & Xử Lý Đa Cộng Tuyến Nghiêm Ngặt (Collinearity Check)</div>
+                <p style="margin:0; font-size:13.5px; color:#14532d;">
+                    Quét ma trận tương quan Pearson trên toàn bộ các biến số học phát hiện:
+                </p>
+                <ul style="margin:6px 0 0 18px; font-size:13.5px; color:#14532d;">
+                    <li><code>day_of_week - is_weekend (|r|=0.80)</code></li>
+                </ul>
+                <p style="margin:8px 0 0 0; font-size:13.5px; color:#14532d;">
+                    <strong>Chiến lược xử lý:</strong> Cặp <code>(day_of_week, is_weekend)</code> có tương quan rất cao (|r| = 0.80 &gt; 0.6). Do đó, nhóm đã <strong>chủ động loại bỏ đặc trưng <code>is_weekend</code></strong> trước khi đưa vào mô hình. Việc này triệt tiêu hoàn toàn nguy cơ đa cộng tuyến, bảo vệ nghiệm nghịch đảo của ma trận (X<sup>T</sup>X)<sup>-1</sup> trong Hồi quy tuyến tính OLS không bị suy biến.
+                </p>
+            </div>
+        </div>
+
+        <!-- MỤC 5: BÀN GIAO HIỆN VẬT -->
+        <div class="card">
+            <h2>5. Danh Mục Hiện Vật Dữ Liệu & Pipeline Bàn Giao</h2>
+            <table>
+                <thead><tr><th>Tên Hiện Vật</th><th>Đường Dẫn Lưu Trữ</th><th>Quy Mô / Định Dạng</th><th>Mục Đích Sử Dụng Ở Chặng Kế Tiếp</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><code>clean_amazon_sales.csv</code></td>
+                        <td><code>data/processed/clean_amazon_sales.csv</code></td>
+                        <td>102.852 dòng x 12 cột</td>
+                        <td>Tệp dữ liệu sạch chuẩn phục vụ kiểm tra và EDA</td>
+                    </tr>
+                    <tr>
+                        <td><code>train.csv</code></td>
+                        <td><code>data/processed/train.csv</code></td>
+                        <td>82.281 dòng x 11 cột</td>
+                        <td>Dữ liệu huấn luyện kèm Amount thực tế phục vụ trực quan hóa</td>
+                    </tr>
+                    <tr>
+                        <td><code>test.csv</code></td>
+                        <td><code>data/processed/test.csv</code></td>
+                        <td>20.571 dòng x 11 cột</td>
+                        <td>Dữ liệu kiểm thử kèm Amount thực tế phục vụ trực quan hóa</td>
+                    </tr>
+                    <tr>
+                        <td><code>preprocessor.joblib</code></td>
+                        <td><code>models/saved_models/preprocessor.joblib</code></td>
+                        <td>ColumnTransformer đã fit</td>
+                        <td>Dây chuyền tiền xử lý độc lập nạp trực tiếp vào suy luận thực tế</td>
+                    </tr>
+                    <tr>
+                        <td><code>train_test_data.joblib</code></td>
+                        <td><code>models/saved_models/train_test_data.joblib</code></td>
+                        <td>Dictionary đối tượng</td>
+                        <td>Nạp siêu tốc cho Chặng 03 (X_train, X_test, y_train, y_test)</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div style="text-align: right; margin-top: 24px;">
-            <a href="03_model_evaluation_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 03 — Huấn Luyện & Đánh Giá Mô Hình &rarr;</a>
+            <a href="03_model_training_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 03 — Huấn Luyện 3 Mô Hình Scratch & 5-Fold CV &rarr;</a>
         </div>
     </div>
 </body>

@@ -691,8 +691,8 @@ def test_08_ast_syntax_integrity():
 
     # Kiểm tra AST trên code cells của các Notebooks
     notebook_files = [
-        BASE_DIR / "notebooks" / "01_data_cleaning_and_eda.ipynb",
-        BASE_DIR / "notebooks" / "02_feature_engineering_and_pipeline.ipynb",
+        BASE_DIR / "notebooks" / "01_exploratory_data_analysis.ipynb",
+        BASE_DIR / "notebooks" / "02_data_preprocessing_and_feature_engineering.ipynb",
         BASE_DIR / "notebooks" / "03_model_training_evaluation_and_explain.ipynb",
         BASE_DIR / "notebooks" / "demo.ipynb"
     ]

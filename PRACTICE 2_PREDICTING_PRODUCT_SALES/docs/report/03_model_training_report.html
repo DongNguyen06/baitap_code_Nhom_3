@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>Báo Cáo 03: Huấn Luyện Mô Hình Scratch & 5-Fold Cross Validation</title>
+    <style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --bg-body: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg-body);
+        color: var(--text-main);
+        line-height: 1.6;
+        padding: 30px 20px;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .nav-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .nav-link:hover { text-decoration: underline; }
+    .header {
+        margin-bottom: 30px;
+    }
+    .header h1 {
+        font-size: 26px;
+        color: #1e293b;
+        margin-bottom: 8px;
+    }
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 9999px;
+        text-transform: uppercase;
+        background: #e0e7ff;
+        color: #3730a3;
+        margin-bottom: 10px;
+    }
+    .badge-success { background: #dcfce7; color: #166534; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+    .stat-card {
+        background: var(--card-bg);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .stat-card .title {
+        font-size: 13px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .stat-card .value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-top: 6px;
+    }
+    .stat-card .desc {
+        font-size: 12.5px;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+    .card {
+        background: var(--card-bg);
+        padding: 26px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+    .card h2 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: #1e293b;
+        border-left: 4px solid var(--primary);
+        padding-left: 12px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+    th, td {
+        padding: 12px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    th {
+        background: #f1f5f9;
+        font-weight: 600;
+        color: #334155;
+    }
+    tr:hover { background: #f8fafc; }
+    .img-box {
+        text-align: center;
+        margin: 20px 0;
+        background: #f8fafc;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 16px;
+    }
+    .img-box img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .img-caption {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 10px;
+        font-style: italic;
+    }
+    .highlight-box {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin: 18px 0;
+    }
+    .highlight-title {
+        font-weight: 700;
+        color: #166534;
+        font-size: 14.5px;
+        margin-bottom: 6px;
+    }
+    ul {
+        padding-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 14px;
+    }
+    li {
+        font-size: 14px;
+        color: #334155;
+        margin-bottom: 8px;
+        line-height: 1.65;
+    }
+    .banner-warning {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #92400e;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-bar">
+            <a href="02_feature_pipeline_report.html" class="nav-link">&larr; Báo Cáo 02: Tiền Xử Lý Dữ Liệu & Kỹ Thuật Đặc Trưng</a>
+            <a href="index.html" class="nav-link">Bảng Điều Khiển Tổng Quan</a>
+            <a href="04_model_evaluation_report.html" class="nav-link">Báo Cáo 04: Đánh Giá Độc Lập Test Set &rarr;</a>
+        </div>
+        <div class="header">
+            <span class="badge badge-success">CHẶNG 03: HUẤN LUYỆN & KIỂM ĐỊNH CHÉO</span>
+            <h1>Báo Cáo Huấn Luyện 3 Mô Hình Hồi Quy Scratch & 5-Fold Cross Validation</h1>
+            <p style="color:var(--text-muted); font-size:14.5px;">
+                Thực nghiệm huấn luyện 3 thuật toán Scratch thuần NumPy (Linear Regression OLS Normal Equation, Decision Tree Regressor Quantile Splits, Random Forest Regressor Ensemble Bagging) kết hợp kiểm định chéo 5-Fold Cross Validation.
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:14:59.334683 (Thời lượng thực thi: <strong>466.19s</strong>).</em>
+            </p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="title">Số Lượng Thuật Toán Scratch</div>
+                <div class="value">3 Mô Hình</div>
+                <div class="desc">Cài đặt 100% bằng NumPy thuần túy</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Quy Mô Kiểm Định Chéo (CV)</div>
+                <div class="value">5-Fold CV</div>
+                <div class="desc">Chạy trên 100% tập Train (82,281 mẫu)</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Điểm Số R² CV Cao Nhất</div>
+                <div class="value" style="color:var(--success);">0.5573</div>
+                <div class="desc">Random Forest Regressor</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Chiến Lược Tinh Chỉnh</div>
+                <div class="value">GridSearchCV</div>
+                <div class="desc">Tối ưu hóa siêu tham số tự động</div>
+            </div>
+        </div>
+
+        <!-- MỤC 1: KIỂM ĐỊNH CHÉO 5-FOLD CV -->
+        <div class="card">
+            <h2>1. Bảng Tổng Kết Đánh Giá Độ Ổn Định 5-Fold Cross Validation (Toàn Bộ Tập Train)</h2>
+            <p>Để đảm bảo 3 thuật toán hoạt động ổn định và không phụ thuộc vào may rủi khi phân chia dữ liệu, toàn bộ <strong>82,281 mẫu Train</strong> được kiểm định chéo 5-Fold Cross Validation:</p>
+            <table>
+                <thead><tr><th>Mô Hình Hồi Quy Scratch</th><th>CV R² (Trung Bình)</th><th>Độ Lệch R² (Std)</th><th>CV RMSE (Trung Bình)</th><th>Độ Lệch RMSE (Std)</th></tr></thead>
+                <tbody><tr><td><strong>Linear Regression</strong></td><td>0.5522</td><td>± 0.0056</td><td>0.2600</td><td>± 0.0009</td></tr><tr><td><strong>Decision Tree Regressor</strong></td><td>0.5531</td><td>± 0.0058</td><td>0.2598</td><td>± 0.0009</td></tr><tr><td><strong>Random Forest Regressor</strong></td><td>0.5577</td><td>± 0.0055</td><td>0.2584</td><td>± 0.0009</td></tr></tbody>
+            </table>
+
+            <div class="highlight-box">
+                <div class="highlight-title">✓ Nhận Định Chuyên Sâu Về Độ Ổn Định & Bản Chất Hiệu Năng 3 Thuật Toán:</div>
+                <ul>
+                    <li><strong>Độ ổn định phương sai tuyệt đối:</strong> Độ lệch chuẩn giữa 5 folds cực kỳ nhỏ (&sigma; R&sup2; &le; &plusmn; 0.0058 và &sigma; RMSE &le; &plusmn; 0.0009). Điều này khẳng định quy trình ColumnTransformer và biến đổi Log1p ở Chặng 2 phân bổ dữ liệu rất đồng nhất, loại bỏ hoàn toàn hiện tượng học vẹt (overfitting).</li>
+                    <li><strong>Bản chất sự tương đồng hiệu năng (R&sup2; &approx; 0.552 - 0.557):</strong> Phép biến đổi ln(1 + Amount) đã tuyến tính hóa bài toán sang dạng cộng tính. Hơn 88% không gian đặc trưng là các biến nhị phân One-Hot (37/42 chiều), do đó nghiệm giải tích Normal Equation của Linear Regression đã khai thác tối đa quy luật phân khúc giá theo định lý Gauss-Markov.</li>
+                    <li><strong>Mô hình Random Forest dẫn đầu:</strong> Đạt CV R&sup2; = 0.5577 (RMSE = 0.2584 log), nhỉnh hơn OLS và Decision Tree nhờ bắt thêm được các mối tương tác phi tuyến tính giữa Ngành hàng (<code>Category</code>) và Kích cỡ (<code>Size</code>).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MỤC 2: TINH CHỈNH SIÊU THAM SỐ GRIDSEARCHCV -->
+        <div class="card">
+            <h2>2. Kết Quả Tinh Chỉnh Siêu Tham Số (Hyperparameter Tuning qua GridSearchCV)</h2>
+            <p>Không gian tìm kiếm tối ưu hóa tự động siêu tham số cho cả 3 mô hình nhằm khai phá năng lực dự báo cao nhất:</p>
+            <table>
+                <thead><tr><th>Mô Hình Hồi Quy</th><th>Best Score (R²)</th><th>Tổ Hợp Siêu Tham Số Tối Ưu Nhất (Best Parameters)</th></tr></thead>
+                <tbody><tr><td><strong>Linear Regression</strong></td><td>0.5521</td><td><code>{&#x27;regressor__l2&#x27;: 0.0}</code></td></tr><tr><td><strong>Decision Tree Regressor</strong></td><td>0.5540</td><td><code>{&#x27;regressor__max_depth&#x27;: 7, &#x27;regressor__min_samples_split&#x27;: 5}</code></td></tr><tr><td><strong>Random Forest Regressor</strong></td><td>0.5573</td><td><code>{&#x27;regressor__max_depth&#x27;: 8, &#x27;regressor__n_estimators&#x27;: 20}</code></td></tr></tbody>
+            </table>
+        </div>
+
+        <!-- MỤC 3: BÀN GIAO MÔ HÌNH HIỆN VẬT -->
+        <div class="card">
+            <h2>3. Danh Mục Hiện Vật Mô Hình Đã Lưu Trữ & Bàn Giao</h2>
+            <p>Cả 3 mô hình sau khi tìm được cấu hình tối ưu đã được huấn luyện hoàn chỉnh trên toàn bộ 82,281 mẫu Train và đóng gói thành các Pipeline độc lập phục vụ Chặng 4:</p>
+            <table>
+                <thead><tr><th>Tên Hiện Vật</th><th>Đường Dẫn Lưu Trữ</th><th>Kiến Trúc Đóng Gói</th><th>Vai Trò Nghiệm Thu</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><code>linear_regression.joblib</code></td>
+                        <td><code>models/saved_models/linear_regression.joblib</code></td>
+                        <td>Pipeline (ColumnTransformer + LinearRegressionScratch Normal Equation)</td>
+                        <td>Mô hình cơ sở chuẩn mực (Baseline), tốc độ suy luận giải tích siêu tốc</td>
+                    </tr>
+                    <tr>
+                        <td><code>decision_tree.joblib</code></td>
+                        <td><code>models/saved_models/decision_tree.joblib</code></td>
+                        <td>Pipeline (ColumnTransformer + DecisionTreeRegressorScratch Quantile Splits)</td>
+                        <td>Cây quyết định đơn, cung cấp khả năng giải thích trực quan các nhánh rẽ</td>
+                    </tr>
+                    <tr>
+                        <td><code>random_forest.joblib</code></td>
+                        <td><code>models/saved_models/random_forest.joblib</code></td>
+                        <td>Pipeline (ColumnTransformer + RandomForestRegressorScratch Ensemble Bagging)</td>
+                        <td>Rừng ngẫu nhiên Ensemble 20 cây, ứng viên quán quân độ chính xác cao nhất</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align: right; margin-top: 24px;">
+            <a href="04_model_evaluation_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 04 — Đánh Giá Độc Lập Test Set & Bóc Tách Đặc Trưng &rarr;</a>
+        </div>
+    </div>
+</body>
+</html>

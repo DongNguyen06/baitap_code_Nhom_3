@@ -33,6 +33,74 @@ CATEGORY_LOOKUP = {
 }
 
 
+def clean_raw_sales_data(
+    df_raw: pd.DataFrame
+) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """
+    [BƯỚC 1: LÀM SẠCH & KHỬ TRÙNG LẶP DỮ LIỆU TMĐT]
+    - Loại bỏ các đơn hàng bị hủy (Status chứa 'Cancelled').
+    - Loại bỏ các đơn hàng có Amount hoặc Qty <= 0 hoặc khuyết thiếu.
+    - Giữ lại các cột nghiệp vụ cốt lõi và điền khuyết thiếu giá trị kỹ thuật.
+    - Khử trùng lặp bản ghi triệt để (Zero Duplicate Leakage).
+    """
+    n_raw = len(df_raw)
+
+    # 1. Lọc đơn Cancelled
+    if 'Status' in df_raw.columns:
+        is_cancelled = df_raw['Status'].astype(str).str.contains('Cancelled', case=False, na=False)
+        n_cancelled = int(is_cancelled.sum())
+        df_clean = df_raw[~is_cancelled].copy()
+    else:
+        n_cancelled = 0
+        df_clean = df_raw.copy()
+
+    # 2. Lọc Amount > 0 và Qty > 0
+    cond_valid = pd.Series(True, index=df_clean.index)
+    if 'Amount' in df_clean.columns:
+        cond_valid &= (df_clean['Amount'].notna()) & (df_clean['Amount'] > 0)
+    if 'Qty' in df_clean.columns:
+        cond_valid &= (df_clean['Qty'].notna()) & (df_clean['Qty'] > 0)
+
+    n_invalid = int((~cond_valid).sum())
+    df_clean = df_clean[cond_valid].copy()
+
+    # 3. Giữ các cột thuộc tính cốt lõi
+    core_cols = [
+        'Date', 'Status', 'Fulfilment', 'ship-service-level', 'Category',
+        'Size', 'Courier Status', 'Qty', 'Amount', 'ship-state',
+        'promotion-ids', 'B2B'
+    ]
+    cols_present = [c for c in core_cols if c in df_clean.columns]
+    if cols_present:
+        df_clean = df_clean[cols_present]
+
+    # 4. Khử trùng lặp bản ghi (Zero Duplicate Leakage)
+    n_before_dedup = len(df_clean)
+    df_clean = df_clean.drop_duplicates().copy()
+    n_duplicates = n_before_dedup - len(df_clean)
+
+    # 5. Điền khuyết thiếu kỹ thuật
+    if "promotion-ids" in df_clean.columns:
+        df_clean["promotion-ids"] = df_clean["promotion-ids"].fillna("No_Promotion")
+
+    if "Courier Status" in df_clean.columns:
+        df_clean["Courier Status"] = df_clean["Courier Status"].fillna("Unshipped")
+
+    if "ship-state" in df_clean.columns:
+        mode_series = df_clean["ship-state"].mode().dropna()
+        mode_val = mode_series.iloc[0] if not mode_series.empty else "Unknown"
+        df_clean["ship-state"] = df_clean["ship-state"].fillna(mode_val)
+
+    stats = {
+        "raw_rows": n_raw,
+        "cancelled_removed": n_cancelled,
+        "invalid_amount_qty_removed": n_invalid,
+        "duplicates_removed": n_duplicates,
+        "clean_rows": len(df_clean)
+    }
+    return df_clean, stats
+
+
 def extract_domain_features(
     df: pd.DataFrame,
     top_states: Optional[List[str]] = None

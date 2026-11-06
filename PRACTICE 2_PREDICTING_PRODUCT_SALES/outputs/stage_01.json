@@ -1,0 +1,299 @@
+{
+  "stage": "01",
+  "status": "success",
+  "started_at": "2026-11-06T13:06:57.652982",
+  "finished_at": "2026-11-06T13:07:06.700664",
+  "duration_sec": 9.05,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_01_eda_20261106_130657.log",
+  "config": {
+    "raw_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\data\\raw\\Amazon Sale Report.csv",
+    "random_seed": 42
+  },
+  "metrics": {
+    "raw_rows": 128975,
+    "raw_cols": 24,
+    "raw_duplicates": 0,
+    "amount_mean": 648.56,
+    "amount_median": 605.0,
+    "amount_std": 281.21,
+    "amount_skewness": 0.89,
+    "amount_kurtosis": 3.0,
+    "amount_outliers_count": 3743,
+    "amount_outliers_ratio": 3.15
+  },
+  "tables": {
+    "missing_counts": {
+      "index": 0,
+      "Order ID": 0,
+      "Date": 0,
+      "Status": 0,
+      "Fulfilment": 0,
+      "Sales Channel ": 0,
+      "ship-service-level": 0,
+      "Style": 0,
+      "SKU": 0,
+      "Category": 0,
+      "Size": 0,
+      "ASIN": 0,
+      "Courier Status": 6872,
+      "Qty": 0,
+      "currency": 7795,
+      "Amount": 7795,
+      "ship-city": 33,
+      "ship-state": 33,
+      "ship-postal-code": 33,
+      "ship-country": 33,
+      "promotion-ids": 49153,
+      "B2B": 0,
+      "fulfilled-by": 89698,
+      "Unnamed: 22": 49050
+    },
+    "missing_pct": {
+      "index": 0.0,
+      "Order ID": 0.0,
+      "Date": 0.0,
+      "Status": 0.0,
+      "Fulfilment": 0.0,
+      "Sales Channel ": 0.0,
+      "ship-service-level": 0.0,
+      "Style": 0.0,
+      "SKU": 0.0,
+      "Category": 0.0,
+      "Size": 0.0,
+      "ASIN": 0.0,
+      "Courier Status": 5.33,
+      "Qty": 0.0,
+      "currency": 6.04,
+      "Amount": 6.04,
+      "ship-city": 0.03,
+      "ship-state": 0.03,
+      "ship-postal-code": 0.03,
+      "ship-country": 0.03,
+      "promotion-ids": 38.11,
+      "B2B": 0.0,
+      "fulfilled-by": 69.55,
+      "Unnamed: 22": 38.03
+    },
+    "category_stats": [
+      {
+        "Category": "Set",
+        "count": 47042,
+        "mean": 833.39,
+        "median": 788.0,
+        "std": 293.35,
+        "total": 39204124.03,
+        "share_pct": 49.88
+      },
+      {
+        "Category": "kurta",
+        "count": 46717,
+        "mean": 455.93,
+        "median": 435.0,
+        "std": 148.86,
+        "total": 21299546.7,
+        "share_pct": 27.1
+      },
+      {
+        "Category": "Western Dress",
+        "count": 14704,
+        "mean": 762.79,
+        "median": 744.0,
+        "std": 167.73,
+        "total": 11216072.69,
+        "share_pct": 14.27
+      },
+      {
+        "Category": "Top",
+        "count": 10165,
+        "mean": 526.1,
+        "median": 519.05,
+        "std": 149.06,
+        "total": 5347792.3,
+        "share_pct": 6.8
+      },
+      {
+        "Category": "Ethnic Dress",
+        "count": 1093,
+        "mean": 723.9,
+        "median": 837.0,
+        "std": 264.33,
+        "total": 791217.66,
+        "share_pct": 1.01
+      },
+      {
+        "Category": "Blouse",
+        "count": 881,
+        "mean": 520.33,
+        "median": 545.0,
+        "std": 175.19,
+        "total": 458408.18,
+        "share_pct": 0.58
+      },
+      {
+        "Category": "Bottom",
+        "count": 420,
+        "mean": 358.73,
+        "median": 345.0,
+        "std": 116.95,
+        "total": 150667.98,
+        "share_pct": 0.19
+      },
+      {
+        "Category": "Saree",
+        "count": 155,
+        "mean": 799.57,
+        "median": 791.0,
+        "std": 202.92,
+        "total": 123933.76,
+        "share_pct": 0.16
+      },
+      {
+        "Category": "Dupatta",
+        "count": 3,
+        "mean": 305.0,
+        "median": 305.0,
+        "std": 0.0,
+        "total": 915.0,
+        "share_pct": 0.0
+      }
+    ],
+    "fulfilment_stats": [
+      {
+        "Fulfilment": "Amazon",
+        "count": 83639,
+        "mean": 649.48,
+        "median": 599.0,
+        "std": 281.76,
+        "total": 54322151.0,
+        "share_pct": 69.12
+      },
+      {
+        "Fulfilment": "Merchant",
+        "count": 37541,
+        "mean": 646.51,
+        "median": 629.0,
+        "std": 279.99,
+        "total": 24270527.3,
+        "share_pct": 30.88
+      }
+    ],
+    "state_stats": [
+      {
+        "ship-state": "MAHARASHTRA",
+        "count": 21073,
+        "mean": 632.83,
+        "median": 597.0,
+        "std": 272.25,
+        "total": 13335534.14,
+        "share_pct": 16.97
+      },
+      {
+        "ship-state": "KARNATAKA",
+        "count": 16394,
+        "mean": 639.33,
+        "median": 600.95,
+        "std": 272.89,
+        "total": 10481114.37,
+        "share_pct": 13.34
+      },
+      {
+        "ship-state": "TELANGANA",
+        "count": 10637,
+        "mean": 650.24,
+        "median": 612.0,
+        "std": 278.8,
+        "total": 6916615.65,
+        "share_pct": 8.8
+      },
+      {
+        "ship-state": "UTTAR PRADESH",
+        "count": 9947,
+        "mean": 685.3,
+        "median": 648.0,
+        "std": 297.14,
+        "total": 6816642.08,
+        "share_pct": 8.67
+      },
+      {
+        "ship-state": "TAMIL NADU",
+        "count": 10809,
+        "mean": 602.8,
+        "median": 534.0,
+        "std": 263.92,
+        "total": 6515650.11,
+        "share_pct": 8.29
+      },
+      {
+        "ship-state": "DELHI",
+        "count": 6393,
+        "mean": 662.48,
+        "median": 625.0,
+        "std": 283.72,
+        "total": 4235215.97,
+        "share_pct": 5.39
+      },
+      {
+        "ship-state": "KERALA",
+        "count": 6151,
+        "mean": 622.7,
+        "median": 597.0,
+        "std": 251.89,
+        "total": 3830227.58,
+        "share_pct": 4.87
+      },
+      {
+        "ship-state": "WEST BENGAL",
+        "count": 5547,
+        "mean": 632.39,
+        "median": 574.0,
+        "std": 272.23,
+        "total": 3507880.44,
+        "share_pct": 4.46
+      },
+      {
+        "ship-state": "ANDHRA PRADESH",
+        "count": 5055,
+        "mean": 636.96,
+        "median": 597.0,
+        "std": 289.88,
+        "total": 3219831.72,
+        "share_pct": 4.1
+      },
+      {
+        "ship-state": "HARYANA",
+        "count": 4188,
+        "mean": 688.18,
+        "median": 641.0,
+        "std": 297.0,
+        "total": 2882092.99,
+        "share_pct": 3.67
+      }
+    ],
+    "eta_squared": {
+      "Category": 0.3908,
+      "is_promoted": 0.0159,
+      "ship-state": 0.0109,
+      "Size": 0.0088,
+      "ship-service-level": 0.0016,
+      "B2B": 0.0002,
+      "Fulfilment": 0.0
+    }
+  },
+  "figures": [
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_01_amount_distribution.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_02_bivariate_category_fulfilment.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_03_outliers_boxplot.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_04_temporal_sales_trend.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_05_geographic_sales_distribution.png",
+    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\eda_06_correlation_heatmap.png"
+  ],
+  "timings": {
+    "load_raw_data": 1.98,
+    "inspect_structure": 0.43,
+    "univariate_stats": 0.02,
+    "iqr_outliers": 0.02,
+    "bivariate_analysis": 0.6,
+    "export_figures": 5.97
+  }
+}

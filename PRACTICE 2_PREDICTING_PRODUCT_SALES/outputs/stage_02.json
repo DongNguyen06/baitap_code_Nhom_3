@@ -1,0 +1,106 @@
+{
+  "stage": "02",
+  "status": "success",
+  "started_at": "2026-11-06T13:07:06.747698",
+  "finished_at": "2026-11-06T13:07:13.085360",
+  "duration_sec": 6.34,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_02_fe_20261106_130706.log",
+  "config": {
+    "test_size": 0.2,
+    "random_seed": 42,
+    "numeric_scaler": "StandardScaler",
+    "categorical_encoder": "OneHotEncoder(handle_unknown='ignore')",
+    "target_transform": "ln(1 + Amount)"
+  },
+  "metrics": {
+    "raw_rows": 128975,
+    "cancelled_removed": 18332,
+    "invalid_amount_qty_removed": 2572,
+    "duplicates_removed": 5219,
+    "clean_rows": 102852,
+    "train_size": 82281,
+    "test_size": 20571,
+    "train_amount_mean": 665.2,
+    "test_amount_mean": 666.94,
+    "train_amount_std": 270.28,
+    "test_amount_std": 274.16,
+    "data_leakage_overlap": 0,
+    "total_features_dim": 42,
+    "num_features_dim": 5,
+    "cat_encoded_dim": 37
+  },
+  "tables": {
+    "domain_features_summary": [
+      {
+        "feature": "Qty",
+        "type": "Numeric (Số lượng)",
+        "description": "Số lượng sản phẩm đặt mua trong đơn hàng"
+      },
+      {
+        "feature": "month",
+        "type": "Numeric (Thời gian)",
+        "description": "Tháng phát sinh giao dịch (Tháng 4, 5, 6)"
+      },
+      {
+        "feature": "day_of_week",
+        "type": "Numeric (Thời gian)",
+        "description": "Thứ trong tuần (0: Thứ 2 đến 6: Chủ nhật)"
+      },
+      {
+        "feature": "is_promoted",
+        "type": "Binary Flag (Tiếp thị)",
+        "description": "Cờ 1 nếu đơn hàng áp dụng voucher/mã khuyến mãi, 0 nếu không"
+      },
+      {
+        "feature": "is_b2b",
+        "type": "Binary Flag (Nghiệp vụ)",
+        "description": "Cờ 1 nếu là khách hàng doanh nghiệp sỉ B2B, 0 nếu khách lẻ"
+      },
+      {
+        "feature": "Category",
+        "type": "Categorical (Ngành hàng)",
+        "description": "Nhóm ngành hàng thời trang (Set, Kurta, Top, Western Dress...)"
+      },
+      {
+        "feature": "Size",
+        "type": "Categorical (Kích cỡ)",
+        "description": "Kích cỡ sản phẩm (XS, S, M, L, XL, XXL, 3XL...)"
+      },
+      {
+        "feature": "Fulfilment",
+        "type": "Categorical (Vận hành)",
+        "description": "Kênh hoàn tất đơn hàng (Merchant tự giao vs Amazon FBA)"
+      },
+      {
+        "feature": "ship-service-level",
+        "type": "Categorical (Dịch vụ)",
+        "description": "Mức độ dịch vụ giao hàng (Standard vs Expedited)"
+      },
+      {
+        "feature": "Courier Status",
+        "type": "Categorical (Trạng thái)",
+        "description": "Tình trạng chuyển phát qua bưu tá (Shipped, Unshipped)"
+      },
+      {
+        "feature": "state_grouped",
+        "type": "Categorical (Địa lý)",
+        "description": "Phân nhóm địa lý Top 10 bang lớn tại Ấn Độ hoặc 'Other'"
+      }
+    ],
+    "collinear_features": [
+      "day_of_week - is_weekend (|r|=0.80)"
+    ]
+  },
+  "figures": [],
+  "timings": {
+    "load_raw_data": 1.31,
+    "clean_raw_data": 2.02,
+    "extract_features": 0.42,
+    "collinear_check": 0.04,
+    "split_train_test": 0.11,
+    "leakage_check": 0.03,
+    "build_column_transformer": 0.75,
+    "export_artifacts": 1.63
+  }
+}

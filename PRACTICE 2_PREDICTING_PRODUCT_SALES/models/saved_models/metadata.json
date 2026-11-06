@@ -1,7 +1,7 @@
 {
   "project_name": "Practice 2: Predicting Product Sales — Group 3",
   "team": "Nhóm 3",
-  "created_at": "2026-11-04T13:44:57.057282",
+  "created_at": "2026-11-06T13:15:01.212599",
   "model_name": "Random Forest Regressor (Ensemble Bagging Scratch)",
   "best_model": "Random Forest Regressor (Ensemble Bagging Scratch)",
   "test_metrics": {

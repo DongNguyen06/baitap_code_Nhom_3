@@ -1,0 +1,75 @@
+{
+  "stage": "03",
+  "status": "success",
+  "started_at": "2026-11-06T13:07:13.146326",
+  "finished_at": "2026-11-06T13:14:59.334683",
+  "duration_sec": 466.19,
+  "quick_mode": false,
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_03_train_20261106_130713.log",
+  "config": {
+    "cv_splits": 5,
+    "train_samples_used": 82281,
+    "random_seed": 42,
+    "optimization": "GridSearchCV"
+  },
+  "metrics": {
+    "models_count": 3,
+    "models_trained": [
+      "Linear Regression",
+      "Decision Tree Regressor",
+      "Random Forest Regressor"
+    ],
+    "best_cv_model": "Random Forest Regressor",
+    "best_cv_r2": "0.5573",
+    "train_samples_used": 82281
+  },
+  "tables": {
+    "cv_summary": [
+      {
+        "Mô hình": "Linear Regression",
+        "CV R² (Mean)": "0.5522",
+        "CV R² (Std)": "± 0.0056",
+        "CV RMSE (Mean)": "0.2600",
+        "CV RMSE (Std)": "± 0.0009"
+      },
+      {
+        "Mô hình": "Decision Tree Regressor",
+        "CV R² (Mean)": "0.5531",
+        "CV R² (Std)": "± 0.0058",
+        "CV RMSE (Mean)": "0.2598",
+        "CV RMSE (Std)": "± 0.0009"
+      },
+      {
+        "Mô hình": "Random Forest Regressor",
+        "CV R² (Mean)": "0.5577",
+        "CV R² (Std)": "± 0.0055",
+        "CV RMSE (Mean)": "0.2584",
+        "CV RMSE (Std)": "± 0.0009"
+      }
+    ],
+    "grid_search_summary": [
+      {
+        "Mô hình": "Linear Regression",
+        "Best CV R²": "0.5521",
+        "Siêu tham số tối ưu (Best Params)": "{'regressor__l2': 0.0}"
+      },
+      {
+        "Mô hình": "Decision Tree Regressor",
+        "Best CV R²": "0.5540",
+        "Siêu tham số tối ưu (Best Params)": "{'regressor__max_depth': 7, 'regressor__min_samples_split': 5}"
+      },
+      {
+        "Mô hình": "Random Forest Regressor",
+        "Best CV R²": "0.5573",
+        "Siêu tham số tối ưu (Best Params)": "{'regressor__max_depth': 8, 'regressor__n_estimators': 20}"
+      }
+    ]
+  },
+  "figures": [],
+  "timings": {
+    "data_loading_sec": 0.079,
+    "init_models_sec": 0.001,
+    "cross_validation_sec": 196.509,
+    "grid_search_sec": 269.474
+  }
+}
