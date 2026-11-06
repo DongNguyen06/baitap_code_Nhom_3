@@ -1,11 +1,11 @@
 {
   "stage": "02",
   "status": "success",
-  "started_at": "2026-11-06T08:43:56.316209",
-  "finished_at": "2026-11-06T08:43:59.850911",
-  "duration_sec": 3.53,
+  "started_at": "2026-11-06T13:06:48.949327",
+  "finished_at": "2026-11-06T13:06:57.498228",
+  "duration_sec": 8.55,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_02_fe_20261106_084356.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_02_fe_20261106_130648.log",
   "config": {
     "test_size": 0.2,
     "random_seed": 42,
@@ -18,6 +18,13 @@
     "scaler": "MinMaxScaler"
   },
   "metrics": {
+    "raw_rows": 39154,
+    "duplicates_removed": 6494,
+    "clean_rows": 32660,
+    "clean_ham_count": 17094,
+    "clean_spam_count": 15566,
+    "clean_ham_ratio": 52.34,
+    "clean_spam_ratio": 47.66,
     "total_samples": 32660,
     "train_size": 26128,
     "test_size": 6532,
@@ -80,10 +87,10 @@
   },
   "figures": [],
   "timings": {
-    "load_clean_data": 0.73,
-    "extract_domain_features": 2.05,
-    "train_test_split": 0.02,
-    "leakage_check": 0.03,
+    "clean_and_deduplicate": 5.58,
+    "extract_domain_features": 2.19,
+    "train_test_split": 0.03,
+    "leakage_check": 0.01,
     "build_preprocessor": 0.0,
     "save_artifacts": 0.62
   }

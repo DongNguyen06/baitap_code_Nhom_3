@@ -37,13 +37,13 @@
 | Thành phần | Lựa chọn kỹ thuật trong dự án | Lý do lựa chọn |
 | :--- | :--- | :--- |
 | **Thư viện cốt lõi** | `numpy`, `pandas`, `scikit-learn`, `joblib`, `matplotlib`, `seaborn` | Bộ công cụ chuẩn mực cho tiền xử lý, tính toán ma trận và trực quan hóa. |
-| **3 Thuật toán Scratch** | 1. Multinomial Naive Bayes <br>2. Logistic Regression <br>3. Linear SVM  | Tự code bằng NumPy để hiểu bản chất thuật toán. |
+| **3 Thuật toán Scratch** | 1. Multinomial Naive Bayes <br>2. Logistic Regression <br>3. Linear SVM | Tự code bằng NumPy để hiểu bản chất thuật toán. |
 | **Thước đo đánh giá** | Accuracy, Precision, Recall, F1-Score & Ma trận nhầm lẫn (Confusion Matrix) | Đánh giá toàn diện năng lực nhận diện spam và đo đếm chính xác số ca bắt nhầm (FP). |
 | **Tiêu chí chọn Best Model** | Mô hình có **F1-Score cao nhất** kết hợp **Precision cao** (hạn chế tối đa FP) | Cân bằng hoàn hảo giữa khả năng bắt thư rác và độ an toàn cho thư thường. |
 
 #### WHEN — Tiến trình thực hiện
-* **Giai đoạn 1:** Khám phá & Làm sạch dữ liệu (`clean_emails.csv`).
-* **Giai đoạn 2:** Trích xuất đặc trưng kết hợp & Tách tập Train/Test 80/20 (`train.csv`, `test.csv`).
+* **Giai đoạn 1:** Khám phá dữ liệu email thô (EDA thuần túy — Read-Only 100%).
+* **Giai đoạn 2:** Tiền xử lý NLP, khử trùng lặp (Zero Duplicate Leakage) & Kỹ thuật 7 đặc trưng miền.
 * **Giai đoạn 3:** Huấn luyện 3 mô hình Scratch & Tinh chỉnh siêu tham số qua 5-Fold Stratified CV.
 * **Giai đoạn 4:** Đánh giá độc lập trên tập Test, vẽ Confusion Matrix và xuất Top 15 từ khóa spam.
 * **Giai đoạn 5:** Đóng gói Pipeline vào `models/saved_models/` và dựng giao diện thử nghiệm tương tác.
@@ -103,13 +103,13 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │       ├── preprocessor.joblib   # Pipeline biến đổi ColumnTransformer đã fit
 │       └── metadata.json         # Bảng chỉ số nghiệm thu và Top từ khóa spam
 ├── notebooks/                    # 4 Notebooks thực hành trực quan demo (outputs: [])
-│   ├── 01_data_cleaning_and_eda.ipynb
-│   ├── 02_feature_engineering_and_pipeline.ipynb
+│   ├── 01_exploratory_data_analysis.ipynb
+│   ├── 02_data_preprocessing_and_feature_engineering.ipynb
 │   ├── 03_model_training_evaluation_and_explain.ipynb
 │   └── demo.ipynb                # Notebook thử nghiệm dự đoán email tương tác đa mô hình
 ├── outputs/                      # Dữ liệu phong bì JSON giao tiếp giữa các chặng
-│   ├── stage_01.json             # Kết quả Chặng 1 (EDA & Làm sạch)
-│   ├── stage_02.json             # Kết quả Chặng 2 (Đặc trưng & Chia tập)
+│   ├── stage_01.json             # Kết quả Chặng 1 (EDA thuần túy)
+│   ├── stage_02.json             # Kết quả Chặng 2 (Tiền xử lý NLP & Đặc trưng)
 │   ├── stage_03.json             # Kết quả Chặng 3 (Huấn luyện & CV)
 │   └── stage_04.json             # Kết quả Chặng 4 (Đánh giá Hold-out Test)
 ├── scripts/                      # Các module tái sử dụng và kịch bản thực thi độc lập
@@ -133,25 +133,25 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 
 ### 4. HOW — QUY TRÌNH XÂY DỰNG 5 BƯỚC (ĐẦU VÀO -> XỬ LÝ -> ĐẦU RA)
 
-* **Bước 1: Khám phá & Làm sạch dữ liệu (Data Cleaning & EDA):**
-  * *Đầu vào:* Tệp `CEAS_08.csv` gốc (39.154 dòng).
-  * *Xử lý:* Điền chuỗi rỗng cho tiêu đề khuyết; gỡ sạch thẻ HTML ngụy trang, URL và ký tự rác bằng Regex; chuyển chữ thường; khử triệt để 6.494 mẫu thư rác trùng lặp đa hình; phân tích phân bố nhãn và độ dài qua IQR.
-  * *Đầu ra:* Tệp dữ liệu sạch `clean_emails.csv` (32.660 dòng) và 2 biểu đồ phân bố EDA.
+* **Bước 1: Khám phá dữ liệu email (Exploratory Data Analysis - EDA):**
+  * *Đầu vào:* Tệp `CEAS_08.csv` gốc (39.154 email thô).
+  * *Xử lý:* Khảo sát cấu trúc thuộc tính, tỷ lệ nhãn Ham/Spam và phân phối độ dài văn bản qua IQR theo cơ chế Read-Only 100% (không làm sạch và không ghi đè dữ liệu); bóc tách dấu hiệu ngụy trang ban đầu của thư rác.
+  * *Đầu ra:* Phong bì `outputs/stage_01.json`, 2 biểu đồ phân bố EDA và báo cáo `01_data_report.html`.
 
-* **Bước 2: Kỹ thuật đặc trưng & Phân tách tập dữ liệu (Feature Engineering & Split):**
-  * *Đầu vào:* Dữ liệu sạch `clean_emails.csv`.
-  * *Xử lý:* Trích xuất 7 đặc trưng miền số (`caps_ratio`, dấu `!`, ký hiệu `$`, số link URL, tiền tố `Re:`, độ dài tiêu đề và log độ dài thân thư); biến đổi văn bản qua TF-IDF (1,2-gram) và sàng lọc 5.000 từ vựng bằng Chi-Square; ghép tất cả qua `ColumnTransformer`; phân chia tập Train (80%) và Test (20%) có bảo toàn tỷ lệ nhãn (`stratify=y`).
-  * *Đầu ra:* Ma trận đặc trưng đã chuẩn hóa, các tệp `train.csv`, `test.csv` và bộ nạp nhanh `train_test_data.joblib`.
+* **Bước 2: Tiền xử lý NLP & Kỹ thuật đặc trưng (Data Preprocessing & Feature Engineering):**
+  * *Đầu vào:* Tệp `CEAS_08.csv` gốc.
+  * *Xử lý:* Điền chuỗi rỗng cho tiêu đề khuyết; gỡ sạch thẻ HTML ngụy trang, URL và ký tự rác bằng Regex; chuyển chữ thường; khử triệt để 6.494 mẫu thư rác trùng lặp đa hình theo nguyên tắc Zero Duplicate Leakage; trích xuất 7 đặc trưng miền số (`caps_ratio`, dấu `!`, ký hiệu `$`, số link URL, tiền tố `Re:`, độ dài tiêu đề và log độ dài thân thư); biến đổi văn bản qua TF-IDF (1,2-gram) và sàng lọc 5.000 từ vựng bằng Chi-Square; ghép tất cả qua `ColumnTransformer`; phân chia tập Train (80%) và Test (20%) có bảo toàn tỷ lệ nhãn (`stratify=y`).
+  * *Đầu ra:* Tệp dữ liệu sạch `clean_emails.csv` (32.660 dòng sạch), các tệp `train.csv`, `test.csv`, bộ nạp nhanh `train_test_data.joblib`, `preprocessor.joblib`, phong bì `outputs/stage_02.json` và báo cáo `02_feature_pipeline_report.html`.
 
 * **Bước 3: Huấn luyện mô hình & Tinh chỉnh siêu tham số (Model Training & Tuning):**
   * *Đầu vào:* Tập dữ liệu huấn luyện `X_train`, `y_train` (26.128 mẫu).
   * *Xử lý:* Huấn luyện 3 thuật toán Scratch (Multinomial Naive Bayes, Logistic Regression L2, Linear SVM Pegasos); chạy GridSearchCV kết hợp 5-Fold Stratified Cross-Validation để tìm bộ siêu tham số tối ưu ($\alpha, C$); đối với Linear SVM, kết hợp hàm Sigmoid tính khoảng cách tới siêu phẳng để suy ra xác suất tin cậy.
-  * *Đầu ra:* 3 mô hình đã huấn luyện tối ưu và tệp lưu trữ mô hình Quán quân `best_model.joblib`.
+  * *Đầu ra:* 3 mô hình đã huấn luyện tối ưu, tệp lưu trữ mô hình Quán quân `best_model.joblib`, phong bì `outputs/stage_03.json` và báo cáo `03_model_training_report.html`.
 
 * **Bước 4: Đánh giá mô hình & Phân tích sai số (Model Evaluation):**
   * *Đầu vào:* 3 mô hình đã tối ưu và tập kiểm tra `X_test`, `y_test` (6.532 mẫu).
   * *Xử lý:* Tính toán 4 chỉ số (Accuracy, Precision, Recall, F1); vẽ ma trận nhầm lẫn để kiểm soát số ca bắt nhầm thư thường (FP) và bỏ lọt thư rác (FN); bóc tách Top 15 từ khóa có trọng số cảnh báo spam lớn nhất từ mô hình tốt nhất.
-  * *Đầu ra:* Biểu đồ ma trận nhầm lẫn `model_01_confusion_matrices.png`, biểu đồ so sánh `model_03_performance_comparison.png` và tệp chỉ số nghiệm thu `metadata.json`.
+  * *Đầu ra:* Biểu đồ ma trận nhầm lẫn `model_01_confusion_matrices.png`, biểu đồ so sánh `model_03_performance_comparison.png`, tệp chỉ số nghiệm thu `metadata.json`, phong bì `outputs/stage_04.json` và báo cáo `04_model_evaluation_report.html`.
 
 * **Bước 5: Thử nghiệm tương tác & Dự đoán thời gian thực (Demo):**
   * *Đầu vào:* Tiêu đề và nội dung email văn bản thô bất kỳ do người dùng gõ vào.

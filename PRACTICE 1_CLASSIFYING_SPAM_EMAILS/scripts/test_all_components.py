@@ -256,8 +256,8 @@ def test_08_codebase_integrity():
         print(f"  ✓ {py_file.name}: Cú pháp Python AST hợp lệ 100%.")
 
     nb_files = [
-        BASE_DIR / "notebooks" / "01_data_cleaning_and_eda.ipynb",
-        BASE_DIR / "notebooks" / "02_feature_engineering_and_pipeline.ipynb",
+        BASE_DIR / "notebooks" / "01_exploratory_data_analysis.ipynb",
+        BASE_DIR / "notebooks" / "02_data_preprocessing_and_feature_engineering.ipynb",
         BASE_DIR / "notebooks" / "03_model_training_evaluation_and_explain.ipynb",
         BASE_DIR / "notebooks" / "demo.ipynb"
     ]
@@ -292,8 +292,8 @@ def test_08_codebase_integrity():
         with open(stage_01_json, "r", encoding="utf-8") as f:
             s1_data = json.load(f)
         assert s1_data.get("status") == "success", "stage_01.json có trạng thái không hợp lệ"
-        assert s1_data.get("metrics", {}).get("clean_rows") == 32660, "Số lượng mẫu sạch không đúng 32,660"
-        print("  ✓ outputs/stage_01.json: Dữ liệu phong bì Chặng 1 hoàn chỉnh và số mẫu sạch đạt 32,660.")
+        assert s1_data.get("metrics", {}).get("raw_rows") == 39154, "Số lượng mẫu thô không đúng 39,154"
+        print("  ✓ outputs/stage_01.json: Dữ liệu phong bì Chặng 1 hoàn chỉnh và số mẫu thô đạt 39,154.")
 
     report_01 = BASE_DIR / "docs" / "report" / "01_data_report.html"
     index_html = BASE_DIR / "docs" / "report" / "index.html"
@@ -307,9 +307,10 @@ def test_08_codebase_integrity():
         with open(stage_02_json, "r", encoding="utf-8") as f:
             s2_data = json.load(f)
         assert s2_data.get("status") == "success", "stage_02.json có trạng thái không hợp lệ"
+        assert s2_data.get("metrics", {}).get("clean_rows") == 32660, "Số lượng mẫu sạch không đúng 32,660"
         assert s2_data.get("metrics", {}).get("total_features_dim") == 2007, "Tổng số chiều đặc trưng không đúng 2,007"
         assert s2_data.get("metrics", {}).get("text_overlap_count") == 0, "Có rò rỉ dữ liệu giữa Train và Test"
-        print("  ✓ outputs/stage_02.json: Dữ liệu phong bì Chặng 2 hoàn chỉnh (2,007 chiều, Zero Leakage).")
+        print("  ✓ outputs/stage_02.json: Dữ liệu phong bì Chặng 2 hoàn chỉnh (32,660 mẫu sạch, 2,007 chiều, Zero Leakage).")
 
     report_02 = BASE_DIR / "docs" / "report" / "02_feature_pipeline_report.html"
     if report_02.exists():

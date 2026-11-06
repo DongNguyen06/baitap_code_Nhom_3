@@ -14,7 +14,6 @@ if str(ROOT_DIR) not in sys.path:
 
 from scripts.common import (
     RAW_CSV,
-    CLEAN_CSV,
     LOGS_DIR,
     RANDOM_SEED,
     require_files,
@@ -30,19 +29,17 @@ from data.scripts.eda import (
     get_top_keywords_comparison,
     analyze_re_prefix_and_duplicates
 )
-from data.scripts.data_preprocessing import process_and_save_clean_data
 from scripts.report_builder import build_report_01, build_index
 
 
 def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     """
-    Kịch bản thực thi Chặng 01: Khám phá & Làm sạch dữ liệu (EDA & Data Cleaning):
+    Kịch bản thực thi Chặng 01: Khám phá Dữ liệu Email (Exploratory Data Analysis - EDA):
     1. Đọc dữ liệu thô CEAS_08.csv.
     2. Khảo sát cấu trúc, thống kê đơn biến, ngoại lai IQR và từ khóa đặc trưng.
     3. Vẽ và lưu 2 biểu đồ PNG vào docs/images/.
-    4. Làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage) -> clean_emails.csv.
-    5. Lưu kết quả phong bì vào outputs/stage_01.json.
-    6. Tự động sinh docs/report/01_data_report.html và cập nhật index.html.
+    4. Lưu kết quả phong bì vào outputs/stage_01.json.
+    5. Tự động sinh docs/report/01_data_report.html và cập nhật index.html.
     """
     start_time_iso = datetime.now().isoformat()
     t_start = time.time()
@@ -55,7 +52,7 @@ def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
         log_file = getattr(logger, "log_file", "")
 
     logger.info("=" * 75)
-    logger.info("🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ & LÀM SẠCH DỮ LIỆU (EDA & NLP CLEANING)")
+    logger.info("🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU EMAIL (EXPLORATORY DATA ANALYSIS - EDA)")
     logger.info("=" * 75)
     log_environment(logger, seed=RANDOM_SEED)
 
@@ -171,17 +168,6 @@ def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     logger.info(f"  ✔ Đã xuất biểu đồ: {fig1_path.name}")
     logger.info(f"  ✔ Đã xuất biểu đồ: {fig2_path.name}")
 
-    # 9. Làm sạch văn bản NLP và khử trùng lặp (Zero Duplicate Leakage)
-    with timed(logger, "Làm sạch văn bản NLP và khử trùng lặp (Zero Duplicate Leakage)") as b:
-        df_clean, n_removed, out_clean_path = process_and_save_clean_data(df_raw, str(CLEAN_CSV))
-        clean_ham = int((df_clean["label"] == 0).sum())
-        clean_spam = int((df_clean["label"] == 1).sum())
-        clean_ham_ratio = float(clean_ham / len(df_clean) * 100)
-        clean_spam_ratio = float(clean_spam / len(df_clean) * 100)
-    timings["nlp_cleaning_and_dedup"] = b.elapsed
-    logger.info(f"  • Đã loại bỏ {n_removed:,} mẫu email trùng lặp nội dung sạch.")
-    logger.info(f"  ✔ Đã xuất: {CLEAN_CSV.name} ({len(df_clean):,} email sạch: Ham={clean_ham:,} ({clean_ham_ratio:.1f}%), Spam={clean_spam:,} ({clean_spam_ratio:.1f}%))")
-
     top_kw_records = [
         {
             "rank": i + 1,
@@ -195,7 +181,7 @@ def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
 
     total_duration = round(time.time() - t_start, 2)
 
-    # 10. Đóng gói phong bì kết quả vào outputs/stage_01.json
+    # 9. Đóng gói phong bì kết quả vào outputs/stage_01.json
     stage_data = {
         "stage": "01",
         "status": "success",
@@ -206,23 +192,15 @@ def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
         "log_file": str(log_file),
         "config": {
             "raw_csv": str(raw_path),
-            "clean_csv": str(out_clean_path),
             "random_seed": RANDOM_SEED
         },
         "metrics": {
             "raw_rows": len(df_raw),
             "raw_cols": df_raw.shape[1],
-            "clean_rows": len(df_clean),
-            "clean_cols": df_clean.shape[1],
-            "duplicates_removed": n_removed,
             "raw_ham_count": uni_stats["ham_count"],
             "raw_spam_count": uni_stats["spam_count"],
             "raw_ham_ratio": round(uni_stats["ham_ratio"], 2),
             "raw_spam_ratio": round(uni_stats["spam_ratio"], 2),
-            "clean_ham_count": clean_ham,
-            "clean_spam_count": clean_spam,
-            "clean_ham_ratio": round(clean_ham_ratio, 2),
-            "clean_spam_ratio": round(clean_spam_ratio, 2),
             "url_present_ratio": round(uni_stats["url_present_ratio"], 2),
             "subject_len_mean": round(uni_stats["subject_len_mean"], 2),
             "subject_len_median": round(uni_stats["subject_len_median"], 2),
@@ -262,7 +240,7 @@ def main(raw_csv_path: str = None, extra_handler=None, logger=None) -> dict:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Chặng 01: Khám phá & Làm sạch dữ liệu (EDA & Data Cleaning)")
+    parser = argparse.ArgumentParser(description="Chặng 01: Khám phá Dữ liệu Email (Exploratory Data Analysis - EDA)")
     parser.add_argument("--raw-csv", type=str, default=str(RAW_CSV), help="Đường dẫn tới tệp dữ liệu thô CEAS_08.csv")
     args = parser.parse_args()
 

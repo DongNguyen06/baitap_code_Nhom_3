@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo Cáo 01: Khám Phá & Làm Sạch Dữ Liệu — Nhóm 3</title>
+    <title>Báo Cáo 01: Khám Phá Dữ Liệu Email (EDA) — Nhóm 3</title>
     <style>
 :root {
     --primary: #2563eb;
@@ -108,21 +108,55 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 .tag-warning { background: #fef9c3; color: #854d0e; }
 .tag-danger { background: #fee2e2; color: #b91c1c; }
 .tag-neutral { background: #f1f5f9; color: #475569; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger { background: #fee2e2; color: #991b1b; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.stat-card .title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.stat-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
 </style>
 </head>
 <body>
     <div class="container">
         <div class="nav-bar">
             <a href="index.html" class="nav-link">&larr; Bảng Điều Khiển Tổng Quan</a>
-            <a href="02_feature_pipeline_report.html" class="nav-link">Báo Cáo 02: Kỹ Thuật Đặc Trưng &rarr;</a>
+            <a href="02_feature_pipeline_report.html" class="nav-link">Báo Cáo 02: Tiền Xử Lý & Kỹ Thuật Đặc Trưng &rarr;</a>
         </div>
 
         <div class="header">
-            <span class="badge">CHẶNG 1 / 3 — DATA EXPLORATION & NLP CLEANING</span>
-            <h1>Báo Cáo Khám Phá Dữ Liệu & Làm Sạch Văn Bản</h1>
+            <span class="badge">CHẶNG 1 / 4 — DATA EXPLORATION (EDA)</span>
+            <h1>Báo Cáo Khám Phá Dữ Liệu Email (Exploratory Data Analysis)</h1>
             <p style="color: var(--text-muted); font-size: 14.5px;">
-                Phân tích tập dữ liệu thô CEAS_08, xử lý khuyết thiếu, bóc trần thủ thuật ngụy trang và khử trùng lặp (Zero Duplicate Leakage).
-                <br><em>Cập nhật lần cuối: 2026-11-06T08:43:56.267587 (Thời lượng: 6.56s).</em>
+                Khảo sát toàn diện 39.154 email thô CEAS_08, cấu trúc thuộc tính, phân bố đơn biến, ngoại lai IQR và định hướng chiến lược tiền xử lý cho Chặng 2.
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:06:48.918261 (Thời lượng: 2.65s).</em>
             </p>
         </div>
 
@@ -136,9 +170,9 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                     </thead>
                     <tbody>
                         <tr><td><code>sender</code></td><td>Địa chỉ email người gửi</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
-                        <tr><td><code>receiver</code></td><td>Địa chỉ email người nhận</td><td>462 dòng (1.18%)</td><td>Điền giá trị mặc định 'unknown'</td></tr>
+                        <tr><td><code>receiver</code></td><td>Địa chỉ email người nhận</td><td>462 dòng (1.18%)</td><td>Điền giá trị mặc định 'unknown' ở Chặng 2</td></tr>
                         <tr><td><code>date</code></td><td>Thời điểm gửi thư</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
-                        <tr><td><code>subject</code></td><td>Tiêu đề email</td><td>28 dòng (0.07%)</td><td>Điền chuỗi rỗng '' an toàn cho xử lý văn bản</td></tr>
+                        <tr><td><code>subject</code></td><td>Tiêu đề email</td><td>28 dòng (0.07%)</td><td>Điền chuỗi rỗng '' an toàn cho xử lý văn bản ở Chặng 2</td></tr>
                         <tr><td><code>body</code></td><td>Nội dung email</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
                         <tr><td><code>label</code></td><td>Nhãn phân loại (0: Ham, 1: Spam)</td><td>0 dòng</td><td>Biến mục tiêu chuẩn (0/1)</td></tr>
                         <tr><td><code>urls</code></td><td>Có chứa đường dẫn liên kết hay không</td><td>0 dòng</td><td>Đầy đủ 100%</td></tr>
@@ -172,24 +206,19 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                 <li><strong>Tiêu đề:</strong> Thư thường có xu hướng tiêu đề dài và chi tiết hơn (trung vị tiêu đề ham lớn hơn spam rõ rệt). Phát hiện <strong>932 tiêu đề ngoại lai</strong> theo quy tắc 1.5 * IQR.</li>
                 <li><strong>Nội dung:</strong> Độ dài nội dung email bị lệch phải cực đoan. Phát hiện <strong>14.36% email ngoại lai siêu dài</strong> (> 3.000 ký tự). Kẻ phát tán thư rác cố tình chèn văn bản dài vô nghĩa nhằm làm loãng từ khóa để đánh lừa bộ lọc xác suất (<em>Bayesian Poisoning</em>). Kỹ thuật cần dùng là nén hàm logarit <code>np.log1p</code> thay vì xóa bỏ.</li>
             </ul>
-        </div>
 
-        <div class="card">
-            <h2>4. Làm Sạch Văn Bản NLP & Khử Trùng Lặp (Zero Duplicate Leakage)</h2>
-            <div class="highlight-box">
-                <div class="highlight-title">✓ Phát Hiện Quan Trọng: Thủ Thuật Ngụy Trang Của Giới Phát Tán Thư Rác</div>
-                <p style="margin: 0;">Khi so khớp toàn bộ cột thô ban đầu, tỷ lệ trùng lặp bằng 0. Tuy nhiên, spammer sử dụng kỹ thuật chèn ngẫu nhiên mã HTML ẩn và đổi tham số URL động. Khi hàm <code>clean_text</code> lột bỏ toàn bộ thẻ HTML và URL, hàng nghìn bức thư giống hệt nhau lộ diện.</p>
+            <div class="highlight-box" style="margin-top: 16px;">
+                <div class="highlight-title">🎯 Định Hướng Hành Động Cho Chặng 2 (Tiền Xử Lý & Kỹ Thuật Đặc Trưng)</div>
+                <p style="margin: 0; font-size: 13.5px; color: #14532d;">
+                    1. <strong>Tiền xử lý độc lập dòng:</strong> Cần lột bỏ mã HTML và URL ngụy trang, lọc stopwords, đồng thời khử trùng lặp nội dung sạch trước khi chia Train/Test để đạt 100% Zero Duplicate Leakage.<br>
+                    2. <strong>Trích xuất đặc trưng miền:</strong> Bổ sung 7 biến số học (tỷ lệ viết hoa, đếm dấu !, $, cờ Re:, cờ ! tiêu đề, độ dài và log độ dài).<br>
+                    3. <strong>Đóng gói ColumnTransformer:</strong> Kết hợp TfidfVectorizer + SelectKBest(chi2) cho văn bản và MinMaxScaler cho biến số, chỉ fit trên tập Train.
+                </p>
             </div>
-            <p><strong>Kết quả xử lý:</strong></p>
-            <ul>
-                <li>Hàm <code>clean_text</code>: Giải mã ký tự HTML unescape, xóa thẻ HTML <code>&lt;...&gt;</code>, xóa link HTTP/HTTPS, xóa ký tự đặc biệt, chuyển chữ thường và lọc từ dừng Stopwords tiếng Anh.</li>
-                <li><strong>Nguyên tắc Zero Duplicate Leakage:</strong> Đã loại bỏ triệt để <strong>6,494 mẫu email trùng lặp nội dung sạch</strong>, ngăn chặn hoàn toàn nguy cơ rò rỉ dữ liệu giữa tập huấn luyện và kiểm thử.</li>
-                <li><strong>Dữ liệu bàn giao:</strong> Xuất thành công <strong>32,660 email sạch</strong> sang tệp <code>data/processed/clean_emails.csv</code> phục vụ Chặng 2. Sau khi khử trùng lặp, tỷ lệ nhãn đạt trạng thái cân bằng tự nhiên lý tưởng: <strong>Ham 52.3%</strong> (17,094 email) và <strong>Spam 47.7%</strong> (15,566 email).</li>
-            </ul>
         </div>
 
         <div style="text-align: right; margin-top: 24px;">
-            <a href="02_feature_pipeline_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 02 — Kỹ Thuật Đặc Trưng & Pipeline &rarr;</a>
+            <a href="02_feature_pipeline_report.html" class="nav-link" style="font-size: 15px;">Tiếp tục: Chặng 02 — Tiền Xử Lý Dữ Liệu & Kỹ Thuật Đặc Trưng &rarr;</a>
         </div>
     </div>
 </body>

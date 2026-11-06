@@ -1,30 +1,22 @@
 {
   "stage": "01",
   "status": "success",
-  "started_at": "2026-11-06T08:43:49.711445",
-  "finished_at": "2026-11-06T08:43:56.267587",
-  "duration_sec": 6.56,
+  "started_at": "2026-11-06T13:06:46.272312",
+  "finished_at": "2026-11-06T13:06:48.918261",
+  "duration_sec": 2.65,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_01_eda_20261106_084349.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_01_eda_20261106_130646.log",
   "config": {
     "raw_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\raw\\CEAS_08.csv",
-    "clean_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\processed\\clean_emails.csv",
     "random_seed": 42
   },
   "metrics": {
     "raw_rows": 39154,
     "raw_cols": 7,
-    "clean_rows": 32660,
-    "clean_cols": 8,
-    "duplicates_removed": 6494,
     "raw_ham_count": 17312,
     "raw_spam_count": 21842,
     "raw_ham_ratio": 44.22,
     "raw_spam_ratio": 55.78,
-    "clean_ham_count": 17094,
-    "clean_spam_count": 15566,
-    "clean_ham_ratio": 52.34,
-    "clean_spam_ratio": 47.66,
     "url_present_ratio": 67.0,
     "subject_len_mean": 38.9,
     "subject_len_median": 35.0,
@@ -128,12 +120,11 @@
     "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_02_length_distribution_boxplot.png"
   ],
   "timings": {
-    "load_raw_data": 0.58,
-    "inspect_structure": 0.29,
-    "univariate_stats": 0.01,
+    "load_raw_data": 0.67,
+    "inspect_structure": 0.3,
+    "univariate_stats": 0.0,
     "iqr_outliers": 0.04,
-    "keywords_and_re": 0.19,
-    "export_figures": 1.07,
-    "nlp_cleaning_and_dedup": 4.37
+    "keywords_and_re": 0.22,
+    "export_figures": 1.39
   }
 }

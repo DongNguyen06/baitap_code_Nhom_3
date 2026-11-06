@@ -11,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from scripts.common import (
+    RAW_CSV,
     CLEAN_CSV,
     TRAIN_TEST_JOBLIB,
     PREPROCESSOR_JOBLIB,
@@ -21,6 +22,7 @@ from scripts.common import (
 )
 from scripts.logger_utils import setup_logger, timed, log_environment
 from scripts.feature_engineering import (
+    clean_raw_email_data,
     load_clean_data,
     extract_domain_features,
     split_stratified_train_test,
@@ -30,15 +32,15 @@ from scripts.feature_engineering import (
 from scripts.report_builder import build_report_02, build_index
 
 
-def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
+def main(raw_csv_path: str = None, clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     """
-    Kịch bản thực thi Chặng 02: Kỹ thuật đặc trưng & Pipeline phân tách tập dữ liệu:
-    1. Đọc tệp dữ liệu sạch clean_emails.csv (32.660 mẫu).
-    2. Trích xuất 7 đặc trưng miền nghiệp vụ và tính thống kê trung bình theo nhãn.
-    3. Phân chia Train/Test 80/20 phân tầng (Stratified Split) với seed=42.
-    4. Quét kiểm tra rò rỉ dữ liệu (Zero Data Leakage: số văn bản trùng lặp = 0).
-    5. Khởi tạo cấu hình ColumnTransformer 2.007 chiều (TF-IDF + Chi2 + MinMaxScaler).
-    6. Đóng gói lưu trữ preprocessor.joblib, train_test_data.joblib, train.csv, test.csv.
+    Kịch bản thực thi Chặng 02: Kỹ thuật đặc trưng & Pipeline tiền xử lý khép kín:
+    1. [B1 Làm sạch NLP & Khử trùng lặp]: Đọc CEAS_08.csv thô, chuẩn hóa NLP, khử trùng lặp nội dung sạch và lưu clean_emails.csv.
+    2. [B2 Tạo biến miền nghiệp vụ]: Trích xuất 7 đặc trưng số học phản ánh bản chất hành vi gửi email.
+    3. [B3 Chia Train/Test 80/20 phân tầng]: Phân tách độc lập, bảo toàn tỷ lệ nhãn qua stratify=y.
+    4. [B4 Kiểm tra rò rỉ dữ liệu]: Quét ranh giới Train/Test (Zero Data Leakage: overlap = 0).
+    5. [B5 Thiết lập ColumnTransformer]: Khởi tạo 2 nhánh xử lý TfidfVectorizer + Chi2 và MinMaxScaler.
+    6. [B6 Đóng gói Pipeline & Hiện vật]: Lưu preprocessor.joblib, train_test_data.joblib, train.csv, test.csv.
     7. Lưu phong bì kết quả vào outputs/stage_02.json.
     8. Tự động cập nhật báo cáo docs/report/02_feature_pipeline_report.html và index.html.
     """
@@ -52,26 +54,38 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     else:
         log_file = getattr(logger, "log_file", "")
 
-    logger.info("=" * 75)
-    logger.info("🚀 BẮT ĐẦU CHẶNG 02: KỸ THUẬT ĐẶC TRƯNG & DÂY CHUYỀN PIPELINE (FEATURE ENGINEERING)")
-    logger.info("=" * 75)
+    logger.info("=" * 80)
+    logger.info("🚀 BẮT ĐẦU CHẶNG 02: TIỀN XỬ LÝ DỮ LIỆU & KỸ THUẬT ĐẶC TRƯNG (FEATURE ENGINEERING)")
+    logger.info("=" * 80)
     log_environment(logger, seed=RANDOM_SEED)
 
     # 2. Kiểm tra điều kiện tiên quyết
+    raw_path = Path(raw_csv_path) if raw_csv_path else RAW_CSV
     clean_path = Path(clean_csv_path) if clean_csv_path else CLEAN_CSV
+
     require_files(
         logger,
-        [clean_path],
-        hint=f"Tệp '{clean_path.name}' chưa được tạo. Vui lòng chạy 'python scripts/run_01_eda.py' trước."
+        [raw_path],
+        hint=f"Tệp '{raw_path.name}' chưa được tìm thấy. Vui lòng kiểm tra thư mục '{raw_path.parent}'."
     )
 
-    # 3. Nạp dữ liệu sạch
-    with timed(logger, f"Nạp dữ liệu sạch từ {clean_path.name}") as b:
-        df_clean = load_clean_data(str(clean_path))
-    timings["load_clean_data"] = b.elapsed
-    logger.info(f"  • Đã nạp thành công {len(df_clean):,} email sạch.")
+    # 3. [BƯỚC 1]: Làm sạch văn bản NLP & Khử trùng lặp nội dung sạch
+    with timed(logger, f"Nạp {raw_path.name}, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage)") as b:
+        df_raw = pd.read_csv(raw_path)
+        df_clean, clean_stats = clean_raw_email_data(df_raw)
 
-    # 4. Trích xuất 7 đặc trưng miền nghiệp vụ
+        # Lưu dữ liệu sạch ra clean_emails.csv
+        clean_path.parent.mkdir(parents=True, exist_ok=True)
+        cols_export = ["sender", "receiver", "date", "subject", "body", "text_clean", "urls", "label"]
+        cols_to_use = [c for c in cols_export if c in df_clean.columns]
+        df_clean[cols_to_use].to_csv(clean_path, index=False, encoding="utf-8")
+    timings["clean_and_deduplicate"] = b.elapsed
+    logger.info(f"  • Dữ liệu thô gốc: {clean_stats['raw_rows']:,} email.")
+    logger.info(f"  • Khử trùng lặp nội dung sạch: Đã loại bỏ {clean_stats['duplicates_removed']:,} email trùng lặp.")
+    logger.info(f"  • Dữ liệu sạch thu được: {clean_stats['clean_rows']:,} email (Ham={clean_stats['clean_ham_count']:,} [{clean_stats['clean_ham_ratio']:.1f}%], Spam={clean_stats['clean_spam_count']:,} [{clean_stats['clean_spam_ratio']:.1f}%]).")
+    logger.info(f"  ✔ Đã xuất dữ liệu sạch: {clean_path.name}")
+
+    # 4. [BƯỚC 2]: Trích xuất 7 đặc trưng miền nghiệp vụ
     with timed(logger, "Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features)") as b:
         df_feat = extract_domain_features(df_clean)
         if "label" not in df_feat.columns and "label" in df_clean.columns:
@@ -105,7 +119,7 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     logger.info(f"    - Tiền tố 'Re:': Ham={feature_stats[3]['ham_mean']*100:.2f}%, Spam={feature_stats[3]['spam_mean']*100:.2f}%")
     logger.info(f"    - Dấu chấm than (!): Ham={feature_stats[1]['ham_mean']:.2f}, Spam={feature_stats[1]['spam_mean']:.2f}")
 
-    # 5. Phân chia Train/Test 80/20 phân tầng
+    # 5. [BƯỚC 3]: Phân chia Train/Test 80/20 phân tầng
     with timed(logger, "Phân chia Train/Test 80/20 phân tầng (Stratified Split)") as b:
         X_train, X_test, y_train, y_test = split_stratified_train_test(
             df_feat, test_size=0.2, random_state=RANDOM_SEED
@@ -122,7 +136,7 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     logger.info(f"  • Tập Huấn luyện (Train set 80%): {len(X_train):,} mẫu (Ham={train_ham:,}, Spam={train_spam:,} ~ {train_spam_ratio:.2f}%)")
     logger.info(f"  • Tập Kiểm thử (Test set 20%): {len(X_test):,} mẫu (Ham={test_ham:,}, Spam={test_spam:,} ~ {test_spam_ratio:.2f}%)")
 
-    # 6. Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check)
+    # 6. [BƯỚC 4]: Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check)
     with timed(logger, "Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check)") as b:
         train_texts = set(X_train["text_clean"].dropna().astype(str))
         test_texts = set(X_test["text_clean"].dropna().astype(str))
@@ -134,7 +148,7 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     else:
         logger.warning(f"  ⚠️ Cảnh báo: Phát hiện {overlap_count} mẫu văn bản trùng giữa Train và Test!")
 
-    # 7. Xây dựng cấu hình ColumnTransformer
+    # 7. [BƯỚC 5]: Xây dựng cấu hình ColumnTransformer
     with timed(logger, "Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer)") as b:
         preprocessor = build_column_transformer(max_features=5000, k_best=2000, ngram_range=(1, 2))
         total_dim = 2000 + 7
@@ -142,7 +156,7 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     logger.info(f"  • Cấu trúc Pipeline: Nhánh Text TF-IDF + Chi2 (2,000 chiều) + Nhánh Số MinMaxScaler (7 chiều) = {total_dim:,} chiều.")
     logger.info(f"  • Tuân thủ nghiêm ngặt Zero Data Leakage: Pipeline chỉ được fit trên tập Train ở Chặng 3, không fit tại đây.")
 
-    # 8. Đóng gói và lưu hiện vật
+    # 8. [BƯỚC 6]: Đóng gói và lưu hiện vật
     with timed(logger, "Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv") as b:
         save_pipeline_and_splits(
             preprocessor,
@@ -176,7 +190,14 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
             "scaler": "MinMaxScaler"
         },
         "metrics": {
-            "total_samples": len(df_clean),
+            "raw_rows": clean_stats["raw_rows"],
+            "duplicates_removed": clean_stats["duplicates_removed"],
+            "clean_rows": clean_stats["clean_rows"],
+            "clean_ham_count": clean_stats["clean_ham_count"],
+            "clean_spam_count": clean_stats["clean_spam_count"],
+            "clean_ham_ratio": clean_stats["clean_ham_ratio"],
+            "clean_spam_ratio": clean_stats["clean_spam_ratio"],
+            "total_samples": clean_stats["clean_rows"],
             "train_size": len(X_train),
             "test_size": len(X_test),
             "train_ham_count": train_ham,
@@ -207,17 +228,18 @@ def main(clean_csv_path: str = None, extra_handler=None, logger=None) -> dict:
     logger.info("  ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html")
     logger.info("  ✔ Đã cập nhật bảng trạng thái: docs/report/index.html")
 
-    logger.info("=" * 75)
+    logger.info("=" * 80)
     logger.info(f"🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG {total_duration:.2f} GIÂY!")
     logger.info(f"👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html")
-    logger.info("=" * 75)
+    logger.info("=" * 80)
 
     return stage_data
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Chặng 02: Kỹ thuật đặc trưng & Pipeline phân tách tập dữ liệu")
-    parser.add_argument("--clean-csv", type=str, default=str(CLEAN_CSV), help="Đường dẫn tới tệp dữ liệu sạch clean_emails.csv")
+    parser = argparse.ArgumentParser(description="Chặng 02: Tiền xử lý dữ liệu & Kỹ thuật đặc trưng (Feature Engineering)")
+    parser.add_argument("--raw-csv", type=str, default=str(RAW_CSV), help="Đường dẫn tới tệp dữ liệu thô CEAS_08.csv")
+    parser.add_argument("--clean-csv", type=str, default=str(CLEAN_CSV), help="Đường dẫn lưu tệp dữ liệu sạch clean_emails.csv")
     args = parser.parse_args()
 
-    main(clean_csv_path=args.clean_csv)
+    main(raw_csv_path=args.raw_csv, clean_csv_path=args.clean_csv)

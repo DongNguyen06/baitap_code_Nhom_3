@@ -109,6 +109,40 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 .tag-warning { background: #fef9c3; color: #854d0e; }
 .tag-danger { background: #fee2e2; color: #b91c1c; }
 .tag-neutral { background: #f1f5f9; color: #475569; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger { background: #fee2e2; color: #991b1b; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.stat-card .title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.stat-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
 
         header {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
@@ -221,7 +255,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                 <div class="stat-label">Bỏ sót thư rác (Test set)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-val">0.26 ms</div>
+                <div class="stat-val">0.32 ms</div>
                 <div class="stat-label">Thời gian suy luận / 1 email</div>
             </div>
         </div>
@@ -242,35 +276,35 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                     <tbody>
                         
         <tr>
-            <td><strong>Chặng 01: Khám Phá &amp; Làm Sạch Dữ Liệu (EDA &amp; Cleaning)</strong></td>
+            <td><strong>Chặng 01: Khám Phá Dữ Liệu Email (Exploratory Data Analysis - EDA)</strong></td>
             <td><span class="tag-badge tag-success">✔ Đã hoàn thành</span></td>
-            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T08:43:56.267587</td>
-            <td><strong>6.56s</strong></td>
-            <td><a href="01_data_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_01_eda_20261106_084349.log</code></a></td>
+            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T13:06:48.918261</td>
+            <td><strong>2.65s</strong></td>
+            <td><a href="01_data_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_01_eda_20261106_130646.log</code></a></td>
         </tr>
         
         <tr>
-            <td><strong>Chặng 02: Kỹ Thuật Đặc Trưng &amp; Phân Tách Tập Dữ Liệu</strong></td>
+            <td><strong>Chặng 02: Tiền Xử Lý Dữ Liệu &amp; Kỹ Thuật Đặc Trưng (Feature Engineering)</strong></td>
             <td><span class="tag-badge tag-success">✔ Đã hoàn thành</span></td>
-            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T08:43:59.850911</td>
-            <td><strong>3.53s</strong></td>
-            <td><a href="02_feature_pipeline_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_02_fe_20261106_084356.log</code></a></td>
+            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T13:06:57.498228</td>
+            <td><strong>8.55s</strong></td>
+            <td><a href="02_feature_pipeline_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_02_fe_20261106_130648.log</code></a></td>
         </tr>
         
         <tr>
             <td><strong>Chặng 03: Huấn Luyện 3 Mô Hình Scratch &amp; 5-Fold CV</strong></td>
             <td><span class="tag-badge tag-success">✔ Đã hoàn thành</span></td>
-            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T08:46:54.342755</td>
-            <td><strong>174.46s</strong></td>
-            <td><a href="03_model_training_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_03_train_20261106_084359.log</code></a></td>
+            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T13:11:31.641014</td>
+            <td><strong>274.09s</strong></td>
+            <td><a href="03_model_training_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_03_train_20261106_130657.log</code></a></td>
         </tr>
         
         <tr>
             <td><strong>Chặng 04: Đánh Giá Hold-out Test &amp; Xuất Artifacts</strong></td>
             <td><span class="tag-badge tag-success">✔ Đã hoàn thành</span></td>
-            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T08:46:58.329174</td>
-            <td><strong>3.91s</strong></td>
-            <td><a href="04_model_evaluation_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_04_eval_20261106_084654.log</code></a></td>
+            <td style="font-size:13px; color:var(--text-muted);">2026-11-06T13:11:38.277110</td>
+            <td><strong>6.56s</strong></td>
+            <td><a href="04_model_evaluation_report.html" class="nav-link">Báo cáo &rarr;</a>  | <a href="run_log.html" class="nav-link"><code>run_04_eval_20261106_131131.log</code></a></td>
         </tr>
         
                     </tbody>
@@ -282,20 +316,20 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
         <div class="reports-grid">
             <div class="report-card">
                 <div>
-                    <div class="report-num">Chặng 01 / Data & EDA</div>
-                    <div class="report-title">01. Khám Phá & Làm Sạch Dữ Liệu</div>
-                    <div class="report-desc">Báo cáo khảo sát cấu trúc bộ dữ liệu thô CEAS_08, phân tích đơn biến, đa biến, độ dài văn bản, quét ngoại lai IQR và chuẩn hóa văn bản NLP chống rò rỉ dữ liệu.</div>
+                    <div class="report-num">Chặng 01 / EDA</div>
+                    <div class="report-title">01. Khám Phá Dữ Liệu Email</div>
+                    <div class="report-desc">Báo cáo khảo sát cấu trúc bộ dữ liệu thô CEAS_08, phân tích đơn biến, đa biến, độ dài văn bản, quét ngoại lai IQR và đúc kết định hướng chiến lược tiền xử lý cho Chặng 2.</div>
                 </div>
-                <a href="01_data_report.html" class="btn">Xem Báo Cáo Dữ Liệu &rarr;</a>
+                <a href="01_data_report.html" class="btn">Xem Báo Cáo EDA &rarr;</a>
             </div>
 
             <div class="report-card">
                 <div>
-                    <div class="report-num">Chặng 02 / Features & Pipeline</div>
-                    <div class="report-title">02. Kỹ Thuật Đặc Trưng & Pipeline</div>
-                    <div class="report-desc">Báo cáo trích xuất 7 đặc trưng miền nghiệp vụ, kỹ thuật nén logarit, phân chia Train/Test 80/20 phân tầng và đóng gói ColumnTransformer đa tầng.</div>
+                    <div class="report-num">Chặng 02 / Feature Engineering</div>
+                    <div class="report-title">02. Tiền Xử Lý & Dây Chuyền Pipeline</div>
+                    <div class="report-desc">Báo cáo làm sạch văn bản NLP, khử trùng lặp nội dung sạch (Zero Duplicate Leakage), trích xuất 7 đặc trưng miền, chia Train/Test 80/20 phân tầng và ColumnTransformer 2.007 chiều.</div>
                 </div>
-                <a href="02_feature_pipeline_report.html" class="btn">Xem Báo Cáo Đặc Trưng &rarr;</a>
+                <a href="02_feature_pipeline_report.html" class="btn">Xem Báo Cáo Pipeline &rarr;</a>
             </div>
 
             <div class="report-card">

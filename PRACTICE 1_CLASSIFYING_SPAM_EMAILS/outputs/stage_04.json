@@ -1,11 +1,11 @@
 {
   "stage": "04",
   "status": "success",
-  "started_at": "2026-11-06T08:46:54.414554",
-  "finished_at": "2026-11-06T08:46:58.329174",
-  "duration_sec": 3.91,
+  "started_at": "2026-11-06T13:11:31.721661",
+  "finished_at": "2026-11-06T13:11:38.277110",
+  "duration_sec": 6.56,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_04_eval_20261106_084654.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_04_eval_20261106_131131.log",
   "config": {
     "test_samples": 6532,
     "best_model_name": "linear_svm"
@@ -19,8 +19,8 @@
     "best_f1": 98.67,
     "missed_spam": 43,
     "false_alarms": 40,
-    "inference_time_ms": 0.26,
-    "inference_time_str": "0.26 ms"
+    "inference_time_ms": 0.32,
+    "inference_time_str": "0.32 ms"
   },
   "tables": {
     "test_results": [
@@ -159,10 +159,10 @@
     "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_03_performance_comparison.png"
   ],
   "timings": {
-    "load_artifacts_sec": 0.168,
-    "evaluation_sec": 2.621,
-    "feature_weights_sec": 0.0,
-    "export_artifacts_sec": 0.092,
-    "total_stage_sec": 3.91
+    "load_artifacts_sec": 0.299,
+    "evaluation_sec": 4.541,
+    "feature_weights_sec": 0.017,
+    "export_artifacts_sec": 0.141,
+    "total_stage_sec": 6.56
   }
 }

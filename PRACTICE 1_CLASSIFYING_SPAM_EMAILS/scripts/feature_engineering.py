@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Tuple, Dict, Any
 import re
 import joblib
 import numpy as np
@@ -10,9 +11,48 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-from data.scripts.data_preprocessing import clean_text
+from data.scripts.data_preprocessing import handle_missing_values, clean_text
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def clean_raw_email_data(df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    """
+    [BƯỚC 1: LÀM SẠCH & KHỬ TRÙNG LẶP DỮ LIỆU EMAIL NLP]
+    - Điền khuyết thiếu an toàn cho subject, body và receiver.
+    - Chuẩn hóa văn bản NLP bằng clean_text (lột HTML, URL, Stopwords, chuyển chữ thường).
+    - Khử trùng lặp nội dung sạch subset=['text_clean'] triệt để (Zero Duplicate Leakage).
+    """
+    n_raw = len(df_raw)
+
+    # 1. Xử lý giá trị khuyết thiếu an toàn
+    df_clean = handle_missing_values(df_raw)
+
+    # 2. Chuẩn hóa NLP cho chuỗi văn bản kết hợp
+    if "text_clean" not in df_clean.columns:
+        combined_text = df_clean["subject"].astype(str) + " " + df_clean["body"].astype(str)
+        df_clean["text_clean"] = combined_text.apply(clean_text)
+
+    # 3. Khử trùng lặp nội dung sạch (Zero Duplicate Leakage)
+    n_before_dedup = len(df_clean)
+    df_clean = df_clean.drop_duplicates(subset=["text_clean"]).reset_index(drop=True)
+    n_duplicates = n_before_dedup - len(df_clean)
+
+    ham_cnt = int((df_clean["label"] == 0).sum())
+    spam_cnt = int((df_clean["label"] == 1).sum())
+    n_clean = len(df_clean)
+
+    stats = {
+        "raw_rows": n_raw,
+        "missing_handled": n_raw,
+        "duplicates_removed": n_duplicates,
+        "clean_rows": n_clean,
+        "clean_ham_count": ham_cnt,
+        "clean_spam_count": spam_cnt,
+        "clean_ham_ratio": round(ham_cnt / n_clean * 100, 2) if n_clean > 0 else 0.0,
+        "clean_spam_ratio": round(spam_cnt / n_clean * 100, 2) if n_clean > 0 else 0.0,
+    }
+    return df_clean, stats
 
 
 def load_clean_data(clean_path: str = None) -> pd.DataFrame:

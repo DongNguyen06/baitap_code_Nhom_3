@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo Cáo 02: Kỹ Thuật Đặc Trưng & Pipeline — Nhóm 3</title>
+    <title>Báo Cáo 02: Kỹ Thuật Đặc Trưng & Tiền Xử Lý (Feature Engineering) — Nhóm 3</title>
     <style>
-        
 :root {
     --primary: #2563eb;
     --primary-dark: #1d4ed8;
@@ -109,39 +108,139 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 .tag-warning { background: #fef9c3; color: #854d0e; }
 .tag-danger { background: #fee2e2; color: #b91c1c; }
 .tag-neutral { background: #f1f5f9; color: #475569; }
-
-        .flow-box {
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 16px;
-            font-family: Consolas, "Courier New", monospace;
-            font-size: 13px;
-            line-height: 1.8;
-            margin: 16px 0;
-            color: #1e293b;
-            border-left: 4px solid var(--primary);
-        }
-    </style>
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger { background: #fee2e2; color: #991b1b; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.stat-card .title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.stat-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+</style>
 </head>
 <body>
     <div class="container">
         <div class="nav-bar">
-            <a href="01_data_report.html" class="nav-link">&larr; Báo Cáo 01: Dữ Liệu & EDA</a>
+            <a href="01_data_report.html" class="nav-link">&larr; Báo Cáo 01: Khám Phá Dữ Liệu (EDA)</a>
             <a href="index.html" class="nav-link">Bảng Điều Khiển Tổng Quan</a>
             <a href="03_model_training_report.html" class="nav-link">Báo Cáo 03: Huấn Luyện & Kiểm Định Chéo &rarr;</a>
         </div>
 
         <div class="header">
-            <span class="badge">CHẶNG 2 / 3 — FEATURE ENGINEERING & PIPELINE</span>
-            <h1>Báo Cáo Kỹ Thuật Đặc Trưng & Dây Chuyền Pipeline</h1>
+            <span class="badge badge-success">CHẶNG 02: TIỀN XỬ LÝ & KỸ THUẬT ĐẶC TRƯNG</span>
+            <h1>Báo Cáo Dây Chuyền Kỹ Thuật Đặc Trưng & Tiền Xử Lý (Feature Engineering Pipeline)</h1>
             <p style="color: var(--text-muted); font-size: 14.5px;">
-                Trích xuất 7 đặc trưng miền nghiệp vụ, kỹ thuật nén logarit, phân chia Train/Test 80/20 phân tầng và đóng gói ColumnTransformer đa tầng.
-                <br><em>Cập nhật lần cuối: 2026-11-06T08:43:59.850911 (Thời lượng: 3.53s).</em>
+                Chuẩn hóa toàn diện từ 39.154 email thô sang không gian đặc trưng 2.007 chiều, phân chia Train/Test 80/20 phân tầng và bảo đảm chống rò rỉ dữ liệu tuyệt đối (Zero Data Leakage).
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:06:57.498228 (Thời lượng: <strong>8.55s</strong>).</em>
             </p>
         </div>
 
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="title">Dữ Liệu Sạch Nghiệm Thu</div>
+                <div class="value">32,660</div>
+                <div class="desc">Lọc từ 39,154 email thô gốc</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Tập Huấn Luyện (Train 80%)</div>
+                <div class="value">26,128</div>
+                <div class="desc">Tỷ lệ Spam: 47.66% (12,453 email)</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Tập Kiểm Thử (Test 20%)</div>
+                <div class="value">6,532</div>
+                <div class="desc">Tỷ lệ Spam: 47.66% (3,113 email)</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Rò Rỉ Dữ Liệu (Data Leakage)</div>
+                <div class="value" style="color:var(--success);">0</div>
+                <div class="desc">Trùng lặp Train/Test: Tuyệt đối không</div>
+            </div>
+            <div class="stat-card">
+                <div class="title">Không Gian Đặc Trưng</div>
+                <div class="value">2,007 Chiều</div>
+                <div class="desc">2,000 từ vựng TF-IDF/Chi2 + 7 biến số</div>
+            </div>
+        </div>
+
+        <!-- MỤC 1: LÀM SẠCH & KHỬ TRÙNG LẶP -->
         <div class="card">
-            <h2>1. Trích Xuất 7 Đặc Trưng Miền Nghiệp Vụ (Domain Features)</h2>
+            <h2>1. Làm Sạch Dữ Liệu Email & Khử Trùng Lặp Thô (Zero Duplicate Leakage)</h2>
+            <div class="highlight-box">
+                <div class="highlight-title">✓ Nguyên Tắc Tiền Xử Lý Độc Lập Dòng (Row-level Processing)</div>
+                <p style="margin: 0; font-size: 13.5px; color: #14532d;">
+                    Bước 1 thực hiện các phép làm sạch độc lập từng email (lột bỏ mã HTML unescape, xóa đường dẫn URL, ký tự đặc biệt, lọc từ dừng Stopwords) và điền khuyết thiếu an toàn, không học bất kỳ tham số thống kê tổng thể nào. Việc khử trùng lặp nội dung sạch trước khi chia tập giúp triệt tiêu hoàn toàn nguy cơ cùng một bức thư xuất hiện đồng thời ở cả tập Train và tập Test.
+                </p>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Giai Đoạn Lọc</th>
+                            <th>Số Lượng Xử Lý</th>
+                            <th>Tỷ Lệ / Quy Mô</th>
+                            <th>Hành Động & Đánh Giá Kỹ Thuật</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Dữ liệu thô ban đầu</strong></td>
+                            <td>39,154</td>
+                            <td>100.0%</td>
+                            <td>Bộ dữ liệu thô ban đầu <code>CEAS_08.csv</code> với 7 thuộc tính</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Khuyết thiếu & Chuẩn hóa NLP</strong></td>
+                            <td>39,154</td>
+                            <td>100.0%</td>
+                            <td><span class="badge badge-success">Đã xử lý</span> Lột bỏ HTML, URL, Stopwords và điền khuyết an toàn cho subject/body/receiver</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email trùng lặp nội dung sạch (Duplicates)</strong></td>
+                            <td>6,494</td>
+                            <td>16.59%</td>
+                            <td><span class="badge badge-danger">Khử trùng</span> Bảo đảm nguyên tắc Zero Duplicate Leakage tuyệt đối</td>
+                        </tr>
+                        <tr style="background: #f0fdf4; font-weight: 600;">
+                            <td><strong>Dữ liệu sạch thu được</strong></td>
+                            <td>32,660</td>
+                            <td>83.41%</td>
+                            <td><span class="badge badge-success">Sạch chuẩn</span> Xuất tệp <code>data/processed/clean_emails.csv</code> bàn giao (Ham 52.3% vs Spam 47.7%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MỤC 2: TRÍCH XUẤT ĐẶC TRƯNG MIỀN NGHIỆP VỤ EMAIL -->
+        <div class="card">
+            <h2>2. Trích Xuất 7 Đặc Trưng Miền Nghiệp Vụ Email (Domain Features)</h2>
             <p>Dựa trên phát hiện từ khâu EDA, nhóm tiến hành tạo thêm 7 đặc trưng số học phản ánh bản chất hành vi gửi email trên toàn bộ <strong>32,660 mẫu sạch</strong>:</p>
             <div class="table-wrap">
                 <table>
@@ -202,43 +301,154 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                     </tbody>
                 </table>
             </div>
+            <ul>
+                <li><strong>Biến đổi Logarit tự nhiên trên độ dài văn bản:</strong> <code>log_text_len = ln(1 + text_len)</code> nén độ dài từ hàng chục nghìn ký tự về khoảng $[0, 10]$, giúp phân phối bớt lệch phải cực đoan và triệt tiêu ảnh hưởng của kỹ thuật Bayesian Poisoning do spammer chèn đoạn văn dài vô nghĩa để làm loãng từ khóa.</li>
+            </ul>
         </div>
 
+        <!-- MỤC 3: PHÂN CHIA TRAIN/TEST 80/20 & CHỐNG RÒ RỈ -->
         <div class="card">
-            <h2>2. Phân Chia Tập Train/Test 80/20 Phân Tầng Chống Rò Rỉ Dữ Liệu</h2>
+            <h2>3. Phân Chia Tập Train/Test 80/20 Phân Tầng & Cơ Chế Chống Rò Rỉ Tuyệt Đối (Zero Data Leakage)</h2>
             <div class="highlight-box">
-                <div class="highlight-title">✓ Cơ Chế Chống Rò Rỉ Tuyệt Đối (Zero Data Leakage)</div>
-                <p style="margin: 0;">Mọi thao tác học vốn từ vựng TF-IDF, tính điểm thống kê Chi-Square và tính khoảng Min-Max của bộ co giãn chỉ được phép thực hiện (fit) trên tập Train, sau đó áp dụng biến đổi (transform) trên tập Test. Tuyệt đối không fit trên toàn bộ dữ liệu trước khi chia tách.</p>
+                <div class="highlight-title">✓ Ranh Giới Chống Rò Rỉ Tuyệt Đối (Zero Data Leakage Boundary)</div>
+                <p style="margin: 0; font-size: 13.5px; color: #14532d;">
+                    Từ Bước 3 trở đi, mọi thao tác học thống kê (tính IDF của TfidfVectorizer, điểm Chi-Square của SelectKBest, và khoảng Min-Max của MinMaxScaler) chỉ được phép thực hiện (<code>.fit()</code>) DUY NHẤT trên tập Train <code>X_train</code>. Tập Test <code>X_test</code> chỉ được phép áp dụng biến đổi (<code>.transform()</code>) để đóng vai trò dữ liệu chưa từng thấy trong thực tế.
+                </p>
             </div>
-            <p><strong>Kết quả phân chia tập dữ liệu:</strong></p>
-            <ul>
-                <li><strong>Tập Huấn luyện (Train set - 80%):</strong> <strong>26,128 mẫu</strong> (Tỷ lệ Spam: 47.66%).</li>
-                <li><strong>Tập Kiểm thử (Test set - 20%):</strong> <strong>6,532 mẫu</strong> (Tỷ lệ Spam: 47.66%).</li>
-                <li><strong>Kiểm tra trùng lặp ranh giới (Train/Test Text Overlap):</strong> <strong>0 mẫu trùng</strong> (Đạt chuẩn 100% Zero Data Leakage).</li>
-                <li>Tỷ lệ phân bố lớp giữa hai tập được bảo toàn hoàn hảo thông qua kỹ thuật <code>stratify=y</code> với hạt giống cố định <code>RANDOM_SEED = 42</code>.</li>
-            </ul>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chỉ Số Đối Soát</th>
+                            <th>Tập Huấn Luyện (Train Set - 80%)</th>
+                            <th>Tập Kiểm Thử (Test Set - 20%)</th>
+                            <th>Đánh Giá Rò Rỉ & Đại Diện</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Số lượng mẫu</strong></td>
+                            <td>26,128 email</td>
+                            <td>6,532 email</td>
+                            <td>Phân chia chuẩn 80/20 với <code>random_state = 42</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tỷ lệ Thư rác (Spam - 1)</strong></td>
+                            <td>47.66% (12,453 email)</td>
+                            <td>47.66% (3,113 email)</td>
+                            <td>Bảo toàn tỷ lệ nhãn chính xác tuyệt đối qua <code>stratify=y</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tỷ lệ Thư thường (Ham - 0)</strong></td>
+                            <td>52.34% (13,675 email)</td>
+                            <td>52.34% (3,419 email)</td>
+                            <td>Phân phối cân bằng đồng nhất giữa hai tập</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trùng lặp ranh giới (Text Overlap)</strong></td>
+                            <td colspan="2" style="text-align: center; font-weight: 700; color: var(--success); font-size: 15px;">
+                                0 MẪU TRÙNG LẶP (OVERLAP = 0)
+                            </td>
+                            <td><span class="badge badge-success">Zero Data Leakage 100%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
+        <!-- MỤC 4: THIẾT LẬP COLUMNTRANSFORMER -->
         <div class="card">
-            <h2>3. Thiết Lập Dây Chuyền Tiền Xử Lý Đa Tầng (ColumnTransformer)</h2>
-            <p>Dây chuyền xử lý tự động gồm 2 nhánh chạy song song, biến đổi đồng thời văn bản và số liệu:</p>
-            
-            <div class="flow-box">
-Input Email: [text_clean, 7 biến số học]
-  ├── [Nhánh Văn bản]: TfidfVectorizer(ngram=(1,2), max_features=5000)
-  │                      └──> SelectKBest(chi2, k=2,000) ──> [2,000 đặc trưng từ vựng quan trọng]
-  └── [Nhánh Số học]: MinMaxScaler() ───────────────────────────> [7 đặc trưng miền co giãn [0, 1]]
-                         │
-                         ▼
-        Khối ghép nối: ColumnTransformer ──> [Không gian vector 2,007 chiều chuẩn hóa]
+            <h2>4. Thiết Lập Dây Chuyền Tiền Xử Lý Đa Tầng (ColumnTransformer)</h2>
+            <p>Dây chuyền tiền xử lý tự động hóa gồm 2 nhánh chạy song song, biến đổi đồng thời văn bản và số liệu:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nhánh Tiền Xử Lý</th>
+                            <th>Phương Pháp Kỹ Thuật</th>
+                            <th>Danh Sách Thuộc Tính</th>
+                            <th>Số Chiều Sau Biến Đổi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nhánh Văn Bản (Text)</strong></td>
+                            <td><code>TfidfVectorizer(ngram_range=(1,2), max_features=5000)</code> + <code>SelectKBest(chi2, k=2000)</code></td>
+                            <td><code>['text_clean']</code></td>
+                            <td>2.000 đặc trưng từ khóa quan trọng nhất</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nhánh Số Học (Numeric)</strong></td>
+                            <td><code>MinMaxScaler()</code> (Co giãn về miền [0, 1])</td>
+                            <td><code>['caps_ratio', 'exclamation_count', 'dollar_count', 'has_re_prefix', 'subject_exclamation', 'text_len', 'log_text_len']</code></td>
+                            <td>7 đặc trưng miền nghiệp vụ</td>
+                        </tr>
+                        <tr style="background: #f8fafc; font-weight: 600;">
+                            <td><strong>Tổng không gian đặc trưng</strong></td>
+                            <td>Đóng gói hợp nhất qua <code>ColumnTransformer</code></td>
+                            <td>8 thuộc tính đầu vào gốc</td>
+                            <td><strong>2,007 chiều ma trận thưa</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <ul>
-                <li><strong>TfidfVectorizer:</strong> Khai thác cả từ đơn và cụm 2 từ (Bigram) như <em>"daily cnn", "urgent reply", "bank account"</em> nhằm nắm bắt ngữ cảnh lừa đảo.</li>
-                <li><strong>SelectKBest(chi2):</strong> Dùng kiểm định thống kê Chi-Square chọn đúng 2,000 từ khóa có mức độ tương quan cao nhất với nhãn Spam/Ham, loại bỏ 3.000 từ vựng gây nhiễu.</li>
-                <li><strong>MinMaxScaler:</strong> Đưa 7 đặc trưng số học về miền $[0, 1]$, triệt tiêu giá trị âm (tránh làm sụp đổ thuật toán Naive Bayes) và bảo đảm các giá trị đếm lớn không lấn át trọng số.</li>
-                <li><strong>Bàn giao tài nguyên:</strong> Toàn bộ dữ liệu và dây chuyền xử lý được lưu trữ vào <code>data/processed/train_test_data.joblib</code> và <code>models/saved_models/preprocessor.joblib</code>.</li>
-            </ul>
+            <div class="highlight-box" style="margin-top: 16px;">
+                <div class="highlight-title">🔍 Đánh Giá Kỹ Thuật Về Tính Toàn Vẹn Của Mô Hình Học Máy</div>
+                <p style="margin: 0; font-size: 13.5px; color: #14532d;">
+                    1. <strong>SelectKBest(chi2):</strong> Dùng kiểm định thống kê Chi-Square chọn đúng 2,000 từ khóa có mức độ tương quan cao nhất với nhãn Spam/Ham, loại bỏ 3.000 từ vựng gây nhiễu, giảm kích thước ma trận và tăng tốc độ hội tụ.<br>
+                    2. <strong>MinMaxScaler:</strong> Đưa 7 đặc trưng số học về miền $[0, 1]$, triệt tiêu hoàn toàn giá trị âm (bảo vệ phân phối Multinomial Naive Bayes không bị sụp đổ) và ngăn ngừa các giá trị đếm lớn lấn át trọng số trong SVM và Logistic Regression.
+                </p>
+            </div>
+        </div>
+
+        <!-- MỤC 5: HIỆN VẬT BÀN GIAO -->
+        <div class="card">
+            <h2>5. Danh Mục Hiện Vật Dữ Liệu & Pipeline Bàn Giao</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tên Hiện Vật</th>
+                            <th>Đường Dẫn Lưu Trữ</th>
+                            <th>Quy Mô / Định Dạng</th>
+                            <th>Mục Đích Sử Dụng Ở Chặng Kế Tiếp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>clean_emails.csv</code></td>
+                            <td><code>data/processed/clean_emails.csv</code></td>
+                            <td>32,660 dòng x 8 cột</td>
+                            <td>Tệp dữ liệu sạch chuẩn phục vụ kiểm tra và đối soát trực quan</td>
+                        </tr>
+                        <tr>
+                            <td><code>train.csv</code></td>
+                            <td><code>data/processed/train.csv</code></td>
+                            <td>26,128 dòng x 9 cột</td>
+                            <td>Dữ liệu huấn luyện kèm nhãn label phục vụ kiểm thử độc lập</td>
+                        </tr>
+                        <tr>
+                            <td><code>test.csv</code></td>
+                            <td><code>data/processed/test.csv</code></td>
+                            <td>6,532 dòng x 9 cột</td>
+                            <td>Dữ liệu kiểm thử kèm nhãn label bảo đảm tính khách quan</td>
+                        </tr>
+                        <tr>
+                            <td><code>train_test_data.joblib</code></td>
+                            <td><code>data/processed/train_test_data.joblib</code></td>
+                            <td>Dictionary {'X_train', 'X_test', 'y_train', 'y_test'}</td>
+                            <td>Tập dữ liệu phân tách chuẩn hóa phục vụ Chặng 03 (Huấn luyện)</td>
+                        </tr>
+                        <tr>
+                            <td><code>preprocessor.joblib</code></td>
+                            <td><code>models/saved_models/preprocessor.joblib</code></td>
+                            <td>Scikit-learn ColumnTransformer</td>
+                            <td>Dây chuyền tiền xử lý khép kín dùng fit trên Train và deploy</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div style="text-align: right; margin-top: 24px;">

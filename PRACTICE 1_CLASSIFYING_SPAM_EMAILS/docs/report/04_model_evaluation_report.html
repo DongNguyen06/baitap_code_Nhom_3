@@ -109,6 +109,40 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 .tag-warning { background: #fef9c3; color: #854d0e; }
 .tag-danger { background: #fee2e2; color: #b91c1c; }
 .tag-neutral { background: #f1f5f9; color: #475569; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger { background: #fee2e2; color: #991b1b; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.stat-card .title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.stat-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
 
         .metrics-grid {
             display: grid;
@@ -140,7 +174,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
             <h1>Báo Cáo Đánh Giá Đối Đầu 3 Mô Hình Trên Hold-out Test Set</h1>
             <p style="color: var(--text-muted); font-size: 14.5px;">
                 Thử thách độc lập trên 6,532 mẫu email chưa từng thấy trong quá trình học. Vinh danh Quán quân Linear SVM.
-                <br><em>Cập nhật lần cuối: 2026-11-06T08:46:58.329174 (Thời lượng: 3.91s).</em>
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:11:38.277110 (Thời lượng: 6.56s).</em>
             </p>
         </div>
 
@@ -162,7 +196,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                 <div class="metric-sub">Thư Rác Bỏ Sót (FN / 6,532 email)</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">0.26 ms</div>
+                <div class="metric-value">0.32 ms</div>
                 <div class="metric-sub">Tốc Độ Suy Luận / 1 Email</div>
             </div>
         </div>

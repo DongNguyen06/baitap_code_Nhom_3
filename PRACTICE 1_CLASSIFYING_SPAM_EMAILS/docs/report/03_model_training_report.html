@@ -109,6 +109,40 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 .tag-warning { background: #fef9c3; color: #854d0e; }
 .tag-danger { background: #fee2e2; color: #b91c1c; }
 .tag-neutral { background: #f1f5f9; color: #475569; }
+.badge-success { background: #dcfce7; color: #166534; }
+.badge-warning { background: #fef3c7; color: #92400e; }
+.badge-danger { background: #fee2e2; color: #991b1b; }
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+.stat-card {
+    background: var(--card-bg);
+    padding: 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.stat-card .title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.stat-card .value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 6px;
+}
+.stat-card .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
 
         .metrics-grid {
             display: grid;
@@ -140,7 +174,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
             <h1>Báo Cáo Huấn Luyện Mô Hình & Tinh Chỉnh Siêu Tham Số</h1>
             <p style="color: var(--text-muted); font-size: 14.5px;">
                 Thực nghiệm huấn luyện 3 thuật toán Scratch (Multinomial Naive Bayes, Logistic Regression L2, Linear SVM) kết hợp 5-Fold Stratified Cross Validation.
-                <br><em>Cập nhật lần cuối: 2026-11-06T08:46:54.342755 (Thời lượng: 174.46s).</em>
+                <br><em>Cập nhật lần cuối: 2026-11-06T13:11:31.641014 (Thời lượng: 274.09s).</em>
             </p>
         </div>
 
@@ -214,7 +248,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
 
         <div class="card">
             <h2>2. Tinh Chỉnh Siêu Tham Số (Hyperparameter Tuning qua GridSearchCV)</h2>
-            <p>Không gian tìm kiếm tối ưu hóa đồng thời số lượng từ khóa TF-IDF ($k \in [1500, 2000]$) và siêu tham số phân loại:</p>
+            <p>Không gian tìm kiếm tối ưu hóa đồng thời số lượng từ khóa TF-IDF ($k thuộc [1500, 2000]$) và siêu tham số phân loại:</p>
             <div class="table-wrap">
                 <table>
                     <thead>
