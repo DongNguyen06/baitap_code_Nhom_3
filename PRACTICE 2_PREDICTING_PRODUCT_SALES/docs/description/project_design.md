@@ -70,7 +70,6 @@ PRACTICE 2_PREDICTING_PRODUCT_SALES/
 │   │   │   └── random_forest_regressor.md
 │   │   ├── project_description.md# Mô tả tổng quan bài toán kinh doanh
 │   │   ├── project_design.md     # Bản thiết kế chi tiết 5W1H này
-│   │   └── TASKS.md              # Bảng phân công nhiệm vụ và tiến độ nhóm 3
 │   ├── images/                   # Biểu đồ trực quan hóa EDA và kết quả mô hình
 │   │   ├── eda_01_amount_distribution.png
 │   │   ├── eda_02_bivariate_category_fulfilment.png

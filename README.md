@@ -27,9 +27,9 @@ Monorepo này được thiết kế để chứa tất cả các dự án trong 
 
 | Mã bài | Tên bài thực hành / Dự án | Thư mục mã nguồn | Báo cáo & Tài liệu | Trạng thái |
 | :---: | :--- | :--- | :---: | :---: |
-| **Practice 1** | **Classifying Spam Emails**<br>*(Phân loại email/tin nhắn rác)* | [`PRACTICE 1_CLASSIFYING_SPAM_EMAILS/`](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/) | [Xem Docs](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/docs/) | 🟢 **Đang thực hiện** |
-| **Practice 2** | **Predicting Product Sales**<br>*(Dự đoán doanh số bán hàng)* | [`PRACTICE 2_PREDICTING_PRODUCT_SALES/`](./PRACTICE%202_PREDICTING_PRODUCT_SALES/) | [Xem Docs](./PRACTICE%202_PREDICTING_PRODUCT_SALES/docs/) | 🟢 **Đang thực hiện** |
-| **Practice 3** | **Machine Learning Project 3** | *Chờ đề bài* | *Chờ cập nhật* | ⏳ Sắp triển khai |
+| **Practice 1** | **Classifying Spam Emails**<br>*(Phân loại email/tin nhắn rác)* | [`PRACTICE 1_CLASSIFYING_SPAM_EMAILS/`](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/) | [Xem Docs](./PRACTICE%201_CLASSIFYING_SPAM_EMAILS/docs/) | ✅ **Đã hoàn thành** |
+| **Practice 2** | **Predicting Product Sales**<br>*(Dự đoán doanh số bán hàng)* | [`PRACTICE 2_PREDICTING_PRODUCT_SALES/`](./PRACTICE%202_PREDICTING_PRODUCT_SALES/) | [Xem Docs](./PRACTICE%202_PREDICTING_PRODUCT_SALES/docs/) | ✅ **Đã hoàn thành** |
+| **Practice 3** | **Clustering Retail Customers**<br>*(Phân cụm khách hàng bán lẻ)* | [`PRACTICE 3_CLUSTERING_RETAIL_CUSTOMERS/`](./PRACTICE%203_CLUSTERING_RETAIL_CUSTOMERS/) | [Xem Docs](./PRACTICE%203_CLUSTERING_RETAIL_CUSTOMERS/docs/) | ✅ **Đã hoàn thành** |
 | **Final Project**| **Đồ án cuối kỳ môn Học máy** | `FINAL_PROJECT/` | *Chờ cập nhật* | ⏳ Kế hoạch cuối kỳ |
 
 ---

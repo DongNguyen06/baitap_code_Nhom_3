@@ -1,0 +1,116 @@
+{
+  "stage_name": "Stage 04: Model Evaluation & Customer Segmentation Profiling",
+  "status": "SUCCESS",
+  "elapsed_seconds": 1.53,
+  "metrics_kmeans": {
+    "model_name": "K-Means (Scratch)",
+    "n_clusters": 5,
+    "n_noise": 0,
+    "silhouette_score": 0.5547,
+    "davies_bouldin_index": 0.5722,
+    "calinski_harabasz_score": 248.6493,
+    "cluster_silhouette": {
+      "0": 0.5979,
+      "1": 0.5052,
+      "2": 0.5982,
+      "3": 0.5108,
+      "4": 0.5105
+    }
+  },
+  "metrics_dbscan": {
+    "model_name": "DBSCAN (Scratch)",
+    "n_clusters": 6,
+    "n_noise": 23,
+    "silhouette_score": 0.5577,
+    "davies_bouldin_index": 0.5106,
+    "calinski_harabasz_score": 245.3557,
+    "cluster_silhouette": {
+      "0": 0.6882,
+      "1": 0.5677,
+      "2": 0.6782,
+      "3": 0.4537,
+      "4": 0.64,
+      "5": 0.7125
+    }
+  },
+  "metrics_hierarchical": {
+    "model_name": "Hierarchical (Scratch)",
+    "n_clusters": 5,
+    "n_noise": 0,
+    "silhouette_score": 0.5538,
+    "davies_bouldin_index": 0.5779,
+    "calinski_harabasz_score": 244.4103,
+    "cluster_silhouette": {
+      "0": 0.6354,
+      "1": 0.5162,
+      "2": 0.5626,
+      "3": 0.5139,
+      "4": 0.5526
+    }
+  },
+  "segment_profile": [
+    {
+      "Cluster": 0,
+      "Tên phân khúc (Persona)": "Nhóm Tiêu xài Tự do (Spenders)",
+      "Số lượng": 81,
+      "Tỷ lệ (%)": "40.5%",
+      "Thu nhập TB (k$)": 55.3,
+      "Chi tiêu TB": 49.5,
+      "Tuổi TB": 42.7,
+      "Tỷ lệ Nữ": "59.3%",
+      "Chiến lược Bán lẻ": "Thu nhập thấp nhưng chi tiêu mạnh. Đẩy mạnh các sản phẩm theo trend, khuyến mãi giảm giá chớp nhoáng (flash sales) và hỗ trợ trả góp."
+    },
+    {
+      "Cluster": 1,
+      "Tên phân khúc (Persona)": "Nhóm Khách hàng VIP (Target Customers)",
+      "Số lượng": 35,
+      "Tỷ lệ (%)": "17.5%",
+      "Thu nhập TB (k$)": 88.2,
+      "Chi tiêu TB": 17.1,
+      "Tuổi TB": 41.1,
+      "Tỷ lệ Nữ": "45.7%",
+      "Chiến lược Bán lẻ": "Thu nhập cao và chi tiêu cực mạnh. Chăm sóc đặc quyền (VIP loyalty), giới thiệu sản phẩm cao cấp, cá nhân hóa trải nghiệm mua sắm."
+    },
+    {
+      "Cluster": 2,
+      "Tên phân khúc (Persona)": "Nhóm Khách hàng Tiết kiệm (Sensible)",
+      "Số lượng": 22,
+      "Tỷ lệ (%)": "11.0%",
+      "Thu nhập TB (k$)": 25.7,
+      "Chi tiêu TB": 79.4,
+      "Tuổi TB": 25.3,
+      "Tỷ lệ Nữ": "59.1%",
+      "Chiến lược Bán lẻ": "Thu nhập thấp và chi tiêu dè dặt. Cung cấp các sản phẩm thiết yếu giá rẻ, combo tiết kiệm, tích điểm đổi quà dài hạn."
+    },
+    {
+      "Cluster": 3,
+      "Tên phân khúc (Persona)": "Nhóm Cẩn trọng / Giữ tiền (Careful / Savers)",
+      "Số lượng": 39,
+      "Tỷ lệ (%)": "19.5%",
+      "Thu nhập TB (k$)": 86.5,
+      "Chi tiêu TB": 82.1,
+      "Tuổi TB": 32.7,
+      "Tỷ lệ Nữ": "53.8%",
+      "Chiến lược Bán lẻ": "Thu nhập cao nhưng chi tiêu rất thấp. Cần tiếp thị dựa trên chất lượng, độ bền, uy tín thương hiệu và các chương trình hoàn tiền giá trị cao."
+    },
+    {
+      "Cluster": 4,
+      "Tên phân khúc (Persona)": "Nhóm Khách hàng Tiêu chuẩn (Standard / Average)",
+      "Số lượng": 23,
+      "Tỷ lệ (%)": "11.5%",
+      "Thu nhập TB (k$)": 26.3,
+      "Chi tiêu TB": 20.9,
+      "Tuổi TB": 45.2,
+      "Tỷ lệ Nữ": "60.9%",
+      "Chiến lược Bán lẻ": "Thu nhập và chi tiêu đều ở mức trung bình (chiếm số đông). Duy trì các chương trình khuyến mãi định kỳ và dịch vụ khách hàng ổn định."
+    }
+  ],
+  "saved_figures": [
+    "docs/images/model_01_optimal_k_selection.png",
+    "docs/images/model_02_kmeans_clusters_2d.png",
+    "docs/images/model_03_hierarchical_dendrogram.png",
+    "docs/images/model_04_dbscan_density_clusters.png"
+  ],
+  "stage_id": 4,
+  "timestamp": "2026-11-11T12:02:26.830867"
+}

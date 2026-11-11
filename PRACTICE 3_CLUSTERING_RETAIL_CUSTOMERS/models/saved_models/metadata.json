@@ -1,0 +1,61 @@
+{
+  "project_name": "Practice 3: Clustering Retail Customers",
+  "optimal_k": 5,
+  "best_model": "kmeans",
+  "features_used": [
+    "Annual_Income_k$",
+    "Spending_Score"
+  ],
+  "feature_set": "2d",
+  "scaling_method": "standard",
+  "models_summary": {
+    "kmeans": {
+      "name": "K-Means Clustering (Scratch)",
+      "n_clusters": 5,
+      "silhouette_score": 0.5547,
+      "davies_bouldin_index": 0.5722,
+      "calinski_harabasz_score": 248.6493,
+      "inertia": 65.5684
+    },
+    "dbscan": {
+      "name": "DBSCAN Clustering (Scratch)",
+      "n_clusters": 6,
+      "n_noise": 23,
+      "eps": 0.35,
+      "min_samples": 5,
+      "silhouette_score": 0.5577,
+      "davies_bouldin_index": 0.5106,
+      "calinski_harabasz_score": 245.3557
+    },
+    "hierarchical": {
+      "name": "Hierarchical Clustering (Scratch)",
+      "n_clusters": 5,
+      "linkage": "ward",
+      "silhouette_score": 0.5538,
+      "davies_bouldin_index": 0.5779,
+      "calinski_harabasz_score": 244.4103
+    }
+  },
+  "elbow_wcss": {
+    "2": 276.4158,
+    "3": 230.0066,
+    "4": 109.2282,
+    "5": 65.5684,
+    "6": 57.3199,
+    "7": 54.2802,
+    "8": 42.0337,
+    "9": 39.3128,
+    "10": 36.9345
+  },
+  "silhouette_by_k": {
+    "2": 0.3905,
+    "3": 0.3355,
+    "4": 0.4943,
+    "5": 0.5547,
+    "6": 0.4561,
+    "7": 0.4187,
+    "8": 0.452,
+    "9": 0.4212,
+    "10": 0.4083
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "stage_name": "Stage 01: Exploratory Data Analysis (EDA)",
+  "status": "SUCCESS",
+  "elapsed_seconds": 1.7,
+  "data_path": "data/raw/Mall_Customers.csv",
+  "n_samples": 200,
+  "n_columns": 5,
+  "columns": [
+    "CustomerID",
+    "Gender",
+    "Age",
+    "Annual Income (k$)",
+    "Spending Score (1-100)"
+  ],
+  "gender_counts": {
+    "Female": 112,
+    "Male": 88
+  },
+  "gender_ratio_pct": {
+    "Female": 56.0,
+    "Male": 44.0
+  },
+  "numeric_stats": {
+    "Age": {
+      "mean": 38.85,
+      "std": 13.97,
+      "median": 36.0,
+      "min": 18.0,
+      "max": 70.0,
+      "skewness": 0.486,
+      "kurtosis": -0.672,
+      "iqr": 20.25,
+      "outliers_count": 0,
+      "outliers_values": []
+    },
+    "Annual Income (k$)": {
+      "mean": 60.56,
+      "std": 26.26,
+      "median": 61.5,
+      "min": 15.0,
+      "max": 137.0,
+      "skewness": 0.322,
+      "kurtosis": -0.098,
+      "iqr": 36.5,
+      "outliers_count": 2,
+      "outliers_values": [
+        137,
+        137
+      ]
+    },
+    "Spending Score (1-100)": {
+      "mean": 50.2,
+      "std": 25.82,
+      "median": 50.0,
+      "min": 1.0,
+      "max": 99.0,
+      "skewness": -0.047,
+      "kurtosis": -0.827,
+      "iqr": 38.25,
+      "outliers_count": 0,
+      "outliers_values": []
+    }
+  },
+  "age_distribution": {
+    "31-45 (Trưởng thành)": 72,
+    "18-30 (Trẻ)": 62,
+    "46-60 (Trung niên)": 49,
+    ">60 (Cao niên)": 17
+  },
+  "figures": [
+    "docs/images/eda_01_univariate_distributions.png",
+    "docs/images/eda_02_gender_comparison.png",
+    "docs/images/eda_03_income_vs_spending_scatter.png",
+    "docs/images/eda_04_age_vs_spending_trend.png",
+    "docs/images/eda_05_correlation_heatmap.png"
+  ],
+  "stage_id": 1,
+  "timestamp": "2026-11-11T12:02:15.621151"
+}

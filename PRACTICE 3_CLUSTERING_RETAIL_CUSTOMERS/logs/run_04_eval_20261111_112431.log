@@ -1,0 +1,22 @@
+11:24:31 | INFO  | ================================================================================
+11:24:31 | INFO  | 🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ GOM CỤM & LẬP HỒ SƠ 5 PHÂN KHÚC KHÁCH HÀNG
+11:24:31 | INFO  | ================================================================================
+11:24:31 | INFO  | Môi trường thực thi: Python 3.14.6 | OS: Windows 11 | NumPy 2.5.2 | Pandas 2.3.3 | Scikit-learn 1.9.0 | Random Seed = 42
+11:24:31 | INFO  | Đã xác minh đầy đủ dữ liệu sạch và các mô hình tại: models/saved_models
+11:24:31 | INFO  | ▶ BẮT ĐẦU: Đánh giá chỉ số gom cụm, lập hồ sơ phân khúc & xuất 4 đồ thị vào docs/images
+11:24:33 | INFO  | ✔ XONG: Đánh giá chỉ số gom cụm, lập hồ sơ phân khúc & xuất 4 đồ thị vào docs/images (1.57s)
+11:24:33 | INFO  |   • K-Means Scratch      : K=5 | Silhouette=0.5547 | DB=0.5722 | CH=248.6493
+11:24:33 | INFO  |   • Hierarchical Scratch : K=5 | Silhouette=0.5538 | DB=0.5779 | CH=244.4103
+11:24:33 | INFO  |   • DBSCAN Scratch       : Silhouette=0.5577 | DB=0.5106 | Nhiễu ngoại lai=23 mẫu
+11:24:33 | INFO  |   ✔ Đã lập hồ sơ thành công cho 5 phân khúc khách hàng mục tiêu.
+11:24:33 | INFO  |   ✔ Đã xuất sinh 4 biểu đồ đánh giá vào: docs/images
+11:24:33 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_04.json
+11:24:33 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 4 và cập nhật Dashboard/Run-log
+11:24:33 | INFO  |   ✔ Đã tự động tạo: docs/report/04_model_evaluation_report.html
+11:24:33 | INFO  |   ✔ Đã cập nhật Dashboard: docs/report/index.html
+11:24:33 | INFO  |   ✔ Đã cập nhật Nhật ký: docs/report/run_log.html
+11:24:33 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 4 và cập nhật Dashboard/Run-log (0.02s)
+11:24:33 | INFO  | ================================================================================
+11:24:33 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 1.59 GIÂY!
+11:24:33 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/04_model_evaluation_report.html
+11:24:33 | INFO  | ================================================================================

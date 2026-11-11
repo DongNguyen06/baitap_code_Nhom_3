@@ -70,7 +70,6 @@ PRACTICE 1_CLASSIFYING_SPAM_EMAILS/
 │   │   │   └── support_vector_machine_classifier.md
 │   │   ├── project_description.md# Mô tả tổng quan bài lab
 │   │   ├── project_design.md     # Bản thiết kế chi tiết 5W1H này
-│   │   └── TASKS.md              # Bảng phân công công việc nhóm
 │   ├── images/                   # Biểu đồ trực quan hóa EDA và kết quả mô hình
 │   │   ├── eda_01_univariate_analysis.png
 │   │   ├── eda_02_length_distribution_boxplot.png
