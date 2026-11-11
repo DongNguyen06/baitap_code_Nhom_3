@@ -1,7 +1,7 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails — Group 3",
   "team": "Nhóm 3",
-  "created_at": "2026-11-06 13:11:36",
+  "created_at": "2026-11-09 07:14:39",
   "best_model": "Support Vector Machine (Linear SVM)",
   "best_params": {
     "classifier__learning_rate": 8.0,
@@ -10,10 +10,10 @@
     "preprocessor__text__select__k": 2000
   },
   "test_metrics": {
-    "accuracy_percent": 98.73,
-    "precision_percent": 98.71,
-    "recall_percent": 98.62,
-    "f1_score_percent": 98.67
+    "accuracy_percent": 98.68,
+    "precision_percent": 98.43,
+    "recall_percent": 98.81,
+    "f1_score_percent": 98.62
   },
   "models_comparison": [
     {
@@ -27,21 +27,21 @@
     },
     {
       "Model": "Logistic Regression (L2)",
-      "Accuracy (%)": 97.69,
-      "Precision (%)": 97.05,
+      "Accuracy (%)": 97.7,
+      "Precision (%)": 97.08,
       "Recall (%)": 98.14,
-      "F1-Score (%)": 97.59,
-      "FP": 93,
+      "F1-Score (%)": 97.6,
+      "FP": 92,
       "FN": 58
     },
     {
       "Model": "Support Vector Machine (Linear SVM)",
-      "Accuracy (%)": 98.73,
-      "Precision (%)": 98.71,
-      "Recall (%)": 98.62,
-      "F1-Score (%)": 98.67,
-      "FP": 40,
-      "FN": 43
+      "Accuracy (%)": 98.68,
+      "Precision (%)": 98.43,
+      "Recall (%)": 98.81,
+      "F1-Score (%)": 98.62,
+      "FP": 49,
+      "FN": 37
     }
   ],
   "pipeline_steps": [
@@ -52,77 +52,77 @@
     {
       "rank": 1,
       "keyword": "prince",
-      "weight": 2.3465
+      "weight": 2.3527
     },
     {
       "rank": 2,
       "keyword": "bismarck",
-      "weight": 2.2206
+      "weight": 2.2273
     },
     {
       "rank": 3,
       "keyword": "love",
-      "weight": 1.6532
+      "weight": 1.6501
     },
     {
       "rank": 4,
       "keyword": "increase",
-      "weight": 1.5531
+      "weight": 1.5497
     },
     {
       "rank": 5,
-      "keyword": "penis",
-      "weight": 1.4861
+      "keyword": "replica",
+      "weight": 1.5003
     },
     {
       "rank": 6,
-      "keyword": "girl",
-      "weight": 1.4119
+      "keyword": "penis",
+      "weight": 1.4862
     },
     {
       "rank": 7,
-      "keyword": "replica",
-      "weight": 1.3743
+      "keyword": "girl",
+      "weight": 1.4071
     },
     {
       "rank": 8,
       "keyword": "american",
-      "weight": 1.2844
+      "weight": 1.2807
     },
     {
       "rank": 9,
       "keyword": "cnn",
-      "weight": 1.277
+      "weight": 1.2748
     },
     {
       "rank": 10,
       "keyword": "life",
-      "weight": 1.2575
+      "weight": 1.2659
     },
     {
       "rank": 11,
       "keyword": "sex",
-      "weight": 1.2194
+      "weight": 1.2193
     },
     {
       "rank": 12,
-      "keyword": "mexico",
-      "weight": 1.1601
+      "keyword": "watches",
+      "weight": 1.2099
     },
     {
       "rank": 13,
-      "keyword": "men",
-      "weight": 1.1583
+      "keyword": "mexico",
+      "weight": 1.1621
     },
     {
       "rank": 14,
-      "keyword": "man",
-      "weight": 1.1342
+      "keyword": "men",
+      "weight": 1.1592
     },
     {
       "rank": 15,
-      "keyword": "watches",
-      "weight": 1.1308
+      "keyword": "man",
+      "weight": 1.1295
     }
   ]
 }

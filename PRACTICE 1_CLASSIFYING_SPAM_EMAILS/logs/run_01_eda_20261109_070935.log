@@ -1,0 +1,33 @@
+07:09:35 | INFO  | ===========================================================================
+07:09:35 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU EMAIL (EXPLORATORY DATA ANALYSIS - EDA)
+07:09:35 | INFO  | ===========================================================================
+07:09:35 | INFO  | Môi trường thực thi: Python 3.13.14 | OS: Windows 11 | NumPy 2.5.4 | Pandas 3.0.6 | Scikit-learn 1.9.1 | Random Seed = 42
+07:09:35 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ CEAS_08.csv
+07:09:36 | INFO  | ✔ XONG: Nạp dữ liệu thô từ CEAS_08.csv (1.12s)
+07:09:36 | INFO  |   • Quy mô dữ liệu thô: 39,154 email (7 thuộc tính).
+07:09:36 | INFO  | ▶ BẮT ĐẦU: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật
+07:09:37 | INFO  | ✔ XONG: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật (0.18s)
+07:09:37 | INFO  |   • Khuyết thiếu: subject=28, receiver=462.
+07:09:37 | INFO  | ▶ BẮT ĐẦU: Thống kê đơn biến và tỷ lệ nhãn mục tiêu
+07:09:37 | INFO  | ✔ XONG: Thống kê đơn biến và tỷ lệ nhãn mục tiêu (0.01s)
+07:09:37 | INFO  |   • Phân phối nhãn: Ham=17,312 (44.2%), Spam=21,842 (55.8%).
+07:09:37 | INFO  |   • Sự hiện diện của URLs: 67.0% email có liên kết URL.
+07:09:37 | INFO  | ▶ BẮT ĐẦU: Phân tích ngoại lai IQR độ dài tiêu đề & nội dung
+07:09:37 | INFO  | ✔ XONG: Phân tích ngoại lai IQR độ dài tiêu đề & nội dung (0.06s)
+07:09:37 | INFO  |   • Ngoại lai IQR: Tiêu đề=932 (2.4%), Nội dung=5,622 (14.4%).
+07:09:37 | INFO  | ▶ BẮT ĐẦU: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re:
+07:09:37 | INFO  | ✔ XONG: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re: (0.29s)
+07:09:37 | INFO  |   • Tiền tố 'Re:' trong tiêu đề: Ham=56.3%, Spam=3.6%.
+07:09:37 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/
+07:09:38 | INFO  | ✔ XONG: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/ (1.53s)
+07:09:38 | INFO  |   ✔ Đã xuất biểu đồ: eda_01_univariate_analysis.png
+07:09:38 | INFO  |   ✔ Đã xuất biểu đồ: eda_02_length_distribution_boxplot.png
+07:09:38 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
+07:09:38 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
+07:09:38 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.01s)
+07:09:38 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
+07:09:38 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+07:09:38 | INFO  | ===========================================================================
+07:09:38 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 3.21 GIÂY!
+07:09:38 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
+07:09:38 | INFO  | ===========================================================================

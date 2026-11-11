@@ -1,0 +1,45 @@
+07:09:49 | INFO  | ================================================================================
+07:09:49 | INFO  |    🚀 BẮT ĐẦU CHẶNG 03: HUẤN LUYỆN 3 MÔ HÌNH SCRATCH & KIỂM ĐỊNH CHÉO
+07:09:49 | INFO  |    Thời điểm bắt đầu: 2026-11-09 07:09:49
+07:09:49 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
+07:09:49 | INFO  | ================================================================================
+07:09:49 | INFO  | Môi trường thực thi: Python 3.13.14 | OS: Windows 11 | NumPy 2.5.4 | Pandas 3.0.6 | Scikit-learn 1.9.1 | Random Seed = 42
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Nạp 'preprocessor.joblib' và 'train_test_data.joblib'
+07:09:49 | INFO  | ✔ XONG: Nạp 'preprocessor.joblib' và 'train_test_data.joblib' (0.04s)
+07:09:49 | INFO  |   ✓ Đã nạp thành công: X_train=26,128 mẫu, X_test=6,532 mẫu.
+07:09:49 | INFO  |   ✓ Tỷ lệ Spam trong tập Train: 47.66%.
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng
+07:09:49 | INFO  | ✔ XONG: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng (0.00s)
+07:09:49 | INFO  |   • Sẵn sàng pipeline: [naive_bayes]
+07:09:49 | INFO  |   • Sẵn sàng pipeline: [logistic_regression]
+07:09:49 | INFO  |   • Sẵn sàng pipeline: [linear_svm]
+07:09:49 | INFO  | 
+[Bước 1/2] Tiến hành kiểm định chéo 5-Fold Stratified CV trên 26,128 mẫu Train...
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Thực thi 5-Fold Stratified CV song song
+07:10:31 | INFO  | ✔ XONG: Thực thi 5-Fold Stratified CV song song (41.39s)
+07:10:31 | INFO  | 
+--- BẢNG KẾT QUẢ STRATIFIED CV TRÊN TẬP HUẤN LUYỆN (TRAIN SET) ---
+07:10:31 | INFO  | 
+            Mô hình Accuracy (%) Precision (%)   Recall (%) F1-Score (%)
+        naive_bayes 96.11 ± 0.17  98.90 ± 0.27 92.87 ± 0.36 95.79 ± 0.19
+logistic_regression 97.38 ± 0.23  96.56 ± 0.42 98.00 ± 0.30 97.27 ± 0.24
+         linear_svm 98.20 ± 0.20  97.86 ± 0.39 98.39 ± 0.24 98.12 ± 0.21
+07:10:31 | INFO  | 
+[Bước 2/2] Quét siêu tham số (toàn bộ 100% (26,128 mẫu Train)) và huấn luyện trên 26,128 mẫu Train...
+07:10:31 | INFO  | ▶ BẮT ĐẦU: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu
+07:14:32 | INFO  | ✔ XONG: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu (240.83s)
+07:14:32 | INFO  | 
+--- BẢNG KẾT QUẢ TINH CHỈNH SIÊU THAM SỐ (GRID SEARCH) ---
+07:14:32 | INFO  | 
+            Mô hình Best CV F1 (Toàn bộ Train)                                          Siêu tham số tối ưu (Best Params)
+        naive_bayes                     95.93%          {'classifier__alpha': 0.1, 'preprocessor__text__select__k': 2000}
+logistic_regression                     97.43% {'classifier__learning_rate': 15.0, 'preprocessor__text__select__k': 2000}
+         linear_svm                     98.44%  {'classifier__learning_rate': 8.0, 'preprocessor__text__select__k': 2000}
+07:14:32 | INFO  |   ✓ Đã lưu trữ 3 mô hình .joblib độc lập vào: C:\Users\truon\baitap_code_Nhom_3-1\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\models\saved_models
+07:14:32 | INFO  | 
+✔ Đã lưu phong bì kết quả Chặng 3: stage_03.json
+07:14:32 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/03_model_training_report.html & index.html
+07:14:32 | INFO  | ================================================================================
+07:14:32 | INFO  | 🎉 HOÀN THÀNH CHẶNG 03 THÀNH CÔNG TRONG 282.29 GIÂY!
+07:14:32 | INFO  | 👉 Tiếp theo, hãy chạy 'python scripts/run_04_eval.py' để đánh giá Test set và xuất best_model.
+07:14:32 | INFO  | ================================================================================

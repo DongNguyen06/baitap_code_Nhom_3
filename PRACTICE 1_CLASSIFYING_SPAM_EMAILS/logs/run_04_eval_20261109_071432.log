@@ -1,0 +1,42 @@
+07:14:32 | INFO  | ================================================================================
+07:14:32 | INFO  |    🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ ĐỘC LẬP TẬP TEST & XUẤT HIỆN VẬT TỐI ƯU
+07:14:32 | INFO  |    Thời điểm bắt đầu: 2026-11-09 07:14:32
+07:14:32 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
+07:14:32 | INFO  | ================================================================================
+07:14:32 | INFO  | Môi trường thực thi: Python 3.13.14 | OS: Windows 11 | NumPy 2.5.4 | Pandas 3.0.6 | Scikit-learn 1.9.1 | Random Seed = 42
+07:14:32 | INFO  | ▶ BẮT ĐẦU: Nạp 'train_test_data.joblib' và 3 mô hình .joblib
+07:14:32 | INFO  | ✔ XONG: Nạp 'train_test_data.joblib' và 3 mô hình .joblib (0.22s)
+07:14:32 | INFO  |   ✓ Sẵn sàng đánh giá trên tập kiểm thử độc lập: 6,532 mẫu (Tỷ lệ Spam: 47.66%).
+07:14:32 | INFO  | ▶ BẮT ĐẦU: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set
+07:14:39 | INFO  | ✔ XONG: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set (7.03s)
+07:14:39 | INFO  | 
+================================================================================
+07:14:39 | INFO  |    🏆 BẢNG TỔNG KẾT HIỆU NĂNG KIỂM THỬ ĐỘC LẬP (HOLD-OUT TEST SET)
+07:14:39 | INFO  | ================================================================================
+07:14:39 | INFO  | Mô hình                | Accuracy (%) | Precision (%) | Recall (%) | F1-Score (%) | TP    | FP    | FN   
+07:14:39 | INFO  | --------------------------------------------------------------------------------
+07:14:39 | INFO  | naive_bayes            | 96.34        | 99.31         | 92.96      | 96.03        | 2894  | 20    | 219  
+07:14:39 | INFO  | logistic_regression    | 97.70        | 97.08         | 98.14      | 97.60        | 3055  | 92    | 58   
+07:14:39 | INFO  | linear_svm             | 98.68        | 98.43         | 98.81      | 98.62        | 3076  | 49    | 37   
+07:14:39 | INFO  | ================================================================================
+07:14:39 | INFO  | 
+🎉 Mô hình Quán quân được vinh danh: [LINEAR_SVM] với F1-Score = 98.62%
+07:14:39 | INFO  | ▶ BẮT ĐẦU: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm]
+07:14:39 | INFO  | ✔ XONG: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm] (0.02s)
+07:14:39 | INFO  |   ⚡ Tốc độ suy luận thực tế: 0.64 ms / 1 email.
+07:14:39 | INFO  | ▶ BẮT ĐẦU: Đóng gói 'best_model.joblib' và xuất 'metadata.json'
+07:14:39 | INFO  | ✔ XONG: Đóng gói 'best_model.joblib' và xuất 'metadata.json' (0.17s)
+07:14:39 | INFO  |   ✓ Đã xuất: best_model.joblib và metadata.json
+07:14:39 | INFO  | ▶ BẮT ĐẦU: Khởi tạo và xuất 3 biểu đồ trực quan hóa
+07:14:43 | INFO  |   ✓ Đã sinh biểu đồ 1: model_01_confusion_matrices.png
+07:14:43 | INFO  |   ✓ Đã sinh biểu đồ 2: model_02_top_15_spam_keywords.png
+07:14:43 | INFO  |   ✓ Đã sinh biểu đồ 3: model_03_performance_comparison.png
+07:14:43 | INFO  | ✔ XONG: Khởi tạo và xuất 3 biểu đồ trực quan hóa (3.52s)
+07:14:43 | INFO  | 
+✔ Đã lưu phong bì kết quả Chặng 4: stage_04.json
+07:14:43 | INFO  | ✔ Đã cập nhật 04_model_evaluation_report.html, run_log.html & index.html
+07:14:43 | INFO  | ================================================================================
+07:14:43 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 11.06 GIÂY!
+07:14:43 | INFO  | 👉 Mời xem báo cáo nghiệm thu trực quan tại: docs/report/index.html
+07:14:43 | INFO  | 👉 Trải nghiệm thử nghiệm email thời gian thực tại: notebooks/demo.ipynb
+07:14:43 | INFO  | ================================================================================

@@ -1,13 +1,13 @@
 {
   "stage": "01",
   "status": "success",
-  "started_at": "2026-11-06T13:06:46.272312",
-  "finished_at": "2026-11-06T13:06:48.918261",
-  "duration_sec": 2.65,
+  "started_at": "2026-11-09T07:09:35.704277",
+  "finished_at": "2026-11-09T07:09:38.911762",
+  "duration_sec": 3.21,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_01_eda_20261106_130646.log",
+  "log_file": "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_01_eda_20261109_070935.log",
   "config": {
-    "raw_csv": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\raw\\CEAS_08.csv",
+    "raw_csv": "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\data\\raw\\CEAS_08.csv",
     "random_seed": 42
   },
   "metrics": {
@@ -116,15 +116,15 @@
     }
   },
   "figures": [
-    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_01_univariate_analysis.png",
-    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_02_length_distribution_boxplot.png"
+    "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_01_univariate_analysis.png",
+    "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\eda_02_length_distribution_boxplot.png"
   ],
   "timings": {
-    "load_raw_data": 0.67,
-    "inspect_structure": 0.3,
-    "univariate_stats": 0.0,
-    "iqr_outliers": 0.04,
-    "keywords_and_re": 0.22,
-    "export_figures": 1.39
+    "load_raw_data": 1.12,
+    "inspect_structure": 0.18,
+    "univariate_stats": 0.01,
+    "iqr_outliers": 0.06,
+    "keywords_and_re": 0.29,
+    "export_figures": 1.53
   }
 }

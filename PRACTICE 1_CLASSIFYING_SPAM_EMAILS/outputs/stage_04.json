@@ -1,11 +1,11 @@
 {
   "stage": "04",
   "status": "success",
-  "started_at": "2026-11-06T13:11:31.721661",
-  "finished_at": "2026-11-06T13:11:38.277110",
-  "duration_sec": 6.56,
+  "started_at": "2026-11-09T07:14:32.219548",
+  "finished_at": "2026-11-09T07:14:43.281495",
+  "duration_sec": 11.06,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_04_eval_20261106_131131.log",
+  "log_file": "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_04_eval_20261109_071432.log",
   "config": {
     "test_samples": 6532,
     "best_model_name": "linear_svm"
@@ -13,14 +13,14 @@
   "metrics": {
     "test_samples": 6532,
     "best_model": "linear_svm",
-    "best_accuracy": 98.73,
-    "best_precision": 98.71,
-    "best_recall": 98.62,
-    "best_f1": 98.67,
-    "missed_spam": 43,
-    "false_alarms": 40,
-    "inference_time_ms": 0.32,
-    "inference_time_str": "0.32 ms"
+    "best_accuracy": 98.68,
+    "best_precision": 98.43,
+    "best_recall": 98.81,
+    "best_f1": 98.62,
+    "missed_spam": 37,
+    "false_alarms": 49,
+    "inference_time_ms": 0.64,
+    "inference_time_str": "0.64 ms"
   },
   "tables": {
     "test_results": [
@@ -37,87 +37,87 @@
       },
       {
         "Mô hình": "logistic_regression",
-        "Accuracy (%)": 97.69,
-        "Precision (%)": 97.05,
+        "Accuracy (%)": 97.7,
+        "Precision (%)": 97.08,
         "Recall (%)": 98.14,
-        "F1-Score (%)": 97.59,
+        "F1-Score (%)": 97.6,
         "TP": 3055,
-        "TN": 3326,
-        "FP": 93,
+        "TN": 3327,
+        "FP": 92,
         "FN": 58
       },
       {
         "Mô hình": "linear_svm",
-        "Accuracy (%)": 98.73,
-        "Precision (%)": 98.71,
-        "Recall (%)": 98.62,
-        "F1-Score (%)": 98.67,
-        "TP": 3070,
-        "TN": 3379,
-        "FP": 40,
-        "FN": 43
+        "Accuracy (%)": 98.68,
+        "Precision (%)": 98.43,
+        "Recall (%)": 98.81,
+        "F1-Score (%)": 98.62,
+        "TP": 3076,
+        "TN": 3370,
+        "FP": 49,
+        "FN": 37
       }
     ],
     "top_15_keywords": [
       {
         "Từ khóa": "prince",
-        "Trọng số": 2.34646621937433
+        "Trọng số": 2.3527021170079605
       },
       {
         "Từ khóa": "bismarck",
-        "Trọng số": 2.2206287435174583
+        "Trọng số": 2.227315094696298
       },
       {
         "Từ khóa": "love",
-        "Trọng số": 1.6532409222398576
+        "Trọng số": 1.6501244734943459
       },
       {
         "Từ khóa": "increase",
-        "Trọng số": 1.5530638867128117
-      },
-      {
-        "Từ khóa": "penis",
-        "Trọng số": 1.4860944757230055
-      },
-      {
-        "Từ khóa": "girl",
-        "Trọng số": 1.4118606535582112
+        "Trọng số": 1.5497096151957355
       },
       {
         "Từ khóa": "replica",
-        "Trọng số": 1.37431585578387
+        "Trọng số": 1.5003382015299251
+      },
+      {
+        "Từ khóa": "penis",
+        "Trọng số": 1.48615430710018
+      },
+      {
+        "Từ khóa": "girl",
+        "Trọng số": 1.4071338363639363
       },
       {
         "Từ khóa": "american",
-        "Trọng số": 1.284422115056339
+        "Trọng số": 1.2806774070301774
       },
       {
         "Từ khóa": "cnn",
-        "Trọng số": 1.2770036649157297
+        "Trọng số": 1.2748346475515087
       },
       {
         "Từ khóa": "life",
-        "Trọng số": 1.2574854680793122
+        "Trọng số": 1.2658881991299142
       },
       {
         "Từ khóa": "sex",
-        "Trọng số": 1.2194316562421477
-      },
-      {
-        "Từ khóa": "mexico",
-        "Trọng số": 1.1601383661311335
-      },
-      {
-        "Từ khóa": "men",
-        "Trọng số": 1.1582591928864543
-      },
-      {
-        "Từ khóa": "man",
-        "Trọng số": 1.1341788114377258
+        "Trọng số": 1.2192867694048568
       },
       {
         "Từ khóa": "watches",
-        "Trọng số": 1.1307642079721711
+        "Trọng số": 1.20987217890783
+      },
+      {
+        "Từ khóa": "mexico",
+        "Trọng số": 1.1620882955634637
+      },
+      {
+        "Từ khóa": "men",
+        "Trọng số": 1.1591565083660913
+      },
+      {
+        "Từ khóa": "man",
+        "Trọng số": 1.1294549035019021
       }
     ],
     "confusion_matrices": {
@@ -133,8 +133,8 @@
       ],
       "logistic_regression": [
         [
-          3326,
-          93
+          3327,
+          92
         ],
         [
           58,
@@ -143,26 +143,26 @@
       ],
       "linear_svm": [
         [
-          3379,
-          40
+          3370,
+          49
         ],
         [
-          43,
-          3070
+          37,
+          3076
         ]
       ]
     }
   },
   "figures": [
-    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_01_confusion_matrices.png",
-    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_02_top_15_spam_keywords.png",
-    "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_03_performance_comparison.png"
+    "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_01_confusion_matrices.png",
+    "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_02_top_15_spam_keywords.png",
+    "C:\\Users\\truon\\baitap_code_Nhom_3-1\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\docs\\images\\model_03_performance_comparison.png"
   ],
   "timings": {
-    "load_artifacts_sec": 0.299,
-    "evaluation_sec": 4.541,
-    "feature_weights_sec": 0.017,
-    "export_artifacts_sec": 0.141,
-    "total_stage_sec": 6.56
+    "load_artifacts_sec": 0.222,
+    "evaluation_sec": 7.031,
+    "feature_weights_sec": 0.02,
+    "export_artifacts_sec": 0.173,
+    "total_stage_sec": 11.06
   }
 }

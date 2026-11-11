@@ -1,0 +1,40 @@
+07:09:38 | INFO  | ================================================================================
+07:09:38 | INFO  | 🚀 BẮT ĐẦU CHẶNG 02: TIỀN XỬ LÝ DỮ LIỆU & KỸ THUẬT ĐẶC TRƯNG (FEATURE ENGINEERING)
+07:09:38 | INFO  | ================================================================================
+07:09:38 | INFO  | Môi trường thực thi: Python 3.13.14 | OS: Windows 11 | NumPy 2.5.4 | Pandas 3.0.6 | Scikit-learn 1.9.1 | Random Seed = 42
+07:09:38 | INFO  | ▶ BẮT ĐẦU: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage)
+07:09:46 | INFO  | ✔ XONG: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage) (7.34s)
+07:09:46 | INFO  |   • Dữ liệu thô gốc: 39,154 email.
+07:09:46 | INFO  |   • Khử trùng lặp nội dung sạch: Đã loại bỏ 6,494 email trùng lặp.
+07:09:46 | INFO  |   • Dữ liệu sạch thu được: 32,660 email (Ham=17,094 [52.3%], Spam=15,566 [47.7%]).
+07:09:46 | INFO  |   ✔ Đã xuất dữ liệu sạch: clean_emails.csv
+07:09:46 | INFO  | ▶ BẮT ĐẦU: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features)
+07:09:48 | INFO  | ✔ XONG: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features) (2.40s)
+07:09:48 | INFO  |   • Đã tính toán xong thống kê phân biệt 7 đặc trưng miền Ham vs Spam.
+07:09:48 | INFO  |     - Tiền tố 'Re:': Ham=55.26%, Spam=0.75%
+07:09:48 | INFO  |     - Dấu chấm than (!): Ham=1.07, Spam=1.13
+07:09:48 | INFO  | ▶ BẮT ĐẦU: Phân chia Train/Test 80/20 phân tầng (Stratified Split)
+07:09:48 | INFO  | ✔ XONG: Phân chia Train/Test 80/20 phân tầng (Stratified Split) (0.08s)
+07:09:48 | INFO  |   • Tập Huấn luyện (Train set 80%): 26,128 mẫu (Ham=13,675, Spam=12,453 ~ 47.66%)
+07:09:48 | INFO  |   • Tập Kiểm thử (Test set 20%): 6,532 mẫu (Ham=3,419, Spam=3,113 ~ 47.66%)
+07:09:48 | INFO  | ▶ BẮT ĐẦU: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check)
+07:09:49 | INFO  | ✔ XONG: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check) (0.10s)
+07:09:49 | INFO  |   ✔ Hàng rào chống rò rỉ: Số lượng văn bản sạch trùng giữa Train và Test = 0 mẫu (PASS 100%).
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer)
+07:09:49 | INFO  | ✔ XONG: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer) (0.00s)
+07:09:49 | INFO  |   • Cấu trúc Pipeline: Nhánh Text TF-IDF + Chi2 (2,000 chiều) + Nhánh Số MinMaxScaler (7 chiều) = 2,007 chiều.
+07:09:49 | INFO  |   • Tuân thủ nghiêm ngặt Zero Data Leakage: Pipeline chỉ được fit trên tập Train ở Chặng 3, không fit tại đây.
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv
+07:09:49 | INFO  | ✔ XONG: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv (0.76s)
+07:09:49 | INFO  |   ✔ Đã lưu: preprocessor.joblib
+07:09:49 | INFO  |   ✔ Đã lưu: train_test_data.joblib
+07:09:49 | INFO  |   ✔ Đã xuất độc lập: data/processed/train.csv & test.csv
+07:09:49 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_02.json
+07:09:49 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html
+07:09:49 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html (0.00s)
+07:09:49 | INFO  |   ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html
+07:09:49 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+07:09:49 | INFO  | ================================================================================
+07:09:49 | INFO  | 🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG 10.90 GIÂY!
+07:09:49 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html
+07:09:49 | INFO  | ================================================================================
