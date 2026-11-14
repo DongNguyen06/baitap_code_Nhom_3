@@ -369,35 +369,3 @@ def evaluate_clustering(
 
     return eval_result
 
-
-def main() -> None:
-    """Chạy thực thi trực tiếp quá trình đánh giá từ dòng lệnh."""
-    print("=" * 80)
-    print("   📈 ĐÁNH GIÁ CHẤT LƯỢNG MÔ HÌNH GOM CỤM & LẬP HỒ SƠ PHÂN KHÚC KHÁCH HÀNG")
-    print("=" * 80)
-
-    res = evaluate_clustering()
-
-    print("\n1. Chỉ số Đánh giá Chất lượng Phân cụm:")
-    for key in ["metrics_kmeans", "metrics_dbscan", "metrics_hierarchical"]:
-        m = res[key]
-        print(f"   * {m['model_name']:<28} | K: {m['n_clusters']} | Silhouette: {m['silhouette_score']} | Davies-Bouldin: {m['davies_bouldin_index']} | Calinski-H: {m['calinski_harabasz_score']}")
-
-    print("\n2. Bảng Hồ sơ Nghiệp vụ 5 Phân khúc Khách hàng (K-Means):")
-    print("-" * 88)
-    for seg in res["segment_profile"]:
-        print(f"   [{seg['Cluster']}] {seg['Tên phân khúc (Persona)']}: {seg['Số lượng']} khách ({seg['Tỷ lệ (%)']})")
-        print(f"       -> Thu nhập TB: {seg['Thu nhập TB (k$)']} k$ | Chi tiêu TB: {seg['Chi tiêu TB']} | Tuổi TB: {seg['Tuổi TB']}")
-        print(f"       -> Chiến lược: {seg['Chiến lược Bán lẻ']}")
-    print("-" * 88)
-
-    print(f"\n3. Đã xuất thành công {len(res['saved_figures'])} biểu đồ đánh giá vào docs/images/:")
-    for f in res["saved_figures"]:
-        print(f"   ✓ {Path(f).name}")
-
-    print("=" * 80)
-    print("🎉 Chu trình Đánh giá Hoàn thành 100%!")
-
-
-if __name__ == "__main__":
-    main()

@@ -119,46 +119,11 @@ def export_processed_data(
     df_clean, _ = clean_customer_data(df_raw)
     df_encoded = encode_gender(df_clean)
 
-    df_encoded.to_csv(out_path, index=False, encoding="utf-8")
+    try:
+        df_encoded.to_csv(out_path, index=False, encoding="utf-8")
+    except PermissionError:
+        # Nếu tệp đang được mở xem trong WPS/Excel nhưng đã tồn tại hợp lệ thì bỏ qua lỗi ghi đè
+        if not out_path.exists():
+            raise
     return out_path
 
-
-def main() -> None:
-    """Chạy thực thi và chẩn đoán module feature_engineering."""
-    print("=" * 75)
-    print("   ⚙️ CHẠY MODULE KỸ THUẬT ĐẶC TRƯNG & CHUẨN HÓA THANG ĐO (FEATURE ENGINEERING)")
-    print("=" * 75)
-
-    # 1. Xuất dữ liệu sạch sang data/processed/
-    out_file = export_processed_data()
-    print(f"1. Đã xuất thành công tệp dữ liệu sạch tại: {out_file}")
-    df_proc = pd.read_csv(out_file)
-    print(f"   - Kích thước: {df_proc.shape[0]} dòng, {df_proc.shape[1]} cột.")
-    print(f"   - Cột dữ liệu: {list(df_proc.columns)}")
-
-    # 2. Kiểm tra không gian đặc trưng 2D
-    X_2d, scaler_2d, names_2d = prepare_clustering_features(feature_set="2d")
-    print(f"\n2. Không gian đặc trưng 2D:")
-    print(f"   - Đặc trưng: {names_2d}")
-    print(f"   - Kích thước ma trận X_2d: {X_2d.shape}")
-    print(f"   - Mean sau chuẩn hóa: {np.mean(X_2d, axis=0).round(4)}")
-    print(f"   - Std sau chuẩn hóa: {np.std(X_2d, axis=0).round(4)}")
-
-    # 3. Kiểm tra không gian đặc trưng 3D
-    X_3d, scaler_3d, names_3d = prepare_clustering_features(feature_set="3d")
-    print(f"\n3. Không gian đặc trưng 3D:")
-    print(f"   - Đặc trưng: {names_3d}")
-    print(f"   - Kích thước ma trận X_3d: {X_3d.shape}")
-
-    # 4. Kiểm tra không gian đặc trưng 4D
-    X_4d, scaler_4d, names_4d = prepare_clustering_features(feature_set="4d")
-    print(f"\n4. Không gian đặc trưng 4D:")
-    print(f"   - Đặc trưng: {names_4d}")
-    print(f"   - Kích thước ma trận X_4d: {X_4d.shape}")
-
-    print("=" * 75)
-    print("🎉 Module feature_engineering hoàn thành 100%!")
-
-
-if __name__ == "__main__":
-    main()

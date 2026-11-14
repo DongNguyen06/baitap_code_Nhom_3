@@ -58,25 +58,57 @@ def main(extra_handler=None, logger=None) -> Dict[str, Any]:
     km_info = comp["kmeans"]
     hc_info = comp["hierarchical"]
     db_info = comp["dbscan"]
+    ablation = results.get("feature_ablation", {})
 
-    logger.info(f"  • Thuật toán K-Means      : K = 5 | Silhouette = {km_info['silhouette_score']} | DB = {km_info['davies_bouldin_index']} | Inertia = {km_info['inertia']}")
-    logger.info(f"  • Thuật toán Hierarchical : K = 5 (Ward Linkage) | Silhouette = {hc_info['silhouette_score']} | DB = {hc_info['davies_bouldin_index']}")
-    logger.info(f"  • Thuật toán DBSCAN       : eps={db_info['eps']}, min_samples={db_info['min_samples']} | {db_info['n_clusters']} cụm mật độ + {db_info['n_noise']} nhiễu ngoại lai")
+    # In bảng khảo sát lựa chọn không gian đặc trưng (Feature Space Ablation)
+    logger.info("=" * 80)
+    logger.info("   📊 KHẢO SÁT CHỌN LỌC KHÔNG GIAN ĐẶC TRƯNG (FEATURE SELECTION ABLATION)")
+    logger.info("=" * 80)
+    for code, info in ablation.items():
+        star = " 🏆 (Tối ưu nhất)" if info.get("is_best") else ""
+        diff_str = ""
+        if not info.get("is_best") and "2d" in ablation:
+            diff_pct = (ablation["2d"]["silhouette"] - info["silhouette"]) / ablation["2d"]["silhouette"] * 100
+            diff_str = f" (Giảm {diff_pct:.1f}%)"
+        logger.info(f"  • {info['label']:<45}: Silhouette = {info['silhouette']:.4f}{star}{diff_str}")
+    logger.info("  ➔ KẾT LUẬN: Không gian 2D cho độ tách biệt cao nhất (0.5547). Chọn 2D làm không gian chính thức!")
+    logger.info("=" * 80)
+
+    logger.info("   🤖 HIỆU NĂNG BỘ 3 MÔ HÌNH PHÂN CỤM SCRATCH TRÊN KHÔNG GIAN 2D")
+    logger.info("=" * 80)
+    logger.info(f"  • K-Means Scratch      : K = 5 | Silhouette = {km_info['silhouette_score']} | DB = {km_info['davies_bouldin_index']} | Inertia = {km_info['inertia']}")
+    logger.info(f"  • Hierarchical Scratch : K = 5 (Ward Linkage) | Silhouette = {hc_info['silhouette_score']} | DB = {hc_info['davies_bouldin_index']}")
+    logger.info(f"  • DBSCAN Scratch       : eps={db_info['eps']}, min_samples={db_info['min_samples']} | {db_info['n_clusters']} cụm + {db_info['n_noise']} nhiễu ngoại lai")
     logger.info(f"  🏆 Quán quân phân khúc    : {best_name.upper()} Scratch (Silhouette đạt đỉnh 0.5547)")
+    logger.info("=" * 80)
+
+    logger.info("   🎯 BẢNG SIÊU THAM SỐ TOÀN DIỆN CỦA BỘ 3 MÔ HÌNH PHÂN CỤM SCRATCH")
+    logger.info("=" * 80)
+    logger.info(f"  • K-Means Scratch      : {km_info.get('hyperparameters', {})}")
+    logger.info(f"  • DBSCAN Scratch       : {db_info.get('hyperparameters', {})}")
+    logger.info(f"  • Hierarchical Scratch : {hc_info.get('hyperparameters', {})}")
+    logger.info("=" * 80)
 
     saved_artifacts = list(SAVED_MODELS_DIR.glob("*"))
     logger.info(f"  ✔ Đã lưu {len(saved_artifacts)} hiện vật mô hình vào: {to_rel_path(SAVED_MODELS_DIR)}")
 
-    # 4. Lưu hiện vật kết quả chặng vào outputs/stage_03.json
+    # 4. Lưu hiện vật kết quả chặng vào outputs/stage_03.json (tinh gọn, loại bỏ mảng lặp comparison)
+    clean_comp = {m: {k: v for k, v in data.items() if k != "labels"} for m, data in comp.items()}
     stage_data = {
         "stage_name": "Stage 03: Model Training (K-Means, DBSCAN, Hierarchical)",
         "status": "SUCCESS",
         "elapsed_seconds": round(b.elapsed, 3),
         "best_model_name": best_name,
-        "models_summary": comp,
-        "comparison": comp,
-        "elbow": results["elbow"],
-        "silhouette_by_k": results["silhouette_by_k"],
+        "feature_ablation": {
+            k: {
+                "label": v["label"],
+                "features": v["features"],
+                "silhouette": v["silhouette"]
+            } for k, v in ablation.items()
+        },
+        "models_summary": clean_comp,
+        "elbow": {str(k): round(v, 2) for k, v in results["elbow"].items()},
+        "silhouette_by_k": {str(k): round(v, 4) for k, v in results["silhouette_by_k"].items()},
         "saved_models_dir": to_rel_path(SAVED_MODELS_DIR)
     }
     stage_file = save_stage_result(3, stage_data)

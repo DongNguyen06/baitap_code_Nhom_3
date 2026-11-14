@@ -176,7 +176,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
         <div class="card" style="background:#f8fafc;">
             <h2 style="font-size:15px; border-left:none; padding-left:0;">Danh Sách Tệp Log Có Trong Thư Mục logs/ (5 tệp)</h2>
             <ul style="font-size:13px; color:var(--text-muted); padding-left:20px; line-height:1.7;">
-                <li><code>run_pipeline_20261106_130646.log</code> (18.9 KB, sửa đổi lúc 13:11:38 06/11/2026)</li><li><code>run_04_eval_20261106_131131.log</code> (3.9 KB, sửa đổi lúc 13:11:38 06/11/2026)</li><li><code>run_03_train_20261106_130657.log</code> (3.8 KB, sửa đổi lúc 13:11:31 06/11/2026)</li><li><code>run_02_fe_20261106_130648.log</code> (4.1 KB, sửa đổi lúc 13:06:57 06/11/2026)</li><li><code>run_01_eda_20261106_130646.log</code> (3.1 KB, sửa đổi lúc 13:06:48 06/11/2026)</li>
+                <li><code>run_pipeline_20261114_083931.log</code> (18.8 KB, sửa đổi lúc 08:41:48 14/11/2026)</li><li><code>run_04_eval_20261114_084144.log</code> (3.9 KB, sửa đổi lúc 08:41:48 14/11/2026)</li><li><code>run_03_train_20261114_083942.log</code> (3.7 KB, sửa đổi lúc 08:41:44 14/11/2026)</li><li><code>run_02_fe_20261114_083934.log</code> (4.1 KB, sửa đổi lúc 08:39:42 14/11/2026)</li><li><code>run_01_eda_20261114_083931.log</code> (3.1 KB, sửa đổi lúc 08:39:34 14/11/2026)</li>
             </ul>
         </div>
         
@@ -184,214 +184,214 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
         
                 <div class="card">
                     <h2>Nhật Ký Quy Trình Toàn Trình (End-to-End Pipeline Log)</h2>
-                    <p style="color:var(--text-muted); font-size:13px;">Tệp nguồn: <code>run_pipeline_20261106_130646.log</code></p>
-                    <pre>13:06:46 | INFO  | =====================================================================================
-13:06:46 | INFO  |    🚀 KHỞI ĐỘNG QUY TRÌNH HỌC MÁY TOÀN DIỆN (END-TO-END PIPELINE) — NHÓM 3 (UTH)
-13:06:46 | INFO  |    Thời điểm bắt đầu: 2026-11-06 13:06:46
-13:06:46 | INFO  |    Chế độ chạy: 🏆 Huấn luyện toàn diện (Full Benchmark)
-13:06:46 | INFO  | =====================================================================================
-13:06:46 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
-13:06:46 | INFO  | 
+                    <p style="color:var(--text-muted); font-size:13px;">Tệp nguồn: <code>run_pipeline_20261114_083931.log</code></p>
+                    <pre>08:39:31 | INFO  | =====================================================================================
+08:39:31 | INFO  |    🚀 KHỞI ĐỘNG QUY TRÌNH HỌC MÁY TOÀN DIỆN (END-TO-END PIPELINE) — NHÓM 3 (UTH)
+08:39:31 | INFO  |    Thời điểm bắt đầu: 2026-11-14 08:39:31
+08:39:31 | INFO  |    Chế độ chạy: 🏆 Huấn luyện toàn diện (Full Benchmark)
+08:39:31 | INFO  | =====================================================================================
+08:39:31 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:39:31 | INFO  | 
 =====================================================================================
-13:06:46 | INFO  | &gt;&gt;&gt; [CHẶNG 1/4] KHÁM PHÁ &amp; LÀM SẠCH DỮ LIỆU THÔ (EDA &amp; DATA CLEANING)...
-13:06:46 | INFO  | =====================================================================================
-13:06:46 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 01 (EDA &amp; Data Cleaning)
-13:06:46 | INFO  | ===========================================================================
-13:06:46 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU EMAIL (EXPLORATORY DATA ANALYSIS - EDA)
-13:06:46 | INFO  | ===========================================================================
-13:06:46 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
-13:06:46 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ CEAS_08.csv
-13:06:46 | INFO  | ✔ XONG: Nạp dữ liệu thô từ CEAS_08.csv (0.67s)
-13:06:46 | INFO  |   • Quy mô dữ liệu thô: 39,154 email (7 thuộc tính).
-13:06:46 | INFO  | ▶ BẮT ĐẦU: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật
-13:06:47 | INFO  | ✔ XONG: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật (0.30s)
-13:06:47 | INFO  |   • Khuyết thiếu: subject=28, receiver=462.
-13:06:47 | INFO  | ▶ BẮT ĐẦU: Thống kê đơn biến và tỷ lệ nhãn mục tiêu
-13:06:47 | INFO  | ✔ XONG: Thống kê đơn biến và tỷ lệ nhãn mục tiêu (0.00s)
-13:06:47 | INFO  |   • Phân phối nhãn: Ham=17,312 (44.2%), Spam=21,842 (55.8%).
-13:06:47 | INFO  |   • Sự hiện diện của URLs: 67.0% email có liên kết URL.
-13:06:47 | INFO  | ▶ BẮT ĐẦU: Phân tích ngoại lai IQR độ dài tiêu đề &amp; nội dung
-13:06:47 | INFO  | ✔ XONG: Phân tích ngoại lai IQR độ dài tiêu đề &amp; nội dung (0.04s)
-13:06:47 | INFO  |   • Ngoại lai IQR: Tiêu đề=932 (2.4%), Nội dung=5,622 (14.4%).
-13:06:47 | INFO  | ▶ BẮT ĐẦU: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re:
-13:06:47 | INFO  | ✔ XONG: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re: (0.22s)
-13:06:47 | INFO  |   • Tiền tố &#x27;Re:&#x27; trong tiêu đề: Ham=56.3%, Spam=3.6%.
-13:06:47 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/
-13:06:48 | INFO  | ✔ XONG: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/ (1.39s)
-13:06:48 | INFO  |   ✔ Đã xuất biểu đồ: eda_01_univariate_analysis.png
-13:06:48 | INFO  |   ✔ Đã xuất biểu đồ: eda_02_length_distribution_boxplot.png
-13:06:48 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
-13:06:48 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
-13:06:48 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.01s)
-13:06:48 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
-13:06:48 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
-13:06:48 | INFO  | ===========================================================================
-13:06:48 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 2.65 GIÂY!
-13:06:48 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
-13:06:48 | INFO  | ===========================================================================
-13:06:48 | INFO  | ✔ XONG: Thực thi Chặng 01 (EDA &amp; Data Cleaning) (2.68s)
-13:06:48 | INFO  | 
+08:39:31 | INFO  | &gt;&gt;&gt; [CHẶNG 1/4] KHÁM PHÁ &amp; LÀM SẠCH DỮ LIỆU THÔ (EDA &amp; DATA CLEANING)...
+08:39:31 | INFO  | =====================================================================================
+08:39:31 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 01 (EDA &amp; Data Cleaning)
+08:39:31 | INFO  | ===========================================================================
+08:39:31 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU EMAIL (EXPLORATORY DATA ANALYSIS - EDA)
+08:39:31 | INFO  | ===========================================================================
+08:39:31 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:39:31 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ CEAS_08.csv
+08:39:32 | INFO  | ✔ XONG: Nạp dữ liệu thô từ CEAS_08.csv (0.71s)
+08:39:32 | INFO  |   • Quy mô dữ liệu thô: 39,154 email (7 thuộc tính).
+08:39:32 | INFO  | ▶ BẮT ĐẦU: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật
+08:39:32 | INFO  | ✔ XONG: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật (0.36s)
+08:39:32 | INFO  |   • Khuyết thiếu: subject=28, receiver=462.
+08:39:32 | INFO  | ▶ BẮT ĐẦU: Thống kê đơn biến và tỷ lệ nhãn mục tiêu
+08:39:32 | INFO  | ✔ XONG: Thống kê đơn biến và tỷ lệ nhãn mục tiêu (0.01s)
+08:39:32 | INFO  |   • Phân phối nhãn: Ham=17,312 (44.2%), Spam=21,842 (55.8%).
+08:39:32 | INFO  |   • Sự hiện diện của URLs: 67.0% email có liên kết URL.
+08:39:32 | INFO  | ▶ BẮT ĐẦU: Phân tích ngoại lai IQR độ dài tiêu đề &amp; nội dung
+08:39:32 | INFO  | ✔ XONG: Phân tích ngoại lai IQR độ dài tiêu đề &amp; nội dung (0.04s)
+08:39:32 | INFO  |   • Ngoại lai IQR: Tiêu đề=932 (2.4%), Nội dung=5,622 (14.4%).
+08:39:32 | INFO  | ▶ BẮT ĐẦU: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re:
+08:39:32 | INFO  | ✔ XONG: So sánh từ khóa Ham vs Spam và phân tích tiền tố Re: (0.24s)
+08:39:32 | INFO  |   • Tiền tố &#x27;Re:&#x27; trong tiêu đề: Ham=56.3%, Spam=3.6%.
+08:39:32 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/
+08:39:34 | INFO  | ✔ XONG: Vẽ và xuất 2 biểu đồ phân tích EDA vào docs/images/ (1.37s)
+08:39:34 | INFO  |   ✔ Đã xuất biểu đồ: eda_01_univariate_analysis.png
+08:39:34 | INFO  |   ✔ Đã xuất biểu đồ: eda_02_length_distribution_boxplot.png
+08:39:34 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
+08:39:34 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
+08:39:34 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.01s)
+08:39:34 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
+08:39:34 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+08:39:34 | INFO  | ===========================================================================
+08:39:34 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 2.75 GIÂY!
+08:39:34 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
+08:39:34 | INFO  | ===========================================================================
+08:39:34 | INFO  | ✔ XONG: Thực thi Chặng 01 (EDA &amp; Data Cleaning) (2.79s)
+08:39:34 | INFO  | 
 =====================================================================================
-13:06:48 | INFO  | &gt;&gt;&gt; [CHẶNG 2/4] KỸ THUẬT ĐẶC TRƯNG &amp; THIẾT LẬP PIPELINE TIỀN XỬ LÝ...
-13:06:48 | INFO  | =====================================================================================
-13:06:48 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 02 (Feature Engineering &amp; Train/Test Split)
-13:06:48 | INFO  | ================================================================================
-13:06:48 | INFO  | 🚀 BẮT ĐẦU CHẶNG 02: TIỀN XỬ LÝ DỮ LIỆU &amp; KỸ THUẬT ĐẶC TRƯNG (FEATURE ENGINEERING)
-13:06:48 | INFO  | ================================================================================
-13:06:48 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
-13:06:48 | INFO  | ▶ BẮT ĐẦU: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage)
-13:06:54 | INFO  | ✔ XONG: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage) (5.58s)
-13:06:54 | INFO  |   • Dữ liệu thô gốc: 39,154 email.
-13:06:54 | INFO  |   • Khử trùng lặp nội dung sạch: Đã loại bỏ 6,494 email trùng lặp.
-13:06:54 | INFO  |   • Dữ liệu sạch thu được: 32,660 email (Ham=17,094 [52.3%], Spam=15,566 [47.7%]).
-13:06:54 | INFO  |   ✔ Đã xuất dữ liệu sạch: clean_emails.csv
-13:06:54 | INFO  | ▶ BẮT ĐẦU: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features)
-13:06:56 | INFO  | ✔ XONG: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features) (2.19s)
-13:06:56 | INFO  |   • Đã tính toán xong thống kê phân biệt 7 đặc trưng miền Ham vs Spam.
-13:06:56 | INFO  |     - Tiền tố &#x27;Re:&#x27;: Ham=55.26%, Spam=0.75%
-13:06:56 | INFO  |     - Dấu chấm than (!): Ham=1.07, Spam=1.13
-13:06:56 | INFO  | ▶ BẮT ĐẦU: Phân chia Train/Test 80/20 phân tầng (Stratified Split)
-13:06:56 | INFO  | ✔ XONG: Phân chia Train/Test 80/20 phân tầng (Stratified Split) (0.03s)
-13:06:56 | INFO  |   • Tập Huấn luyện (Train set 80%): 26,128 mẫu (Ham=13,675, Spam=12,453 ~ 47.66%)
-13:06:56 | INFO  |   • Tập Kiểm thử (Test set 20%): 6,532 mẫu (Ham=3,419, Spam=3,113 ~ 47.66%)
-13:06:56 | INFO  | ▶ BẮT ĐẦU: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check)
-13:06:56 | INFO  | ✔ XONG: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check) (0.01s)
-13:06:56 | INFO  |   ✔ Hàng rào chống rò rỉ: Số lượng văn bản sạch trùng giữa Train và Test = 0 mẫu (PASS 100%).
-13:06:56 | INFO  | ▶ BẮT ĐẦU: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer)
-13:06:56 | INFO  | ✔ XONG: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer) (0.00s)
-13:06:56 | INFO  |   • Cấu trúc Pipeline: Nhánh Text TF-IDF + Chi2 (2,000 chiều) + Nhánh Số MinMaxScaler (7 chiều) = 2,007 chiều.
-13:06:56 | INFO  |   • Tuân thủ nghiêm ngặt Zero Data Leakage: Pipeline chỉ được fit trên tập Train ở Chặng 3, không fit tại đây.
-13:06:56 | INFO  | ▶ BẮT ĐẦU: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv
-13:06:57 | INFO  | ✔ XONG: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv (0.62s)
-13:06:57 | INFO  |   ✔ Đã lưu: preprocessor.joblib
-13:06:57 | INFO  |   ✔ Đã lưu: train_test_data.joblib
-13:06:57 | INFO  |   ✔ Đã xuất độc lập: data/processed/train.csv &amp; test.csv
-13:06:57 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_02.json
-13:06:57 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html
-13:06:57 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html (0.01s)
-13:06:57 | INFO  |   ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html
-13:06:57 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
-13:06:57 | INFO  | ================================================================================
-13:06:57 | INFO  | 🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG 8.55 GIÂY!
-13:06:57 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html
-13:06:57 | INFO  | ================================================================================
-13:06:57 | INFO  | ✔ XONG: Thực thi Chặng 02 (Feature Engineering &amp; Train/Test Split) (8.61s)
-13:06:57 | INFO  | 
+08:39:34 | INFO  | &gt;&gt;&gt; [CHẶNG 2/4] KỸ THUẬT ĐẶC TRƯNG &amp; THIẾT LẬP PIPELINE TIỀN XỬ LÝ...
+08:39:34 | INFO  | =====================================================================================
+08:39:34 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 02 (Feature Engineering &amp; Train/Test Split)
+08:39:34 | INFO  | ================================================================================
+08:39:34 | INFO  | 🚀 BẮT ĐẦU CHẶNG 02: TIỀN XỬ LÝ DỮ LIỆU &amp; KỸ THUẬT ĐẶC TRƯNG (FEATURE ENGINEERING)
+08:39:34 | INFO  | ================================================================================
+08:39:34 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:39:34 | INFO  | ▶ BẮT ĐẦU: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage)
+08:39:39 | INFO  | ✔ XONG: Nạp CEAS_08.csv, làm sạch NLP và khử trùng lặp (Zero Duplicate Leakage) (5.43s)
+08:39:39 | INFO  |   • Dữ liệu thô gốc: 39,154 email.
+08:39:39 | INFO  |   • Khử trùng lặp nội dung sạch: Đã loại bỏ 6,494 email trùng lặp.
+08:39:39 | INFO  |   • Dữ liệu sạch thu được: 32,660 email (Ham=17,094 [52.3%], Spam=15,566 [47.7%]).
+08:39:39 | INFO  |   ✔ Đã xuất dữ liệu sạch: clean_emails.csv
+08:39:39 | INFO  | ▶ BẮT ĐẦU: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features)
+08:39:41 | INFO  | ✔ XONG: Trích xuất 7 đặc trưng miền nghiệp vụ (Domain Features) (2.22s)
+08:39:41 | INFO  |   • Đã tính toán xong thống kê phân biệt 7 đặc trưng miền Ham vs Spam.
+08:39:41 | INFO  |     - Tiền tố &#x27;Re:&#x27;: Ham=55.26%, Spam=0.75%
+08:39:41 | INFO  |     - Dấu chấm than (!): Ham=1.07, Spam=1.13
+08:39:41 | INFO  | ▶ BẮT ĐẦU: Phân chia Train/Test 80/20 phân tầng (Stratified Split)
+08:39:42 | INFO  | ✔ XONG: Phân chia Train/Test 80/20 phân tầng (Stratified Split) (0.04s)
+08:39:42 | INFO  |   • Tập Huấn luyện (Train set 80%): 26,128 mẫu (Ham=13,675, Spam=12,453 ~ 47.66%)
+08:39:42 | INFO  |   • Tập Kiểm thử (Test set 20%): 6,532 mẫu (Ham=3,419, Spam=3,113 ~ 47.66%)
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check)
+08:39:42 | INFO  | ✔ XONG: Kiểm tra rò rỉ dữ liệu ranh giới Train/Test (Leakage Check) (0.02s)
+08:39:42 | INFO  |   ✔ Hàng rào chống rò rỉ: Số lượng văn bản sạch trùng giữa Train và Test = 0 mẫu (PASS 100%).
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer)
+08:39:42 | INFO  | ✔ XONG: Thiết lập cấu hình dây chuyền tiền xử lý đa tầng (ColumnTransformer) (0.00s)
+08:39:42 | INFO  |   • Cấu trúc Pipeline: Nhánh Text TF-IDF + Chi2 (2,000 chiều) + Nhánh Số MinMaxScaler (7 chiều) = 2,007 chiều.
+08:39:42 | INFO  |   • Tuân thủ nghiêm ngặt Zero Data Leakage: Pipeline chỉ được fit trên tập Train ở Chặng 3, không fit tại đây.
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv
+08:39:42 | INFO  | ✔ XONG: Đóng gói preprocessor.joblib, train_test_data.joblib và xuất train.csv, test.csv (0.68s)
+08:39:42 | INFO  |   ✔ Đã lưu: preprocessor.joblib
+08:39:42 | INFO  |   ✔ Đã lưu: train_test_data.joblib
+08:39:42 | INFO  |   ✔ Đã xuất độc lập: data/processed/train.csv &amp; test.csv
+08:39:42 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_02.json
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html
+08:39:42 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html (0.00s)
+08:39:42 | INFO  |   ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html
+08:39:42 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+08:39:42 | INFO  | ================================================================================
+08:39:42 | INFO  | 🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG 8.49 GIÂY!
+08:39:42 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html
+08:39:42 | INFO  | ================================================================================
+08:39:42 | INFO  | ✔ XONG: Thực thi Chặng 02 (Feature Engineering &amp; Train/Test Split) (8.56s)
+08:39:42 | INFO  | 
 =====================================================================================
-13:06:57 | INFO  | &gt;&gt;&gt; [CHẶNG 3/4] HUẤN LUYỆN 3 MÔ HÌNH SCRATCH &amp; KIỂM ĐỊNH CHÉO STRATIFIED CV...
-13:06:57 | INFO  | =====================================================================================
-13:06:57 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 03 (Scratch Models Training &amp; GridSearchCV)
-13:06:57 | INFO  | ================================================================================
-13:06:57 | INFO  |    🚀 BẮT ĐẦU CHẶNG 03: HUẤN LUYỆN 3 MÔ HÌNH SCRATCH &amp; KIỂM ĐỊNH CHÉO
-13:06:57 | INFO  |    Thời điểm bắt đầu: 2026-11-06 13:06:57
-13:06:57 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
-13:06:57 | INFO  | ================================================================================
-13:06:57 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
-13:06:57 | INFO  | ▶ BẮT ĐẦU: Nạp &#x27;preprocessor.joblib&#x27; và &#x27;train_test_data.joblib&#x27;
-13:06:57 | INFO  | ✔ XONG: Nạp &#x27;preprocessor.joblib&#x27; và &#x27;train_test_data.joblib&#x27; (0.03s)
-13:06:57 | INFO  |   ✓ Đã nạp thành công: X_train=26,128 mẫu, X_test=6,532 mẫu.
-13:06:57 | INFO  |   ✓ Tỷ lệ Spam trong tập Train: 47.66%.
-13:06:57 | INFO  | ▶ BẮT ĐẦU: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng
-13:06:57 | INFO  | ✔ XONG: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng (0.01s)
-13:06:57 | INFO  |   • Sẵn sàng pipeline: [naive_bayes]
-13:06:57 | INFO  |   • Sẵn sàng pipeline: [logistic_regression]
-13:06:57 | INFO  |   • Sẵn sàng pipeline: [linear_svm]
-13:06:57 | INFO  | 
+08:39:42 | INFO  | &gt;&gt;&gt; [CHẶNG 3/4] HUẤN LUYỆN 3 MÔ HÌNH SCRATCH &amp; KIỂM ĐỊNH CHÉO STRATIFIED CV...
+08:39:42 | INFO  | =====================================================================================
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 03 (Scratch Models Training &amp; GridSearchCV)
+08:39:42 | INFO  | ================================================================================
+08:39:42 | INFO  |    🚀 BẮT ĐẦU CHẶNG 03: HUẤN LUYỆN 3 MÔ HÌNH SCRATCH &amp; KIỂM ĐỊNH CHÉO
+08:39:42 | INFO  |    Thời điểm bắt đầu: 2026-11-14 08:39:42
+08:39:42 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
+08:39:42 | INFO  | ================================================================================
+08:39:42 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Nạp &#x27;preprocessor.joblib&#x27; và &#x27;train_test_data.joblib&#x27;
+08:39:42 | INFO  | ✔ XONG: Nạp &#x27;preprocessor.joblib&#x27; và &#x27;train_test_data.joblib&#x27; (0.05s)
+08:39:42 | INFO  |   ✓ Đã nạp thành công: X_train=26,128 mẫu, X_test=6,532 mẫu.
+08:39:42 | INFO  |   ✓ Tỷ lệ Spam trong tập Train: 47.66%.
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng
+08:39:42 | INFO  | ✔ XONG: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng (0.00s)
+08:39:42 | INFO  |   • Sẵn sàng pipeline: [naive_bayes]
+08:39:42 | INFO  |   • Sẵn sàng pipeline: [logistic_regression]
+08:39:42 | INFO  |   • Sẵn sàng pipeline: [linear_svm]
+08:39:42 | INFO  | 
 [Bước 1/2] Tiến hành kiểm định chéo 5-Fold Stratified CV trên 26,128 mẫu Train...
-13:06:57 | INFO  | ▶ BẮT ĐẦU: Thực thi 5-Fold Stratified CV song song
-13:08:01 | INFO  | ✔ XONG: Thực thi 5-Fold Stratified CV song song (63.93s)
-13:08:01 | INFO  | 
+08:39:42 | INFO  | ▶ BẮT ĐẦU: Thực thi 5-Fold Stratified CV song song
+08:40:36 | INFO  | ✔ XONG: Thực thi 5-Fold Stratified CV song song (53.46s)
+08:40:36 | INFO  | 
 --- BẢNG KẾT QUẢ STRATIFIED CV TRÊN TẬP HUẤN LUYỆN (TRAIN SET) ---
-13:08:01 | INFO  | 
+08:40:36 | INFO  | 
             Mô hình Accuracy (%) Precision (%)   Recall (%) F1-Score (%)
         naive_bayes 96.10 ± 0.17  98.90 ± 0.27 92.85 ± 0.36 95.78 ± 0.19
 logistic_regression 97.38 ± 0.23  96.56 ± 0.42 98.00 ± 0.30 97.27 ± 0.24
          linear_svm 98.20 ± 0.20  97.85 ± 0.38 98.39 ± 0.26 98.12 ± 0.21
-13:08:01 | INFO  | 
-[Bước 2/2] Quét siêu tham số (toàn bộ 100% (26,128 mẫu Train)) và huấn luyện trên 26,128 mẫu Train...
-13:08:01 | INFO  | ▶ BẮT ĐẦU: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu
-13:11:31 | INFO  | ✔ XONG: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu (210.10s)
-13:11:31 | INFO  | 
+08:40:36 | INFO  | 
+[Bước 2/2] Quét siêu tham số (subsample 6,000 mẫu) và huấn luyện trên 26,128 mẫu Train...
+08:40:36 | INFO  | ▶ BẮT ĐẦU: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu
+08:41:44 | INFO  | ✔ XONG: Quét GridSearchCV và huấn luyện toàn diện 3 mô hình tối ưu (68.39s)
+08:41:44 | INFO  | 
 --- BẢNG KẾT QUẢ TINH CHỈNH SIÊU THAM SỐ (GRID SEARCH) ---
-13:11:31 | INFO  | 
-            Mô hình Best CV F1 (Toàn bộ Train)                                          Siêu tham số tối ưu (Best Params)
-        naive_bayes                     95.94%          {&#x27;classifier__alpha&#x27;: 0.1, &#x27;preprocessor__text__select__k&#x27;: 2000}
-logistic_regression                     97.43% {&#x27;classifier__learning_rate&#x27;: 15.0, &#x27;preprocessor__text__select__k&#x27;: 2000}
-         linear_svm                     98.43%  {&#x27;classifier__learning_rate&#x27;: 8.0, &#x27;preprocessor__text__select__k&#x27;: 2000}
-13:11:31 | INFO  |   ✓ Đã lưu trữ 3 mô hình .joblib độc lập vào: D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\models\saved_models
-13:11:31 | INFO  | 
+08:41:44 | INFO  | 
+            Mô hình Best CV F1 (Mẫu 6,000)                               Siêu tham số tối ưu (Best Params)
+        naive_bayes                 95.54%                               {&#x27;alpha&#x27;: 0.05, &#x27;select_k&#x27;: 2000}
+logistic_regression                 97.35%         {&#x27;l2&#x27;: 0.0001, &#x27;learning_rate&#x27;: 15.0, &#x27;select_k&#x27;: 2000}
+         linear_svm                 98.33% {&#x27;lambda_param&#x27;: 1e-05, &#x27;learning_rate&#x27;: 8.0, &#x27;select_k&#x27;: 2000}
+08:41:44 | INFO  |   ✓ Đã lưu trữ 3 mô hình .joblib độc lập vào: D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\models\saved_models
+08:41:44 | INFO  | 
 ✔ Đã lưu phong bì kết quả Chặng 3: stage_03.json
-13:11:31 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/03_model_training_report.html &amp; index.html
-13:11:31 | INFO  | ================================================================================
-13:11:31 | INFO  | 🎉 HOÀN THÀNH CHẶNG 03 THÀNH CÔNG TRONG 274.09 GIÂY!
-13:11:31 | INFO  | 👉 Tiếp theo, hãy chạy &#x27;python scripts/run_04_eval.py&#x27; để đánh giá Test set và xuất best_model.
-13:11:31 | INFO  | ================================================================================
-13:11:31 | INFO  | ✔ XONG: Thực thi Chặng 03 (Scratch Models Training &amp; GridSearchCV) (274.16s)
-13:11:31 | INFO  | 
+08:41:44 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/03_model_training_report.html &amp; index.html
+08:41:44 | INFO  | ================================================================================
+08:41:44 | INFO  | 🎉 HOÀN THÀNH CHẶNG 03 THÀNH CÔNG TRONG 121.93 GIÂY!
+08:41:44 | INFO  | 👉 Tiếp theo, hãy chạy &#x27;python scripts/run_04_eval.py&#x27; để đánh giá Test set và xuất best_model.
+08:41:44 | INFO  | ================================================================================
+08:41:44 | INFO  | ✔ XONG: Thực thi Chặng 03 (Scratch Models Training &amp; GridSearchCV) (121.98s)
+08:41:44 | INFO  | 
 =====================================================================================
-13:11:31 | INFO  | &gt;&gt;&gt; [CHẶNG 4/4] ĐÁNH GIÁ ĐỘC LẬP TRÊN TEST SET &amp; XUẤT BÁO CÁO NGHIỆM THU...
-13:11:31 | INFO  | =====================================================================================
-13:11:31 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 04 (Hold-out Test Evaluation &amp; Artifacts Export)
-13:11:31 | INFO  | ================================================================================
-13:11:31 | INFO  |    🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ ĐỘC LẬP TẬP TEST &amp; XUẤT HIỆN VẬT TỐI ƯU
-13:11:31 | INFO  |    Thời điểm bắt đầu: 2026-11-06 13:11:31
-13:11:31 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
-13:11:31 | INFO  | ================================================================================
-13:11:31 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
-13:11:31 | INFO  | ▶ BẮT ĐẦU: Nạp &#x27;train_test_data.joblib&#x27; và 3 mô hình .joblib
-13:11:32 | INFO  | ✔ XONG: Nạp &#x27;train_test_data.joblib&#x27; và 3 mô hình .joblib (0.30s)
-13:11:32 | INFO  |   ✓ Sẵn sàng đánh giá trên tập kiểm thử độc lập: 6,532 mẫu (Tỷ lệ Spam: 47.66%).
-13:11:32 | INFO  | ▶ BẮT ĐẦU: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set
-13:11:36 | INFO  | ✔ XONG: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set (4.54s)
-13:11:36 | INFO  | 
+08:41:44 | INFO  | &gt;&gt;&gt; [CHẶNG 4/4] ĐÁNH GIÁ ĐỘC LẬP TRÊN TEST SET &amp; XUẤT BÁO CÁO NGHIỆM THU...
+08:41:44 | INFO  | =====================================================================================
+08:41:44 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 04 (Hold-out Test Evaluation &amp; Artifacts Export)
+08:41:44 | INFO  | ================================================================================
+08:41:44 | INFO  |    🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ ĐỘC LẬP TẬP TEST &amp; XUẤT HIỆN VẬT TỐI ƯU
+08:41:44 | INFO  |    Thời điểm bắt đầu: 2026-11-14 08:41:44
+08:41:44 | INFO  |    Chế độ chạy: 🏆 Đầy đủ (Full Benchmark)
+08:41:44 | INFO  | ================================================================================
+08:41:44 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+08:41:44 | INFO  | ▶ BẮT ĐẦU: Nạp &#x27;train_test_data.joblib&#x27; và 3 mô hình .joblib
+08:41:44 | INFO  | ✔ XONG: Nạp &#x27;train_test_data.joblib&#x27; và 3 mô hình .joblib (0.15s)
+08:41:44 | INFO  |   ✓ Sẵn sàng đánh giá trên tập kiểm thử độc lập: 6,532 mẫu (Tỷ lệ Spam: 47.66%).
+08:41:44 | INFO  | ▶ BẮT ĐẦU: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set
+08:41:47 | INFO  | ✔ XONG: Dự đoán và đo lường 4 chỉ số trên 6,532 mẫu Test set (2.69s)
+08:41:47 | INFO  | 
 ================================================================================
-13:11:36 | INFO  |    🏆 BẢNG TỔNG KẾT HIỆU NĂNG KIỂM THỬ ĐỘC LẬP (HOLD-OUT TEST SET)
-13:11:36 | INFO  | ================================================================================
-13:11:36 | INFO  | Mô hình                | Accuracy (%) | Precision (%) | Recall (%) | F1-Score (%) | TP    | FP    | FN   
-13:11:36 | INFO  | --------------------------------------------------------------------------------
-13:11:36 | INFO  | naive_bayes            | 96.34        | 99.31         | 92.96      | 96.03        | 2894  | 20    | 219  
-13:11:36 | INFO  | logistic_regression    | 97.69        | 97.05         | 98.14      | 97.59        | 3055  | 93    | 58   
-13:11:36 | INFO  | linear_svm             | 98.73        | 98.71         | 98.62      | 98.67        | 3070  | 40    | 43   
-13:11:36 | INFO  | ================================================================================
-13:11:36 | INFO  | 
+08:41:47 | INFO  |    🏆 BẢNG TỔNG KẾT HIỆU NĂNG KIỂM THỬ ĐỘC LẬP (HOLD-OUT TEST SET)
+08:41:47 | INFO  | ================================================================================
+08:41:47 | INFO  | Mô hình                | Accuracy (%) | Precision (%) | Recall (%) | F1-Score (%) | TP    | FP    | FN   
+08:41:47 | INFO  | --------------------------------------------------------------------------------
+08:41:47 | INFO  | naive_bayes            | 96.34        | 99.31         | 92.96      | 96.03        | 2894  | 20    | 219  
+08:41:47 | INFO  | logistic_regression    | 97.69        | 97.05         | 98.14      | 97.59        | 3055  | 93    | 58   
+08:41:47 | INFO  | linear_svm             | 98.73        | 98.71         | 98.62      | 98.67        | 3070  | 40    | 43   
+08:41:47 | INFO  | ================================================================================
+08:41:47 | INFO  | 
 🎉 Mô hình Quán quân được vinh danh: [LINEAR_SVM] với F1-Score = 98.67%
-13:11:36 | INFO  | ▶ BẮT ĐẦU: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm]
-13:11:36 | INFO  | ✔ XONG: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm] (0.02s)
-13:11:36 | INFO  |   ⚡ Tốc độ suy luận thực tế: 0.32 ms / 1 email.
-13:11:36 | INFO  | ▶ BẮT ĐẦU: Đóng gói &#x27;best_model.joblib&#x27; và xuất &#x27;metadata.json&#x27;
-13:11:36 | INFO  | ✔ XONG: Đóng gói &#x27;best_model.joblib&#x27; và xuất &#x27;metadata.json&#x27; (0.14s)
-13:11:36 | INFO  |   ✓ Đã xuất: best_model.joblib và metadata.json
-13:11:36 | INFO  | ▶ BẮT ĐẦU: Khởi tạo và xuất 3 biểu đồ trực quan hóa
-13:11:38 | INFO  |   ✓ Đã sinh biểu đồ 1: model_01_confusion_matrices.png
-13:11:38 | INFO  |   ✓ Đã sinh biểu đồ 2: model_02_top_15_spam_keywords.png
-13:11:38 | INFO  |   ✓ Đã sinh biểu đồ 3: model_03_performance_comparison.png
-13:11:38 | INFO  | ✔ XONG: Khởi tạo và xuất 3 biểu đồ trực quan hóa (1.51s)
-13:11:38 | INFO  | 
+08:41:47 | INFO  | ▶ BẮT ĐẦU: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm]
+08:41:47 | INFO  | ✔ XONG: Trích xuất Top 15 từ khóa spam từ mô hình [linear_svm] (0.01s)
+08:41:47 | INFO  |   ⚡ Tốc độ suy luận thực tế: 0.20 ms / 1 email.
+08:41:47 | INFO  | ▶ BẮT ĐẦU: Đóng gói &#x27;best_model.joblib&#x27; và xuất &#x27;metadata.json&#x27;
+08:41:47 | INFO  | ✔ XONG: Đóng gói &#x27;best_model.joblib&#x27; và xuất &#x27;metadata.json&#x27; (0.12s)
+08:41:47 | INFO  |   ✓ Đã xuất: best_model.joblib và metadata.json
+08:41:47 | INFO  | ▶ BẮT ĐẦU: Khởi tạo và xuất 3 biểu đồ trực quan hóa
+08:41:48 | INFO  |   ✓ Đã sinh biểu đồ 1: model_01_confusion_matrices.png
+08:41:48 | INFO  |   ✓ Đã sinh biểu đồ 2: model_02_top_15_spam_keywords.png
+08:41:48 | INFO  |   ✓ Đã sinh biểu đồ 3: model_03_performance_comparison.png
+08:41:48 | INFO  | ✔ XONG: Khởi tạo và xuất 3 biểu đồ trực quan hóa (1.09s)
+08:41:48 | INFO  | 
 ✔ Đã lưu phong bì kết quả Chặng 4: stage_04.json
-13:11:38 | INFO  | ✔ Đã cập nhật 04_model_evaluation_report.html, run_log.html &amp; index.html
-13:11:38 | INFO  | ================================================================================
-13:11:38 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 6.56 GIÂY!
-13:11:38 | INFO  | 👉 Mời xem báo cáo nghiệm thu trực quan tại: docs/report/index.html
-13:11:38 | INFO  | 👉 Trải nghiệm thử nghiệm email thời gian thực tại: notebooks/demo.ipynb
-13:11:38 | INFO  | ================================================================================
-13:11:38 | INFO  | ✔ XONG: Thực thi Chặng 04 (Hold-out Test Evaluation &amp; Artifacts Export) (6.59s)
-13:11:38 | INFO  | 
+08:41:48 | INFO  | ✔ Đã cập nhật 04_model_evaluation_report.html, run_log.html &amp; index.html
+08:41:48 | INFO  | ================================================================================
+08:41:48 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 4.10 GIÂY!
+08:41:48 | INFO  | 👉 Mời xem báo cáo nghiệm thu trực quan tại: docs/report/index.html
+08:41:48 | INFO  | 👉 Trải nghiệm thử nghiệm email thời gian thực tại: notebooks/demo.ipynb
+08:41:48 | INFO  | ================================================================================
+08:41:48 | INFO  | ✔ XONG: Thực thi Chặng 04 (Hold-out Test Evaluation &amp; Artifacts Export) (4.12s)
+08:41:48 | INFO  | 
 =====================================================================================
-13:11:38 | INFO  | 🎉 TOÀN BỘ QUY TRÌNH HỌC MÁY ĐÃ HOÀN TẤT THÀNH CÔNG TRONG 292.04 GIÂY!
-13:11:38 | INFO  | =====================================================================================
-13:11:38 | INFO  |   • Thời lượng Chặng 01 (EDA &amp; Làm sạch)      : 2.68s
-13:11:38 | INFO  |   • Thời lượng Chặng 02 (Đặc trưng &amp; Pipeline): 8.61s
-13:11:38 | INFO  |   • Thời lượng Chặng 03 (Huấn luyện &amp; CV)     : 274.16s
-13:11:38 | INFO  |   • Thời lượng Chặng 04 (Đánh giá &amp; Xuất model): 6.59s
-13:11:38 | INFO  | -------------------------------------------------------------------------------------
-13:11:38 | INFO  | 👉 MỜI XEM BÁO CÁO NGHIỆM THU TỔNG HỢP TRỰC QUAN TẠI:
-13:11:38 | INFO  |    file:///D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\docs\report\index.html
-13:11:38 | INFO  | 👉 TRẢI NGHIỆM THỬ NGHIỆM EMAIL THỜI GIAN THỰC TẠI:
-13:11:38 | INFO  |    notebooks/demo.ipynb
-13:11:38 | INFO  | =====================================================================================
-13:11:38 | INFO  | 
+08:41:48 | INFO  | 🎉 TOÀN BỘ QUY TRÌNH HỌC MÁY ĐÃ HOÀN TẤT THÀNH CÔNG TRONG 137.46 GIÂY!
+08:41:48 | INFO  | =====================================================================================
+08:41:48 | INFO  |   • Thời lượng Chặng 01 (EDA &amp; Làm sạch)      : 2.79s
+08:41:48 | INFO  |   • Thời lượng Chặng 02 (Đặc trưng &amp; Pipeline): 8.56s
+08:41:48 | INFO  |   • Thời lượng Chặng 03 (Huấn luyện &amp; CV)     : 121.98s
+08:41:48 | INFO  |   • Thời lượng Chặng 04 (Đánh giá &amp; Xuất model): 4.12s
+08:41:48 | INFO  | -------------------------------------------------------------------------------------
+08:41:48 | INFO  | 👉 MỜI XEM BÁO CÁO NGHIỆM THU TỔNG HỢP TRỰC QUAN TẠI:
+08:41:48 | INFO  |    file:///D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\docs\report\index.html
+08:41:48 | INFO  | 👉 TRẢI NGHIỆM THỬ NGHIỆM EMAIL THỜI GIAN THỰC TẠI:
+08:41:48 | INFO  |    notebooks/demo.ipynb
+08:41:48 | INFO  | =====================================================================================
+08:41:48 | INFO  | 
 &gt;&gt;&gt; ĐỒNG BỘ TOÀN BỘ BÁO CÁO HTML VÀ BẢNG ĐIỀU KHIỂN TỔNG HỢP...
-13:11:38 | INFO  | ▶ BẮT ĐẦU: Tái tạo đồng bộ toàn bộ báo cáo HTML
+08:41:48 | INFO  | ▶ BẮT ĐẦU: Tái tạo đồng bộ toàn bộ báo cáo HTML
 </pre>
                 </div>
                 

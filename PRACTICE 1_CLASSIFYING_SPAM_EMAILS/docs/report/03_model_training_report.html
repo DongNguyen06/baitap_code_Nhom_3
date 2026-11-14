@@ -174,7 +174,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
             <h1>Báo Cáo Huấn Luyện Mô Hình & Tinh Chỉnh Siêu Tham Số</h1>
             <p style="color: var(--text-muted); font-size: 14.5px;">
                 Thực nghiệm huấn luyện 3 thuật toán Scratch (Multinomial Naive Bayes, Logistic Regression L2, Linear SVM) kết hợp 5-Fold Stratified Cross Validation.
-                <br><em>Cập nhật lần cuối: 2026-11-06T13:11:31.641014 (Thời lượng: 274.09s).</em>
+                <br><em>Cập nhật lần cuối: 2026-11-14T08:41:44.736514 (Thời lượng: 121.93s).</em>
             </p>
         </div>
 
@@ -192,7 +192,7 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                 <div class="metric-sub">Cài Đặt From Scratch Thuần NumPy</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">26,128 mẫu</div>
+                <div class="metric-value">6,000 mẫu</div>
                 <div class="metric-sub">Quy Mô Dữ Liệu Quét GridSearchCV</div>
             </div>
         </div>
@@ -262,20 +262,20 @@ th { background: #f1f5f9; color: #475569; font-weight: 600; }
                         
         <tr>
             <td><strong>naive_bayes</strong></td>
-            <td><strong style="color:var(--primary);">95.94%</strong></td>
-            <td><code>{&#x27;classifier__alpha&#x27;: 0.1, &#x27;preprocessor__text__select__k&#x27;: 2000}</code></td>
+            <td><strong style="color:var(--primary);">95.54%</strong></td>
+            <td><code>{&#x27;alpha&#x27;: 0.05, &#x27;select_k&#x27;: 2000}</code></td>
         </tr>
         
         <tr>
             <td><strong>logistic_regression</strong></td>
-            <td><strong style="color:var(--primary);">97.43%</strong></td>
-            <td><code>{&#x27;classifier__learning_rate&#x27;: 15.0, &#x27;preprocessor__text__select__k&#x27;: 2000}</code></td>
+            <td><strong style="color:var(--primary);">97.35%</strong></td>
+            <td><code>{&#x27;l2&#x27;: 0.0001, &#x27;learning_rate&#x27;: 15.0, &#x27;select_k&#x27;: 2000}</code></td>
         </tr>
         
         <tr>
             <td><strong>linear_svm</strong></td>
-            <td><strong style="color:var(--primary);">98.43%</strong></td>
-            <td><code>{&#x27;classifier__learning_rate&#x27;: 8.0, &#x27;preprocessor__text__select__k&#x27;: 2000}</code></td>
+            <td><strong style="color:var(--primary);">98.33%</strong></td>
+            <td><code>{&#x27;lambda_param&#x27;: 1e-05, &#x27;learning_rate&#x27;: 8.0, &#x27;select_k&#x27;: 2000}</code></td>
         </tr>
         
                     </tbody>

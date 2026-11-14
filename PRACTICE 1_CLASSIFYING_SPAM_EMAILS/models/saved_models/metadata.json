@@ -1,7 +1,7 @@
 {
   "project_name": "Practice 1: Classifying Spam Emails — Group 3",
   "team": "Nhóm 3",
-  "created_at": "2026-11-06 13:11:36",
+  "created_at": "2026-11-14 08:48:25",
   "best_model": "Support Vector Machine (Linear SVM)",
   "best_params": {
     "classifier__learning_rate": 8.0,

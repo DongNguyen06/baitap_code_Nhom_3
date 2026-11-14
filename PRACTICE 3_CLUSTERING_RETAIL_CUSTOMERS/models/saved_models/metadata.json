@@ -15,7 +15,10 @@
       "silhouette_score": 0.5547,
       "davies_bouldin_index": 0.5722,
       "calinski_harabasz_score": 248.6493,
-      "inertia": 65.5684
+      "inertia": 65.5684,
+      "hyperparameters": {
+        "n_clusters": 5
+      }
     },
     "dbscan": {
       "name": "DBSCAN Clustering (Scratch)",
@@ -25,7 +28,11 @@
       "min_samples": 5,
       "silhouette_score": 0.5577,
       "davies_bouldin_index": 0.5106,
-      "calinski_harabasz_score": 245.3557
+      "calinski_harabasz_score": 245.3557,
+      "hyperparameters": {
+        "eps": 0.35,
+        "min_samples": 5
+      }
     },
     "hierarchical": {
       "name": "Hierarchical Clustering (Scratch)",
@@ -33,7 +40,46 @@
       "linkage": "ward",
       "silhouette_score": 0.5538,
       "davies_bouldin_index": 0.5779,
-      "calinski_harabasz_score": 244.4103
+      "calinski_harabasz_score": 244.4103,
+      "hyperparameters": {
+        "n_clusters": 5,
+        "linkage": "ward"
+      }
+    }
+  },
+  "feature_ablation": {
+    "2d": {
+      "label": "Không gian 2D (Income + Spending)",
+      "features": [
+        "Annual_Income_k$",
+        "Spending_Score"
+      ],
+      "n_features": 2,
+      "silhouette": 0.5547,
+      "is_best": true
+    },
+    "3d": {
+      "label": "Không gian 3D (Age + Income + Spending)",
+      "features": [
+        "Age",
+        "Annual_Income_k$",
+        "Spending_Score"
+      ],
+      "n_features": 3,
+      "silhouette": 0.4104,
+      "is_best": false
+    },
+    "4d": {
+      "label": "Không gian 4D (Age + Gender + Income + Spend)",
+      "features": [
+        "Age",
+        "Annual_Income_k$",
+        "Spending_Score",
+        "Gender_Code"
+      ],
+      "n_features": 4,
+      "silhouette": 0.2651,
+      "is_best": false
     }
   },
   "elbow_wcss": {

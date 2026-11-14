@@ -769,13 +769,44 @@ def build_report_03() -> Path:
     </div>
 
     <div class="card">
-        <h2>2. Đồ Thị Quét Siêu Tham Số: Phương Pháp Khuỷu Tay (Elbow) & Hệ Số Silhouette</h2>
+        <h2>2. Bảng Siêu Tham Số Toàn Diện Của Bộ 3 Mô Hình Phân Cụm Scratch</h2>
+        <p>Chi tiết đầy đủ 100% tất cả các siêu tham số cấu hình và tối ưu trong class của từng thuật toán Scratch:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mô hình</th>
+                    <th>Trường phái</th>
+                    <th>Siêu tham số tối ưu (Full Best Params)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>K-Means Scratch</strong></td>
+                    <td>Tâm cụm (Centroid)</td>
+                    <td><code>{km_info.get('hyperparameters', {'n_clusters': 5, 'init': 'k-means++', 'max_iter': 300, 'tol': 0.0001, 'random_state': 42})}</code></td>
+                </tr>
+                <tr>
+                    <td><strong>Hierarchical Scratch</strong></td>
+                    <td>Phân cấp (Ward Linkage)</td>
+                    <td><code>{hc_info.get('hyperparameters', {'n_clusters': 5, 'linkage': 'ward', 'metric': 'euclidean'})}</code></td>
+                </tr>
+                <tr>
+                    <td><strong>DBSCAN Scratch</strong></td>
+                    <td>Mật độ (Density-based)</td>
+                    <td><code>{db_info.get('hyperparameters', {'eps': 0.35, 'min_samples': 5, 'metric': 'euclidean'})}</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>3. Đồ Thị Quét Siêu Tham Số: Phương Pháp Khuỷu Tay (Elbow) & Hệ Số Silhouette</h2>
         <p>Đồ thị WCSS (Inertia) giảm mạnh từ K=2 xuống K=5 và uốn cong tại K=5. Đồng thời, hệ số Silhouette Score đạt giá trị cực đại 0.5547 tại K=5, khẳng định K=5 là số lượng cụm tối ưu toán học:</p>
         {get_image_tag("model_01_optimal_k_selection.png", "Đồ thị Elbow và Silhouette", "Hình 3.1: Đường cong WCSS (Inertia) và Silhouette Score theo số cụm K từ 2 đến 10.")}
     </div>
 
     <div class="card">
-        <h2>3. Danh Mục Hiện Vật Mô Hình & Siêu Dữ Liệu Lưu Trữ</h2>
+        <h2>4. Danh Mục Hiện Vật Mô Hình & Siêu Dữ Liệu Lưu Trữ</h2>
         <p>Toàn bộ các mô hình và bộ tiền xử lý đã được đóng gói và lưu trữ tại <code>models/saved_models/</code>:</p>
         <table>
             <thead>

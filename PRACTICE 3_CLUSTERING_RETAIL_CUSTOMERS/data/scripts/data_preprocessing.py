@@ -141,29 +141,3 @@ def clean_customer_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, Any]]
 
     return df_clean, report
 
-
-def main() -> None:
-    """Hàm chạy chẩn đoán kiểm tra trực tiếp từ dòng lệnh."""
-    print("=" * 70)
-    print("   🔍 KIỂM TRA CHẨN ĐOÁN MODULE TIỀN XỬ LÝ DỮ LIỆU (PREPROCESSING)")
-    print("=" * 70)
-    
-    df_raw = load_raw_data()
-    print(f"1. Nạp dữ liệu thô thành công: {df_raw.shape[0]} dòng, {df_raw.shape[1]} cột.")
-    
-    raw_quality = check_data_quality(df_raw)
-    print(f"2. Chất lượng dữ liệu thô: {raw_quality['total_missing']} giá trị khuyết, {raw_quality['duplicate_rows']} dòng trùng lặp.")
-    
-    df_clean, clean_report = clean_customer_data(df_raw)
-    print(f"3. Dữ liệu sau làm sạch: {df_clean.shape[0]} dòng, {df_clean.shape[1]} cột.")
-    print(f"   - Tên cột chuẩn hóa: {clean_report['columns_standardized']}")
-    print(f"   - Phân bố giới tính: {clean_report['gender_counts']}")
-    print(f"   - Biên độ Tuổi: {clean_report['age_range']}")
-    print(f"   - Biên độ Thu nhập: {clean_report['income_range_k$']} k$")
-    print(f"   - Biên độ Điểm chi tiêu: {clean_report['spending_score_range']}")
-    print("=" * 70)
-    print("🎉 Module data_preprocessing sẵn sàng 100%!")
-
-
-if __name__ == "__main__":
-    main()

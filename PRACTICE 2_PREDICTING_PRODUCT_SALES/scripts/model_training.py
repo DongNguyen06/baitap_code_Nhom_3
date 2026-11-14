@@ -106,18 +106,22 @@ def evaluate_cv_models(
 
 
 def get_default_param_grids() -> Dict[str, Dict[str, Any]]:
-    """Trả về lưới tham số tinh chỉnh tối ưu cho các mô hình hồi quy Scratch."""
+    """Trả về lưới tham số tinh chỉnh toàn diện (3-4 tham số) cho các mô hình hồi quy Scratch."""
     return {
         "Linear Regression": {
-            "regressor__l2": [0.0, 0.0001, 0.001, 0.01]
+            "regressor__l2": [0.0, 0.001, 0.01],
+            "regressor__fit_intercept": [True, False]
         },
         "Decision Tree Regressor": {
-            "regressor__max_depth": [5, 6, 7],
-            "regressor__min_samples_split": [5, 10]
+            "regressor__max_depth": [6, 7],
+            "regressor__min_samples_split": [5, 10],
+            "regressor__min_samples_leaf": [3, 5]
         },
         "Random Forest Regressor": {
             "regressor__n_estimators": [15, 20],
-            "regressor__max_depth": [6, 8]
+            "regressor__max_depth": [6, 8],
+            "regressor__min_samples_split": [5, 10],
+            "regressor__min_samples_leaf": [3, 5]
         }
     }
 
@@ -166,13 +170,16 @@ def tune_grid_search(
         pipe.fit(X_train, y_train)
         tuned_models[name] = pipe
 
+        # Lọc bỏ tiền tố pipeline nội bộ, chỉ giữ lại các siêu tham số được quét
+        clean_params = {k.replace("regressor__", ""): v for k, v in best_p.items()}
+
         sub_label = f"Subsample {subsample_size}" if subsample_size else "Full Train"
         summary_records.append({
             "Mô hình": name,
             "Best CV R²": f"{best_score:.4f}" if not np.isnan(best_score) else "N/A",
-            "Siêu tham số tối ưu (Best Params)": str(best_p) if best_p else "Mặc định"
+            "Siêu tham số tối ưu (Best Params)": str(clean_params)
         })
-        print(f"  ✓ [{name}] Tinh chỉnh hoàn tất | R² = {best_score:.4f} | Params: {best_p}")
+        print(f"  ✓ [{name}] Tinh chỉnh hoàn tất | R² = {best_score:.4f} | Params: {clean_params}")
 
         # Lưu riêng từng mô hình phục vụ suy luận độc lập
         file_map = {

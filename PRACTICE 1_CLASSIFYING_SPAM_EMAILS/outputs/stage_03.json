@@ -1,15 +1,15 @@
 {
   "stage": "03",
   "status": "success",
-  "started_at": "2026-11-06T13:06:57.555190",
-  "finished_at": "2026-11-06T13:11:31.641014",
-  "duration_sec": 274.09,
+  "started_at": "2026-11-14T08:39:42.805788",
+  "finished_at": "2026-11-14T08:41:44.736514",
+  "duration_sec": 121.93,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_03_train_20261106_130657.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 1_CLASSIFYING_SPAM_EMAILS\\logs\\run_03_train_20261114_083942.log",
   "config": {
     "random_seed": 42,
     "cv_splits": 5,
-    "subsample_size": 26128,
+    "subsample_size": 6000,
     "models": [
       "naive_bayes",
       "logistic_regression",
@@ -53,27 +53,27 @@
     "grid_search_summary": [
       {
         "Mô hình": "naive_bayes",
-        "Best CV F1 (Toàn bộ Train)": "95.94%",
-        "Siêu tham số tối ưu (Best Params)": "{'classifier__alpha': 0.1, 'preprocessor__text__select__k': 2000}"
+        "Best CV F1 (Mẫu 6,000)": "95.54%",
+        "Siêu tham số tối ưu (Best Params)": "{'alpha': 0.05, 'select_k': 2000}"
       },
       {
         "Mô hình": "logistic_regression",
-        "Best CV F1 (Toàn bộ Train)": "97.43%",
-        "Siêu tham số tối ưu (Best Params)": "{'classifier__learning_rate': 15.0, 'preprocessor__text__select__k': 2000}"
+        "Best CV F1 (Mẫu 6,000)": "97.35%",
+        "Siêu tham số tối ưu (Best Params)": "{'l2': 0.0001, 'learning_rate': 15.0, 'select_k': 2000}"
       },
       {
         "Mô hình": "linear_svm",
-        "Best CV F1 (Toàn bộ Train)": "98.43%",
-        "Siêu tham số tối ưu (Best Params)": "{'classifier__learning_rate': 8.0, 'preprocessor__text__select__k': 2000}"
+        "Best CV F1 (Mẫu 6,000)": "98.33%",
+        "Siêu tham số tối ưu (Best Params)": "{'lambda_param': 1e-05, 'learning_rate': 8.0, 'select_k': 2000}"
       }
     ]
   },
   "figures": [],
   "timings": {
-    "data_loading_sec": 0.034,
-    "pipeline_init_sec": 0.006,
-    "cross_validation_sec": 63.927,
-    "grid_search_train_sec": 210.1,
-    "total_stage_sec": 274.09
+    "data_loading_sec": 0.053,
+    "pipeline_init_sec": 0.002,
+    "cross_validation_sec": 53.46,
+    "grid_search_train_sec": 68.394,
+    "total_stage_sec": 121.93
   }
 }

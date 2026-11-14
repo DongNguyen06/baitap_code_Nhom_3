@@ -251,10 +251,12 @@ def test_08_ast_syntax_integrity():
                     # Làm sạch magic commands trước khi parse AST
                     clean_lines = [l for l in code_src.splitlines() if not l.strip().startswith(("%", "!"))]
                     ast.parse("\n".join(clean_lines))
-                    assert cell.get("outputs") == [], f"Ô code #{c_idx} trong {nb_file.name} chưa xóa output"
+                    # demo.ipynb cho phép lưu output trực quan để người dùng xem kết quả; các notebook lý thuyết 01, 02, 03 yêu cầu outputs rỗng
+                    if nb_file.name != "demo.ipynb":
+                        assert cell.get("outputs") == [], f"Ô code #{c_idx} trong {nb_file.name} chưa xóa output"
         except Exception as e:
             raise AssertionError(f"Lỗi trong notebook {nb_file.name}: {e}")
-    print(f"  ✓ Toàn bộ 4 Jupyter Notebooks đạt chuẩn cú pháp AST và outputs rỗng.")
+    print(f"  ✓ Toàn bộ 4 Jupyter Notebooks đạt chuẩn cú pháp AST (3 notebook lý thuyết sạch output, demo.ipynb lưu kết quả trực quan).")
 
     return "PASSED"
 

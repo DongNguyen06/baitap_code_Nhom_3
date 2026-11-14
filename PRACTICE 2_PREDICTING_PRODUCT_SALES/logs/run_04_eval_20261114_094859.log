@@ -1,0 +1,43 @@
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  |    🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ ĐỘC LẬP TẬP KIỂM THỬ (HOLD-OUT TEST SET)
+09:48:59 | INFO  |    Thời điểm bắt đầu: 2026-11-14 09:48:59
+09:48:59 | INFO  |    Chế độ chạy: 🏆 Đầy đủ 100% Test Set (20.571 mẫu)
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Nạp 'train_test_data.joblib'
+09:48:59 | INFO  | ✔ XONG: Nạp 'train_test_data.joblib' (0.09s)
+09:48:59 | INFO  |   ✓ Đã nạp thành công tập Test: 20,571 mẫu (15 đặc trưng gốc).
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Nạp 3 mô hình hồi quy Scratch từ models/saved_models/
+09:48:59 | INFO  | ✔ XONG: Nạp 3 mô hình hồi quy Scratch từ models/saved_models/ (0.28s)
+09:48:59 | INFO  |   ✓ Đã nạp đủ 3 mô hình Pipeline: ['Linear Regression', 'Decision Tree Regressor', 'Random Forest Regressor'].
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Đánh giá kiểm thử độc lập trên 20,571 mẫu Test set
+09:49:01 | INFO  | ✔ XONG: Đánh giá kiểm thử độc lập trên 20,571 mẫu Test set (1.44s)
+09:49:01 | INFO  | 
+================================================================================
+09:49:01 | INFO  |    📊 BẢNG ĐỐI ĐẦU HIỆU NĂNG 3 MÔ HÌNH TRÊN HOLD-OUT TEST SET
+09:49:01 | INFO  | ================================================================================
+09:49:01 | INFO  |                 Mô hình  R2 (Log)  R2 (Thực tế)  RMSE (INR)  MAE (INR)       MSE
+09:49:01 | INFO  |       Linear Regression    0.5566       -0.7196      359.51     142.01 129245.42
+09:49:01 | INFO  | Decision Tree Regressor    0.5614        0.4890      195.99     139.63  38411.21
+09:49:01 | INFO  | Random Forest Regressor    0.5643        0.4928      195.25     139.14  38122.54
+09:49:01 | INFO  | ================================================================================
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Đo độ trễ suy luận thời gian thực (Inference Latency)
+09:49:01 | INFO  | ✔ XONG: Đo độ trễ suy luận thời gian thực (Inference Latency) (0.09s)
+09:49:01 | INFO  |   ✓ Tốc độ suy luận Random Forest: 0.092 ms / đơn hàng (10,869 đơn/giây).
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Trích xuất Top 15 đặc trưng chi phối doanh số từ Random Forest Regressor
+09:49:01 | INFO  | ✔ XONG: Trích xuất Top 15 đặc trưng chi phối doanh số từ Random Forest Regressor (0.00s)
+09:49:01 | INFO  |   ✓ Đã trích xuất thành công Top 15 đặc trưng chi phối doanh số.
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Đóng gói 'best_model.joblib' và xuất 'metadata.json'
+09:49:01 | INFO  | ✔ XONG: Đóng gói 'best_model.joblib' và xuất 'metadata.json' (0.41s)
+09:49:01 | INFO  |   ✔ Đã đóng gói mô hình quán quân: models/saved_models/best_model.joblib
+09:49:01 | INFO  |   ✔ Đã xuất siêu dữ liệu nghiệm thu: metadata.json
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 4 biểu đồ trực quan hóa vào docs/images/
+09:49:04 | INFO  | ✔ XONG: Vẽ và xuất 4 biểu đồ trực quan hóa vào docs/images/ (3.12s)
+09:49:04 | INFO  |   ✔ Đã xuất đủ 4 biểu đồ: model_01 đến model_04.
+09:49:04 | INFO  | 
+✔ Đã lưu phong bì kết quả Chặng 4: stage_04.json
+09:49:05 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/04_model_evaluation_report.html, run_log.html & index.html
+09:49:05 | INFO  | ================================================================================
+09:49:05 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 5.44 GIÂY!
+09:49:05 | INFO  | 👉 Mở xem toàn bộ báo cáo tổng hợp tại: docs/report/index.html
+09:49:05 | INFO  | ================================================================================

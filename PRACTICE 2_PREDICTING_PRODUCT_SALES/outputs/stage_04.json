@@ -1,11 +1,11 @@
 {
   "stage": "04",
   "status": "success",
-  "started_at": "2026-11-06T13:14:59.385753",
-  "finished_at": "2026-11-06T13:15:03.642930",
-  "duration_sec": 4.26,
+  "started_at": "2026-11-14T09:48:59.537941",
+  "finished_at": "2026-11-14T09:49:04.980383",
+  "duration_sec": 5.44,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_04_eval_20261106_131459.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_04_eval_20261114_094859.log",
   "config": {
     "test_samples": 20571,
     "random_seed": 42,
@@ -14,12 +14,12 @@
   "metrics": {
     "test_samples": 20571,
     "best_model_name": "Random Forest Regressor",
-    "best_r2_log": 0.564,
-    "best_r2_real": 0.4911,
-    "best_rmse_inr": 195.58,
-    "best_mae_inr": 139.21,
-    "best_mse": 38250.21,
-    "inference_speed_ms": 0.061
+    "best_r2_log": 0.5643,
+    "best_r2_real": 0.4928,
+    "best_rmse_inr": 195.25,
+    "best_mae_inr": 139.14,
+    "best_mse": 38122.54,
+    "inference_speed_ms": 0.092
   },
   "tables": {
     "test_results": [
@@ -29,7 +29,7 @@
         "R2 (Thực tế)": -0.7196,
         "RMSE (INR)": 359.51,
         "MAE (INR)": 142.01,
-        "MSE": 129247.15
+        "MSE": 129245.42
       },
       {
         "Mô hình": "Decision Tree Regressor",
@@ -41,73 +41,73 @@
       },
       {
         "Mô hình": "Random Forest Regressor",
-        "R2 (Log)": 0.564,
-        "R2 (Thực tế)": 0.4911,
-        "RMSE (INR)": 195.58,
-        "MAE (INR)": 139.21,
-        "MSE": 38250.21
+        "R2 (Log)": 0.5643,
+        "R2 (Thực tế)": 0.4928,
+        "RMSE (INR)": 195.25,
+        "MAE (INR)": 139.14,
+        "MSE": 38122.54
       }
     ],
     "top_15_features": [
       {
         "Đặc trưng": "cat__Category_kurta",
-        "Tầm quan trọng": 0.703089278318852
+        "Tầm quan trọng": 0.7027269210423644
       },
       {
         "Đặc trưng": "cat__Category_Top",
-        "Tầm quan trọng": 0.15481292168079697
+        "Tầm quan trọng": 0.1547331207212052
       },
       {
         "Đặc trưng": "cat__Category_Bottom",
-        "Tầm quan trọng": 0.027063579224480643
+        "Tầm quan trọng": 0.027049685889365117
       },
       {
         "Đặc trưng": "num__Qty",
-        "Tầm quan trọng": 0.020807886588379537
+        "Tầm quan trọng": 0.021180301529458493
       },
       {
         "Đặc trưng": "cat__Size_6XL",
-        "Tầm quan trọng": 0.01788341985644763
+        "Tầm quan trọng": 0.017874176429941716
       },
       {
         "Đặc trưng": "cat__Category_Blouse",
-        "Tầm quan trọng": 0.017418315089368884
+        "Tầm quan trọng": 0.017409334098300186
       },
       {
         "Đặc trưng": "num__month",
-        "Tầm quan trọng": 0.015211813922826329
+        "Tầm quan trọng": 0.015183984019894584
       },
       {
         "Đặc trưng": "cat__Size_5XL",
-        "Tầm quan trọng": 0.014445314152543213
+        "Tầm quan trọng": 0.014437906768267233
       },
       {
         "Đặc trưng": "cat__Size_4XL",
-        "Tầm quan trọng": 0.010116911911734548
+        "Tầm quan trọng": 0.010143402464017697
       },
       {
         "Đặc trưng": "cat__Category_Set",
-        "Tầm quan trọng": 0.005509037148750954
+        "Tầm quan trọng": 0.005506234639361488
       },
       {
         "Đặc trưng": "num__is_promoted",
-        "Tầm quan trọng": 0.0020912144254277088
+        "Tầm quan trọng": 0.002096658667394315
       },
       {
         "Đặc trưng": "num__day_of_week",
-        "Tầm quan trọng": 0.0016200957152642571
+        "Tầm quan trọng": 0.001587430710416026
       },
       {
         "Đặc trưng": "cat__Size_Free",
-        "Tầm quan trọng": 0.0015301167236185017
+        "Tầm quan trọng": 0.001529318053421946
       },
       {
         "Đặc trưng": "cat__Fulfilment_Amazon",
-        "Tầm quan trọng": 0.0012962914492912596
+        "Tầm quan trọng": 0.0012773278078297525
       },
       {
         "Đặc trưng": "cat__ship-service-level_Expedited",
-        "Tầm quan trọng": 0.0011650463863210826
+        "Tầm quan trọng": 0.001164452219876493
       }
     ]
   },
@@ -118,12 +118,12 @@
     "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\docs\\images\\model_04_feature_importances.png"
   ],
   "timings": {
-    "data_loading_sec": 0.07,
-    "models_loading_sec": 0.28,
-    "evaluation_sec": 1.111,
-    "latency_test_sec": 0.061,
-    "feature_importance_sec": 0.001,
-    "artifacts_export_sec": 0.287,
-    "export_figures_sec": 2.429
+    "data_loading_sec": 0.088,
+    "models_loading_sec": 0.278,
+    "evaluation_sec": 1.439,
+    "latency_test_sec": 0.092,
+    "feature_importance_sec": 0.002,
+    "artifacts_export_sec": 0.409,
+    "export_figures_sec": 3.117
   }
 }

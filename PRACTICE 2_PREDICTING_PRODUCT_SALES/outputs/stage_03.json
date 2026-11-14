@@ -1,11 +1,11 @@
 {
   "stage": "03",
   "status": "success",
-  "started_at": "2026-11-06T13:07:13.146326",
-  "finished_at": "2026-11-06T13:14:59.334683",
-  "duration_sec": 466.19,
+  "started_at": "2026-11-14T09:29:01.648388",
+  "finished_at": "2026-11-14T09:48:59.497352",
+  "duration_sec": 1197.85,
   "quick_mode": false,
-  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_03_train_20261106_130713.log",
+  "log_file": "D:\\DH_GTVT\\NĂM 3\\ML\\baitap_code_Nhom_3\\PRACTICE 2_PREDICTING_PRODUCT_SALES\\logs\\run_03_train_20261114_092901.log",
   "config": {
     "cv_splits": 5,
     "train_samples_used": 82281,
@@ -51,25 +51,25 @@
       {
         "Mô hình": "Linear Regression",
         "Best CV R²": "0.5521",
-        "Siêu tham số tối ưu (Best Params)": "{'regressor__l2': 0.0}"
+        "Siêu tham số tối ưu (Best Params)": "{'fit_intercept': False, 'l2': 0.01}"
       },
       {
         "Mô hình": "Decision Tree Regressor",
         "Best CV R²": "0.5540",
-        "Siêu tham số tối ưu (Best Params)": "{'regressor__max_depth': 7, 'regressor__min_samples_split': 5}"
+        "Siêu tham số tối ưu (Best Params)": "{'max_depth': 7, 'min_samples_leaf': 5, 'min_samples_split': 5}"
       },
       {
         "Mô hình": "Random Forest Regressor",
         "Best CV R²": "0.5573",
-        "Siêu tham số tối ưu (Best Params)": "{'regressor__max_depth': 8, 'regressor__n_estimators': 20}"
+        "Siêu tham số tối ưu (Best Params)": "{'max_depth': 8, 'min_samples_leaf': 3, 'min_samples_split': 10, 'n_estimators': 20}"
       }
     ]
   },
   "figures": [],
   "timings": {
-    "data_loading_sec": 0.079,
-    "init_models_sec": 0.001,
-    "cross_validation_sec": 196.509,
-    "grid_search_sec": 269.474
+    "data_loading_sec": 0.062,
+    "init_models_sec": 0.0,
+    "cross_validation_sec": 139.841,
+    "grid_search_sec": 1057.92
   }
 }

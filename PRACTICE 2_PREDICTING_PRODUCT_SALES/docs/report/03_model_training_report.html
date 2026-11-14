@@ -196,7 +196,7 @@
             <h1>Báo Cáo Huấn Luyện 3 Mô Hình Hồi Quy Scratch & 5-Fold Cross Validation</h1>
             <p style="color:var(--text-muted); font-size:14.5px;">
                 Thực nghiệm huấn luyện 3 thuật toán Scratch thuần NumPy (Linear Regression OLS Normal Equation, Decision Tree Regressor Quantile Splits, Random Forest Regressor Ensemble Bagging) kết hợp kiểm định chéo 5-Fold Cross Validation.
-                <br><em>Cập nhật lần cuối: 2026-11-06T13:14:59.334683 (Thời lượng thực thi: <strong>466.19s</strong>).</em>
+                <br><em>Cập nhật lần cuối: 2026-11-14T09:48:59.497352 (Thời lượng thực thi: <strong>1197.85s</strong>).</em>
             </p>
         </div>
 
@@ -248,7 +248,7 @@
             <p>Không gian tìm kiếm tối ưu hóa tự động siêu tham số cho cả 3 mô hình nhằm khai phá năng lực dự báo cao nhất:</p>
             <table>
                 <thead><tr><th>Mô Hình Hồi Quy</th><th>Best Score (R²)</th><th>Tổ Hợp Siêu Tham Số Tối Ưu Nhất (Best Parameters)</th></tr></thead>
-                <tbody><tr><td><strong>Linear Regression</strong></td><td>0.5521</td><td><code>{&#x27;regressor__l2&#x27;: 0.0}</code></td></tr><tr><td><strong>Decision Tree Regressor</strong></td><td>0.5540</td><td><code>{&#x27;regressor__max_depth&#x27;: 7, &#x27;regressor__min_samples_split&#x27;: 5}</code></td></tr><tr><td><strong>Random Forest Regressor</strong></td><td>0.5573</td><td><code>{&#x27;regressor__max_depth&#x27;: 8, &#x27;regressor__n_estimators&#x27;: 20}</code></td></tr></tbody>
+                <tbody><tr><td><strong>Linear Regression</strong></td><td>0.5521</td><td><code>{&#x27;fit_intercept&#x27;: False, &#x27;l2&#x27;: 0.01}</code></td></tr><tr><td><strong>Decision Tree Regressor</strong></td><td>0.5540</td><td><code>{&#x27;max_depth&#x27;: 7, &#x27;min_samples_leaf&#x27;: 5, &#x27;min_samples_split&#x27;: 5}</code></td></tr><tr><td><strong>Random Forest Regressor</strong></td><td>0.5573</td><td><code>{&#x27;max_depth&#x27;: 8, &#x27;min_samples_leaf&#x27;: 3, &#x27;min_samples_split&#x27;: 10, &#x27;n_estimators&#x27;: 20}</code></td></tr></tbody>
             </table>
         </div>
 

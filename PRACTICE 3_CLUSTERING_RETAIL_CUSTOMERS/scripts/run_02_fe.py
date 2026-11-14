@@ -64,9 +64,9 @@ def main(extra_handler=None, logger=None) -> Dict[str, Any]:
 
     df_proc = pd.read_csv(out_path)
     logger.info(f"  • Dữ liệu sạch hoàn chỉnh: {df_proc.shape[0]} dòng, {df_proc.shape[1]} cột.")
-    logger.info(f"  • Không gian 2D (Chính): {names_2d} — Kích thước: {list(X_2d.shape)}")
-    logger.info(f"  • Không gian 3D (Mở rộng): {names_3d} — Kích thước: {list(X_3d.shape)}")
-    logger.info(f"  • Không gian 4D (Toàn diện): {names_4d} — Kích thước: {list(X_4d.shape)}")
+    logger.info(f"  • Không gian 2D (Chính)    : [Annual_Income, Spending_Score]        -> {list(X_2d.shape)}")
+    logger.info(f"  • Không gian 3D (Mở rộng)  : [Age, Annual_Income, Spending_Score]   -> {list(X_3d.shape)}")
+    logger.info(f"  • Không gian 4D (Toàn diện): [Age, Gender, Income, Spending]        -> {list(X_4d.shape)}")
 
     # 5. Lưu hiện vật kết quả chặng vào outputs/stage_02.json
     stage_data = {

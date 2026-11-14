@@ -1,7 +1,7 @@
 {
   "stage_name": "Stage 04: Model Evaluation & Customer Segmentation Profiling",
   "status": "SUCCESS",
-  "elapsed_seconds": 1.53,
+  "elapsed_seconds": 1.66,
   "metrics_kmeans": {
     "model_name": "K-Means (Scratch)",
     "n_clusters": 5,
@@ -105,12 +105,7 @@
       "Chiến lược Bán lẻ": "Thu nhập và chi tiêu đều ở mức trung bình (chiếm số đông). Duy trì các chương trình khuyến mãi định kỳ và dịch vụ khách hàng ổn định."
     }
   ],
-  "saved_figures": [
-    "docs/images/model_01_optimal_k_selection.png",
-    "docs/images/model_02_kmeans_clusters_2d.png",
-    "docs/images/model_03_hierarchical_dendrogram.png",
-    "docs/images/model_04_dbscan_density_clusters.png"
-  ],
+  "saved_figures": ["docs/images/model_01_optimal_k_selection.png", "docs/images/model_02_kmeans_clusters_2d.png", "docs/images/model_03_hierarchical_dendrogram.png", "docs/images/model_04_dbscan_density_clusters.png"],
   "stage_id": 4,
-  "timestamp": "2026-11-11T12:02:26.830867"
+  "timestamp": "2026-11-14T10:06:01.398991"
 }

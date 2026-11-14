@@ -7,7 +7,7 @@ Xuất các biểu đồ trực quan hóa chuyên nghiệp vào docs/images/.
 """
 
 from pathlib import Path
-from typing import Dict, Any, Optional, Tuple, List
+from typing import Dict, Any, Optional, Tuple, List, Union
 import sys
 import numpy as np
 import pandas as pd
@@ -245,29 +245,3 @@ def run_eda(raw_path: Optional[Union[str, Path]] = None, output_dir: Optional[Pa
 
     return summary
 
-
-def main() -> None:
-    """Hàm chạy thực thi trực tiếp từ dòng lệnh."""
-    print("=" * 75)
-    print("   📊 CHẠY PHÂN TÍCH KHÁM PHÁ DỮ LIỆU EDA (READ-ONLY TRÊN RAW DATA)")
-    print("=" * 75)
-
-    summary = run_eda()
-    print(f"1. Tổng số quan sát: {summary['n_samples']} khách hàng, {summary['n_columns']} trường dữ liệu.")
-    print(f"2. Cơ cấu giới tính: {summary['gender_counts']} (Tỷ lệ: {summary['gender_ratio_pct']})")
-    
-    print("\n3. Thống kê mô tả các đặc trưng số:")
-    for col, s in summary["numeric_stats"].items():
-        print(f"   * {col:<24} | Mean: {s['mean']:<6} | Median: {s['median']:<5} | Std: {s['std']:<5} | Min-Max: [{s['min']}, {s['max']}] | Outliers: {s['outliers_count']}")
-
-    print(f"\n4. Phân bố theo độ tuổi: {summary['age_distribution']}")
-    print(f"\n5. Đã xuất thành công {len(summary['saved_figures'])} biểu đồ trực quan hóa vào docs/images/:")
-    for f in summary["saved_figures"]:
-        print(f"   ✓ {Path(f).name}")
-
-    print("=" * 75)
-    print("🎉 Chu trình EDA hoàn thành 100%!")
-
-
-if __name__ == "__main__":
-    main()

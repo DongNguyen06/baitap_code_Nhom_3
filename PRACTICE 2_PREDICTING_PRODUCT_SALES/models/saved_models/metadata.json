@@ -1,16 +1,16 @@
 {
   "project_name": "Practice 2: Predicting Product Sales — Group 3",
   "team": "Nhóm 3",
-  "created_at": "2026-11-06T13:15:01.212599",
+  "created_at": "2026-11-14T09:56:49.271238",
   "model_name": "Random Forest Regressor (Ensemble Bagging Scratch)",
   "best_model": "Random Forest Regressor (Ensemble Bagging Scratch)",
   "test_metrics": {
     "Mô hình": "Random Forest Regressor",
-    "R2 (Log)": 0.564,
-    "R2 (Thực tế)": 0.4911,
-    "RMSE (INR)": 195.58,
-    "MAE (INR)": 139.21,
-    "MSE": 38250.21
+    "R2 (Log)": 0.5642,
+    "R2 (Thực tế)": 0.4927,
+    "RMSE (INR)": 195.27,
+    "MAE (INR)": 139.15,
+    "MSE": 38129.01
   },
   "models_comparison": [
     {
@@ -31,73 +31,73 @@
     },
     {
       "Mô hình": "Random Forest Regressor",
-      "R2 (Log)": 0.564,
-      "R2 (Thực tế)": 0.4911,
-      "RMSE (INR)": 195.58,
-      "MAE (INR)": 139.21,
-      "MSE": 38250.21
+      "R2 (Log)": 0.5642,
+      "R2 (Thực tế)": 0.4927,
+      "RMSE (INR)": 195.27,
+      "MAE (INR)": 139.15,
+      "MSE": 38129.01
     }
   ],
   "top_features": [
     {
       "Đặc trưng": "cat__Category_kurta",
-      "Tầm quan trọng": 0.703089278318852
+      "Tầm quan trọng": 0.702603146785464
     },
     {
       "Đặc trưng": "cat__Category_Top",
-      "Tầm quan trọng": 0.15481292168079697
+      "Tầm quan trọng": 0.1547058954925597
     },
     {
       "Đặc trưng": "cat__Category_Bottom",
-      "Tầm quan trọng": 0.027063579224480643
+      "Tầm quan trọng": 0.02704494510425088
     },
     {
       "Đặc trưng": "num__Qty",
-      "Tầm quan trọng": 0.020807886588379537
+      "Tầm quan trọng": 0.021180025618075086
     },
     {
       "Đặc trưng": "cat__Size_6XL",
-      "Tầm quan trọng": 0.01788341985644763
+      "Tầm quan trọng": 0.017870996365995654
     },
     {
       "Đặc trưng": "cat__Category_Blouse",
-      "Tầm quan trọng": 0.017418315089368884
+      "Tầm quan trọng": 0.017406275827735032
     },
     {
       "Đặc trưng": "num__month",
-      "Tầm quan trọng": 0.015211813922826329
+      "Tầm quan trọng": 0.01519821197365607
     },
     {
       "Đặc trưng": "cat__Size_5XL",
-      "Tầm quan trọng": 0.014445314152543213
+      "Tầm quan trọng": 0.014435377793398915
     },
     {
       "Đặc trưng": "cat__Size_4XL",
-      "Tầm quan trọng": 0.010116911911734548
+      "Tầm quan trọng": 0.01014161265660723
     },
     {
       "Đặc trưng": "cat__Category_Set",
-      "Tầm quan trọng": 0.005509037148750954
+      "Tầm quan trọng": 0.00550527207482967
     },
     {
       "Đặc trưng": "num__is_promoted",
-      "Tầm quan trọng": 0.0020912144254277088
+      "Tầm quan trọng": 0.002107123145402936
     },
     {
       "Đặc trưng": "num__day_of_week",
-      "Tầm quan trọng": 0.0016200957152642571
+      "Tầm quan trọng": 0.0016496405204830965
     },
     {
       "Đặc trưng": "cat__Size_Free",
-      "Tầm quan trọng": 0.0015301167236185017
+      "Tầm quan trọng": 0.001529051626401737
     },
     {
       "Đặc trưng": "cat__Fulfilment_Amazon",
-      "Tầm quan trọng": 0.0012962914492912596
+      "Tầm quan trọng": 0.0013145310124108858
     },
     {
       "Đặc trưng": "cat__ship-service-level_Expedited",
-      "Tầm quan trọng": 0.0011650463863210826
+      "Tầm quan trọng": 0.0011642441035585062
     }
   ]
 }

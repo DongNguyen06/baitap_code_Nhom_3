@@ -1,0 +1,215 @@
+09:28:52 | INFO  | =====================================================================================
+09:28:52 | INFO  |    🚀 KHỞI ĐỘNG QUY TRÌNH HỌC MÁY TOÀN DIỆN (END-TO-END PIPELINE) — NHÓM 3 (UTH)
+09:28:52 | INFO  |       ĐỀ TÀI: DỰ ĐOÁN DOANH SỐ BÁN HÀNG THƯƠNG MẠI ĐIỆN TỬ (PRACTICE 2)
+09:28:52 | INFO  |    Thời điểm bắt đầu: 2026-11-14 09:28:52
+09:28:52 | INFO  |    Chế độ chạy: 🏆 Huấn luyện toàn diện (Full Benchmark 100% dữ liệu: 82k mẫu)
+09:28:52 | INFO  | =====================================================================================
+09:28:52 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:28:52 | INFO  | 
+=====================================================================================
+09:28:52 | INFO  | >>> [CHẶNG 1/4] KHÁM PHÁ DỮ LIỆU BÁN HÀNG TMĐT (EXPLORATORY DATA ANALYSIS - EDA)...
+09:28:52 | INFO  | =====================================================================================
+09:28:52 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 01 (EDA Read-Only)
+09:28:52 | INFO  | ================================================================================
+09:28:52 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU BÁN HÀNG TMĐT (EXPLORATORY DATA ANALYSIS - EDA)
+09:28:52 | INFO  | ================================================================================
+09:28:52 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:28:52 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ Amazon Sale Report.csv
+09:28:53 | INFO  | ✔ XONG: Nạp dữ liệu thô từ Amazon Sale Report.csv (0.78s)
+09:28:53 | INFO  |   • Quy mô dữ liệu thô: 128,975 dòng (24 thuộc tính).
+09:28:53 | INFO  | ▶ BẮT ĐẦU: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật
+09:28:53 | INFO  | ✔ XONG: Khảo sát cấu trúc bảng và khuyết thiếu kỹ thuật (0.23s)
+09:28:53 | INFO  |   • Thuộc tính: 24 cột | Số dòng trùng lặp thô: 0.
+09:28:53 | INFO  | ▶ BẮT ĐẦU: Thống kê đơn biến doanh số Amount
+09:28:53 | INFO  | ✔ XONG: Thống kê đơn biến doanh số Amount (0.01s)
+09:28:53 | INFO  |   • Doanh số Amount (INR): Mean=648.56, Median=605.00, Std=281.21, Skewness=0.89.
+09:28:53 | INFO  | ▶ BẮT ĐẦU: Phân tích ngoại lai doanh số bằng khoảng tứ phân vị IQR
+09:28:53 | INFO  | ✔ XONG: Phân tích ngoại lai doanh số bằng khoảng tứ phân vị IQR (0.01s)
+09:28:53 | INFO  |   • Ngoại lai IQR: Ngưỡng trên=1283.00 INR | Số lượng=3,743 (3.15%).
+09:28:53 | INFO  | ▶ BẮT ĐẦU: Phân tích hai biến doanh số với ngành hàng, kênh vận chuyển & địa lý
+09:28:53 | INFO  | ✔ XONG: Phân tích hai biến doanh số với ngành hàng, kênh vận chuyển & địa lý (0.22s)
+09:28:53 | INFO  |   • Xếp hạng ảnh hưởng (Eta-squared): ['Category', 'is_promoted', 'ship-state', 'Size'].
+09:28:53 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 6 biểu đồ phân tích EDA vào docs/images/
+09:28:57 | INFO  | ✔ XONG: Vẽ và xuất 6 biểu đồ phân tích EDA vào docs/images/ (3.94s)
+09:28:57 | INFO  |   ✔ Đã xuất đủ 6 biểu đồ EDA: eda_01 đến eda_06.
+09:28:57 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
+09:28:57 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
+09:28:57 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.01s)
+09:28:57 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
+09:28:57 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 5.22 GIÂY!
+09:28:57 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | ✔ XONG: Thực thi Chặng 01 (EDA Read-Only) (5.24s)
+09:28:57 | INFO  | 
+=====================================================================================
+09:28:57 | INFO  | >>> [CHẶNG 2/4] LÀM SẠCH, KỸ THUẬT ĐẶC TRƯNG & THIẾT LẬP PIPELINE TIỀN XỬ LÝ...
+09:28:57 | INFO  | =====================================================================================
+09:28:57 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 02 (Data Preprocessing, Feature Engineering & Train/Test Split)
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | 🚀 BẮT ĐẦU CHẶNG 02: KỸ THUẬT ĐẶC TRƯNG & DÂY CHUYỀN PIPELINE KHÉP KÍN 6 BƯỚC
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:28:57 | INFO  | --- [BƯỚC 1/6]: LÀM SẠCH DỮ LIỆU THÔ & KHỬ TRÙNG LẶP TRIỆT ĐỂ ---
+09:28:57 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ Amazon Sale Report.csv
+09:28:58 | INFO  | ✔ XONG: Nạp dữ liệu thô từ Amazon Sale Report.csv (0.72s)
+09:28:58 | INFO  |   • Đã nạp thành công 128,975 dòng dữ liệu thô ban đầu (24 thuộc tính).
+09:28:58 | INFO  | ▶ BẮT ĐẦU: Lọc đơn Cancelled, đơn âm/null và khử trùng lặp (Zero Duplicate Leakage)
+09:28:59 | INFO  | ✔ XONG: Lọc đơn Cancelled, đơn âm/null và khử trùng lặp (Zero Duplicate Leakage) (1.30s)
+09:28:59 | INFO  |   • Loại bỏ đơn hủy Status 'Cancelled': 18,332 đơn.
+09:28:59 | INFO  |   • Loại bỏ đơn khuyết thiếu / âm Amount hoặc Qty: 2,572 đơn.
+09:28:59 | INFO  |   • Loại bỏ đơn trùng lặp bản ghi: 5,219 đơn.
+09:28:59 | INFO  |   ✔ Dữ liệu sạch thu được: 102,852 đơn hàng hợp lệ.
+09:28:59 | INFO  |   ✔ Đã xuất tệp dữ liệu sạch: data/processed/clean_amazon_sales.csv
+09:28:59 | INFO  | --- [BƯỚC 2/6]: TRÍCH XUẤT CÁC ĐẶC TRƯNG MIỀN NGHIỆP VỤ TMĐT ---
+09:28:59 | INFO  | ▶ BẮT ĐẦU: Trích xuất đặc trưng thời gian, tiếp thị, B2B và địa lý
+09:28:59 | INFO  | ✔ XONG: Trích xuất đặc trưng thời gian, tiếp thị, B2B và địa lý (0.20s)
+09:28:59 | INFO  |   • Bảng đặc trưng mới: 18 cột (đã tạo: month, day_of_week, is_weekend, is_promoted, is_b2b, state_grouped).
+09:28:59 | INFO  | --- [BƯỚC 3/6]: PHÂN CHIA TRAIN/TEST 80/20 & CƠ CHẾ CHỐNG RÒ RỈ DỮ LIỆU ---
+09:28:59 | INFO  | ▶ BẮT ĐẦU: Quét phát hiện các cặp đặc trưng đa cộng tuyến (|r| > 0.6)
+09:29:00 | INFO  | ✔ XONG: Quét phát hiện các cặp đặc trưng đa cộng tuyến (|r| > 0.6) (0.03s)
+09:29:00 | INFO  |   • Phát hiện 1 cặp đa cộng tuyến (|r| > 0.6): [('day_of_week', 'is_weekend', 0.8006)].
+09:29:00 | INFO  |   • Đã chủ động loại bỏ 'is_weekend' để tránh trùng lặp thông tin với 'day_of_week'.
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Phân chia Train/Test 80/20 và biến đổi log1p biến mục tiêu
+09:29:00 | INFO  | ✔ XONG: Phân chia Train/Test 80/20 và biến đổi log1p biến mục tiêu (0.05s)
+09:29:00 | INFO  |   • Phân chia thành công: Train=82,281 mẫu (80%), Test=20,571 mẫu (20%).
+09:29:00 | INFO  |   • Doanh số TB: Train=665.20 INR, Test=666.94 INR.
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check)
+09:29:00 | INFO  | ✔ XONG: Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check) (0.01s)
+09:29:00 | INFO  |   ✔ Trùng lặp giữa Train và Test: 0 mẫu (Zero Data Leakage đạt 100%).
+09:29:00 | INFO  | --- [BƯỚC 4 & 5/6]: CHUẨN HÓA & MÃ HÓA QUA DÂY CHUYỀN COLUMNTRANSFORMER ---
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Cấu hình ColumnTransformer và huấn luyện (.fit) DUY NHẤT trên Train set
+09:29:00 | INFO  | ✔ XONG: Cấu hình ColumnTransformer và huấn luyện (.fit) DUY NHẤT trên Train set (0.30s)
+09:29:00 | INFO  |   • Không gian đặc trưng sau One-Hot: 42 chiều (5 số + 37 One-Hot).
+09:29:00 | INFO  | --- [BƯỚC 6/6]: ĐÓNG GÓI PIPELINE & XUẤT HIỆN VẬT BÀN GIAO ---
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Lưu trữ các tệp train.csv, test.csv, train_test_data.joblib & preprocessor.joblib
+09:29:01 | INFO  | ✔ XONG: Lưu trữ các tệp train.csv, test.csv, train_test_data.joblib & preprocessor.joblib (1.22s)
+09:29:01 | INFO  |   ✔ Đã lưu: train_test_data.joblib và preprocessor.joblib
+09:29:01 | INFO  |   ✔ Đã xuất: data/processed/train.csv & test.csv
+09:29:01 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_02.json
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html
+09:29:01 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html (0.00s)
+09:29:01 | INFO  |   ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html
+09:29:01 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+09:29:01 | INFO  | ================================================================================
+09:29:01 | INFO  | 🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG 3.84 GIÂY!
+09:29:01 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html
+09:29:01 | INFO  | ================================================================================
+09:29:01 | INFO  | ✔ XONG: Thực thi Chặng 02 (Data Preprocessing, Feature Engineering & Train/Test Split) (3.88s)
+09:29:01 | INFO  | 
+=====================================================================================
+09:29:01 | INFO  | >>> [CHẶNG 3/4] HUẤN LUYỆN 3 MÔ HÌNH HỒI QUY SCRATCH & 5-FOLD CROSS VALIDATION...
+09:29:01 | INFO  | =====================================================================================
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 03 (Scratch Models Training & GridSearchCV)
+09:29:01 | INFO  | ================================================================================
+09:29:01 | INFO  |    🚀 BẮT ĐẦU CHẶNG 03: HUẤN LUYỆN 3 MÔ HÌNH HỒI QUY SCRATCH & 5-FOLD CV
+09:29:01 | INFO  |    Thời điểm bắt đầu: 2026-11-14 09:29:01
+09:29:01 | INFO  |    Chế độ chạy: 🏆 Đầy đủ 100% dữ liệu (Full Benchmark: 82k mẫu)
+09:29:01 | INFO  | ================================================================================
+09:29:01 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Nạp 'preprocessor.joblib' và 'train_test_data.joblib'
+09:29:01 | INFO  | ✔ XONG: Nạp 'preprocessor.joblib' và 'train_test_data.joblib' (0.06s)
+09:29:01 | INFO  |   ✓ Đã nạp thành công tập Train: 82,281 mẫu (15 đặc trưng gốc).
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng
+09:29:01 | INFO  | ✔ XONG: Khởi tạo 3 mô hình Scratch và ghép nối Pipeline đa tầng (0.00s)
+09:29:01 | INFO  |   ✓ Đã ghép nối thành công 3 Pipeline: ['Linear Regression', 'Decision Tree Regressor', 'Random Forest Regressor'].
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Đánh giá độ ổn định 5-Fold Cross Validation trên 82,281 mẫu Train
+09:31:21 | INFO  | ✔ XONG: Đánh giá độ ổn định 5-Fold Cross Validation trên 82,281 mẫu Train (139.84s)
+09:31:21 | INFO  | 
+================================================================================
+09:31:21 | INFO  |    📊 BẢNG KẾT QUẢ 5-FOLD CROSS VALIDATION (TẬP TRAIN)
+09:31:21 | INFO  | ================================================================================
+09:31:21 | INFO  |                 Mô hình CV R² (Mean) CV R² (Std) CV RMSE (Mean) CV RMSE (Std)
+09:31:21 | INFO  |       Linear Regression       0.5522    ± 0.0056         0.2600      ± 0.0009
+09:31:21 | INFO  | Decision Tree Regressor       0.5531    ± 0.0058         0.2598      ± 0.0009
+09:31:21 | INFO  | Random Forest Regressor       0.5577    ± 0.0055         0.2584      ± 0.0009
+09:31:21 | INFO  | ================================================================================
+09:31:21 | INFO  | ▶ BẮT ĐẦU: Tinh chỉnh siêu tham số (GridSearchCV 3-Fold trên 82,281 mẫu)
+09:48:59 | INFO  | ✔ XONG: Tinh chỉnh siêu tham số (GridSearchCV 3-Fold trên 82,281 mẫu) (1057.92s)
+09:48:59 | INFO  | 
+================================================================================
+09:48:59 | INFO  |    🎯 BẢNG KẾT QUẢ TINH CHỈNH SIÊU THAM SỐ (GRIDSEARCHCV)
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  |                 Mô hình Best CV R²                                                    Siêu tham số tối ưu (Best Params)
+09:48:59 | INFO  |       Linear Regression     0.5521                                                 {'fit_intercept': False, 'l2': 0.01}
+09:48:59 | INFO  | Decision Tree Regressor     0.5540                      {'max_depth': 7, 'min_samples_leaf': 5, 'min_samples_split': 5}
+09:48:59 | INFO  | Random Forest Regressor     0.5573 {'max_depth': 8, 'min_samples_leaf': 3, 'min_samples_split': 10, 'n_estimators': 20}
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  | 
+✔ Đã lưu phong bì kết quả Chặng 3: stage_03.json
+09:48:59 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/03_model_training_report.html & index.html
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  | 🎉 HOÀN THÀNH CHẶNG 03 THÀNH CÔNG TRONG 1197.85 GIÂY!
+09:48:59 | INFO  | 👉 Tiếp theo, hãy chạy 'python scripts/run_04_eval.py' để đánh giá Test set và xuất best_model.
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  | ✔ XONG: Thực thi Chặng 03 (Scratch Models Training & GridSearchCV) (1197.89s)
+09:48:59 | INFO  | 
+=====================================================================================
+09:48:59 | INFO  | >>> [CHẶNG 4/4] ĐÁNH GIÁ ĐỘC LẬP TRÊN TEST SET & XUẤT BÁO CÁO NGHIỆM THU...
+09:48:59 | INFO  | =====================================================================================
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Thực thi Chặng 04 (Hold-out Test Evaluation & Artifacts Export)
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  |    🚀 BẮT ĐẦU CHẶNG 04: ĐÁNH GIÁ ĐỘC LẬP TẬP KIỂM THỬ (HOLD-OUT TEST SET)
+09:48:59 | INFO  |    Thời điểm bắt đầu: 2026-11-14 09:48:59
+09:48:59 | INFO  |    Chế độ chạy: 🏆 Đầy đủ 100% Test Set (20.571 mẫu)
+09:48:59 | INFO  | ================================================================================
+09:48:59 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Nạp 'train_test_data.joblib'
+09:48:59 | INFO  | ✔ XONG: Nạp 'train_test_data.joblib' (0.09s)
+09:48:59 | INFO  |   ✓ Đã nạp thành công tập Test: 20,571 mẫu (15 đặc trưng gốc).
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Nạp 3 mô hình hồi quy Scratch từ models/saved_models/
+09:48:59 | INFO  | ✔ XONG: Nạp 3 mô hình hồi quy Scratch từ models/saved_models/ (0.28s)
+09:48:59 | INFO  |   ✓ Đã nạp đủ 3 mô hình Pipeline: ['Linear Regression', 'Decision Tree Regressor', 'Random Forest Regressor'].
+09:48:59 | INFO  | ▶ BẮT ĐẦU: Đánh giá kiểm thử độc lập trên 20,571 mẫu Test set
+09:49:01 | INFO  | ✔ XONG: Đánh giá kiểm thử độc lập trên 20,571 mẫu Test set (1.44s)
+09:49:01 | INFO  | 
+================================================================================
+09:49:01 | INFO  |    📊 BẢNG ĐỐI ĐẦU HIỆU NĂNG 3 MÔ HÌNH TRÊN HOLD-OUT TEST SET
+09:49:01 | INFO  | ================================================================================
+09:49:01 | INFO  |                 Mô hình  R2 (Log)  R2 (Thực tế)  RMSE (INR)  MAE (INR)       MSE
+09:49:01 | INFO  |       Linear Regression    0.5566       -0.7196      359.51     142.01 129245.42
+09:49:01 | INFO  | Decision Tree Regressor    0.5614        0.4890      195.99     139.63  38411.21
+09:49:01 | INFO  | Random Forest Regressor    0.5643        0.4928      195.25     139.14  38122.54
+09:49:01 | INFO  | ================================================================================
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Đo độ trễ suy luận thời gian thực (Inference Latency)
+09:49:01 | INFO  | ✔ XONG: Đo độ trễ suy luận thời gian thực (Inference Latency) (0.09s)
+09:49:01 | INFO  |   ✓ Tốc độ suy luận Random Forest: 0.092 ms / đơn hàng (10,869 đơn/giây).
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Trích xuất Top 15 đặc trưng chi phối doanh số từ Random Forest Regressor
+09:49:01 | INFO  | ✔ XONG: Trích xuất Top 15 đặc trưng chi phối doanh số từ Random Forest Regressor (0.00s)
+09:49:01 | INFO  |   ✓ Đã trích xuất thành công Top 15 đặc trưng chi phối doanh số.
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Đóng gói 'best_model.joblib' và xuất 'metadata.json'
+09:49:01 | INFO  | ✔ XONG: Đóng gói 'best_model.joblib' và xuất 'metadata.json' (0.41s)
+09:49:01 | INFO  |   ✔ Đã đóng gói mô hình quán quân: models/saved_models/best_model.joblib
+09:49:01 | INFO  |   ✔ Đã xuất siêu dữ liệu nghiệm thu: metadata.json
+09:49:01 | INFO  | ▶ BẮT ĐẦU: Vẽ và xuất 4 biểu đồ trực quan hóa vào docs/images/
+09:49:04 | INFO  | ✔ XONG: Vẽ và xuất 4 biểu đồ trực quan hóa vào docs/images/ (3.12s)
+09:49:04 | INFO  |   ✔ Đã xuất đủ 4 biểu đồ: model_01 đến model_04.
+09:49:04 | INFO  | 
+✔ Đã lưu phong bì kết quả Chặng 4: stage_04.json
+09:49:05 | INFO  | ✔ Đã cập nhật giao diện báo cáo HTML: docs/report/04_model_evaluation_report.html, run_log.html & index.html
+09:49:05 | INFO  | ================================================================================
+09:49:05 | INFO  | 🎉 HOÀN THÀNH CHẶNG 04 THÀNH CÔNG TRONG 5.44 GIÂY!
+09:49:05 | INFO  | 👉 Mở xem toàn bộ báo cáo tổng hợp tại: docs/report/index.html
+09:49:05 | INFO  | ================================================================================
+09:49:05 | INFO  | ✔ XONG: Thực thi Chặng 04 (Hold-out Test Evaluation & Artifacts Export) (5.48s)
+09:49:05 | INFO  | 
+=====================================================================================
+09:49:05 | INFO  | 🎉 TOÀN BỘ QUY TRÌNH HỌC MÁY ĐÃ HOÀN TẤT THÀNH CÔNG TRONG 1212.50 GIÂY (20.21 PHÚT)!
+09:49:05 | INFO  | =====================================================================================
+09:49:05 | INFO  |   • Thời lượng Chặng 01 (Khám phá dữ liệu EDA)    : 5.24s
+09:49:05 | INFO  |   • Thời lượng Chặng 02 (Tiền xử lý & Đặc trưng)  : 3.88s
+09:49:05 | INFO  |   • Thời lượng Chặng 03 (Huấn luyện 3 mô hình & CV): 1197.89s
+09:49:05 | INFO  |   • Thời lượng Chặng 04 (Đánh giá Test & Nghiệm thu): 5.48s
+09:49:05 | INFO  | -------------------------------------------------------------------------------------
+09:49:05 | INFO  | 👉 MỜI XEM BÁO CÁO NGHIỆM THU TỔNG HỢP TRỰC QUAN TẠI:
+09:49:05 | INFO  |    file:///D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 2_PREDICTING_PRODUCT_SALES\docs\report\index.html
+09:49:05 | INFO  | 👉 MỜI XEM NHẬT KÝ THỰC THI TOÀN TRÌNH ZERO-DRIFT TẠI:
+09:49:05 | INFO  |    file:///D:\DH_GTVT\NĂM 3\ML\baitap_code_Nhom_3\PRACTICE 2_PREDICTING_PRODUCT_SALES\docs\report\run_log.html
+09:49:05 | INFO  | 👉 TRẢI NGHIỆM SUY LUẬN TƯƠNG TÁC THỜI GIAN THỰC TẠI:
+09:49:05 | INFO  |    notebooks/demo.ipynb
+09:49:05 | INFO  | =====================================================================================
+09:49:05 | INFO  | 
+>>> ĐỒNG BỘ TOÀN BỘ BÁO CÁO HTML VÀ BẢNG ĐIỀU KHIỂN TỔNG HỢP...
+09:49:05 | INFO  | ▶ BẮT ĐẦU: Tái tạo đồng bộ toàn bộ báo cáo HTML
+09:49:05 | INFO  | ✔ XONG: Tái tạo đồng bộ toàn bộ báo cáo HTML (0.04s)

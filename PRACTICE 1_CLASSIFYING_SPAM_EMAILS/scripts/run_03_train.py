@@ -100,7 +100,7 @@ def run_stage_03(quick_mode: bool = False, extra_handler=None):
     logger.info("\n" + cv_summary_df.to_string(index=False))
 
     # 6. Tinh chỉnh siêu tham số và huấn luyện toàn diện trên toàn bộ tập Train
-    subsample_size = 1500 if quick_mode else None
+    subsample_size = 1500 if quick_mode else 6000
     tune_splits = 2 if quick_mode else 3
     cv_tune = StratifiedKFold(n_splits=tune_splits, shuffle=True, random_state=RANDOM_SEED)
 

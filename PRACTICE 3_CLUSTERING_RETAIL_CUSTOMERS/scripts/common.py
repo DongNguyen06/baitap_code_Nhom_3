@@ -6,6 +6,7 @@ và các hàm hỗ trợ định dạng dữ liệu cho toàn bộ quy trình.
 """
 
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -59,11 +60,26 @@ FEATURE_COLUMNS_4D = ["Age", "Annual_Income_k$", "Spending_Score", "Gender_Code"
 # 3. TIỆN ÍCH LƯU & NẠP DỮ LIỆU HIỆN VẬT JSON
 # -----------------------------------------------------------------------------
 def save_json(data: Any, path: Union[str, Path]) -> Path:
-    """Lưu dữ liệu sang tệp JSON hỗ trợ Unicode đầy đủ."""
+    """Lưu dữ liệu sang tệp JSON hỗ trợ Unicode đầy đủ và định dạng tinh gọn."""
     p = Path(path)
     p.parent.mkdir(parents=True, exist_ok=True)
+    raw_str = json.dumps(data, indent=2, ensure_ascii=False)
+    # Nén các mảng số ngắn và mảng 2-6 phần tử trên 1 dòng
+    raw_str = re.sub(r'\[\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\]', r'[\1, \2]', raw_str)
+    raw_str = re.sub(r'\[\s*("[^"]*")\s*,\s*("[^"]*")\s*\]', r'[\1, \2]', raw_str)
+    raw_str = re.sub(r'\[\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*\]', r'[\1, \2, \3]', raw_str)
+    raw_str = re.sub(r'\[\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*\]', r'[\1, \2, \3, \4]', raw_str)
+    raw_str = re.sub(r'\[\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*,\s*("[^"]*")\s*\]', r'[\1, \2, \3, \4, \5, \6]', raw_str)
+    # Nén các dictionary 1 phần tử nhỏ: {"n_clusters": 5}
+    raw_str = re.sub(r'\{\s*"([a-zA-Z0-9_\-]+)":\s*([0-9\.\-]+|"[^"]*")\s*\}', r'{"\1": \2}', raw_str)
+    # Nén các dictionary elbow và silhouette_by_k trên 1 dòng
+    raw_str = re.sub(
+        r'\{\s*"(?:2|3|4|5|6|7|8|9|10)":\s*[\d\.\-]+(?:,\s*"(?:2|3|4|5|6|7|8|9|10)":\s*[\d\.\-]+){8,9}\s*\}',
+        lambda m: re.sub(r'\s+', ' ', m.group(0)),
+        raw_str
+    )
     with open(p, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write(raw_str)
     return p
 
 

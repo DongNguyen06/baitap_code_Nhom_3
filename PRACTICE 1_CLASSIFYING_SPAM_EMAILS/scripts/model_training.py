@@ -62,15 +62,17 @@ def get_default_param_grids() -> dict:
     return {
         "naive_bayes": {
             "preprocessor__text__select__k": [1500, 2000],
-            "classifier__alpha": [0.05, 0.1, 0.5, 1.0]
+            "classifier__alpha": [0.05, 0.1, 0.5]
         },
         "logistic_regression": {
             "preprocessor__text__select__k": [1500, 2000],
-            "classifier__learning_rate": [10.0, 15.0]
+            "classifier__learning_rate": [10.0, 15.0],
+            "classifier__l2": [1e-4, 1e-3]
         },
         "linear_svm": {
             "preprocessor__text__select__k": [1500, 2000],
-            "classifier__learning_rate": [5.0, 8.0]
+            "classifier__learning_rate": [5.0, 8.0],
+            "classifier__lambda_param": [1e-5, 1e-4]
         }
     }
 
@@ -130,13 +132,19 @@ def tune_grid_search(pipelines: dict, param_grids: dict = None, X_train=None, y_
         pipe.fit(X_train, y_train)
         tuned_models[name] = pipe
 
+        # Lọc bỏ tiền tố pipeline nội bộ, chỉ giữ lại các siêu tham số được quét
+        clean_params = {}
+        for k, v in best_p.items():
+            clean_k = k.replace("classifier__", "").replace("preprocessor__text__select__k", "select_k")
+            clean_params[clean_k] = v
+
         f1_col = f"Best CV F1 (Mẫu {subsample_size:,})" if (subsample_size is not None and subsample_size < len(X_train)) else "Best CV F1 (Toàn bộ Train)"
         summary_records.append({
             "Mô hình": name,
             f1_col: f"{best_f1 * 100:.2f}%",
-            "Siêu tham số tối ưu (Best Params)": str(best_p)
+            "Siêu tham số tối ưu (Best Params)": str(clean_params)
         })
-        logging.getLogger("pipeline").info(f"  ✓ [{name}] Best F1 = {best_f1 * 100:.2f}% | Params: {best_p}")
+        logging.getLogger("pipeline").info(f"  ✓ [{name}] Best F1 = {best_f1 * 100:.2f}% | Params: {clean_params}")
 
         # Lưu độc quyền vào models/saved_models/
         joblib.dump(pipe, save_dir / f"{name}.joblib")

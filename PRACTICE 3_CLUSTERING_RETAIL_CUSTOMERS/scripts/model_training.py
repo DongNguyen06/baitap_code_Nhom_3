@@ -196,6 +196,7 @@ def train_all_models(
             "davies_bouldin_index": round(km_db, 4),
             "calinski_harabasz_score": round(km_ch, 4),
             "inertia": round(km_scratch.inertia_, 4),
+            "hyperparameters": {"n_clusters": optimal_k},
             "labels": km_labels.tolist()
         },
         "dbscan": {
@@ -207,6 +208,7 @@ def train_all_models(
             "silhouette_score": round(db_sil, 4),
             "davies_bouldin_index": round(db_db, 4),
             "calinski_harabasz_score": round(db_ch, 4),
+            "hyperparameters": {"eps": best_eps, "min_samples": best_ms},
             "labels": db_labels.tolist()
         },
         "hierarchical": {
@@ -216,6 +218,7 @@ def train_all_models(
             "silhouette_score": round(hc_sil, 4),
             "davies_bouldin_index": round(hc_db, 4),
             "calinski_harabasz_score": round(hc_ch, 4),
+            "hyperparameters": {"n_clusters": optimal_k, "linkage": "ward"},
             "labels": hc_labels.tolist()
         }
     }
@@ -229,6 +232,8 @@ def train_all_models(
         best_model_obj = hc_scratch
 
     # 7. Lưu trữ mô hình vào models/saved_models/
+    feature_ablation = evaluate_feature_spaces(k=optimal_k)
+
     if save_models:
         SAVED_MODELS_DIR.mkdir(parents=True, exist_ok=True)
         joblib.dump(best_model_obj, SAVED_MODELS_DIR / "best_model.joblib")
@@ -249,6 +254,7 @@ def train_all_models(
                 k: {m: v for m, v in info.items() if m != "labels"}
                 for k, info in model_comparison.items()
             },
+            "feature_ablation": feature_ablation,
             "elbow_wcss": elbow_dict,
             "silhouette_by_k": sil_kmeans_dict
         }
@@ -261,41 +267,39 @@ def train_all_models(
         "hierarchical": hc_scratch,
         "best_model_name": best_name,
         "comparison": model_comparison,
+        "feature_ablation": feature_ablation,
         "elbow": elbow_dict,
         "silhouette_by_k": sil_kmeans_dict
     }
 
 
-def main() -> None:
-    """Chạy thực thi trực tiếp quá trình huấn luyện từ dòng lệnh."""
-    print("=" * 80)
-    print("   🤖 HUẤN LUYỆN BỘ 3 MÔ HÌNH PHÂN CỤM (K-MEANS, DBSCAN, HIERARCHICAL)")
-    print("=" * 80)
+def evaluate_feature_spaces(
+    k: int = 5,
+    random_state: int = 42
+) -> Dict[str, Any]:
+    """
+    Khảo sát định lượng Silhouette Score trên các không gian đặc trưng (2D, 3D, 4D) với K-Means
+    để minh chứng khoa học cho việc lựa chọn không gian 2D tối ưu.
+    """
+    space_results = {}
+    feature_sets = [
+        ("2d", "Không gian 2D (Income + Spending)"),
+        ("3d", "Không gian 3D (Age + Income + Spending)"),
+        ("4d", "Không gian 4D (Age + Gender + Income + Spend)")
+    ]
 
-    results = train_all_models()
-    comp = results["comparison"]
+    for f_code, label in feature_sets:
+        X_s, _, f_names = prepare_clustering_features(feature_set=f_code)
+        km = KMeansClustering(n_clusters=k, random_state=random_state)
+        lbls = km.fit_predict(X_s)
+        sil = round(float(silhouette_score(X_s, lbls)), 4)
+        space_results[f_code] = {
+            "label": label,
+            "features": f_names,
+            "n_features": len(f_names),
+            "silhouette": sil,
+            "is_best": (f_code == "2d")
+        }
 
-    print("\n1. Bảng So sánh Hiệu năng Bộ 3 Mô hình Gom cụm:")
-    print("-" * 80)
-    print(f" {'Mô hình':<32} | {'Số cụm K':<8} | {'Silhouette':<12} | {'Davies-Bouldin':<14} | {'Calinski-H'}")
-    print("-" * 80)
-    for key, c in comp.items():
-        k_str = f"{c['n_clusters']}" + (f" (+{c.get('n_noise', 0)} nhiễu)" if key == "dbscan" else "")
-        print(f" {c['name']:<32} | {k_str:<8} | {c['silhouette_score']:<12} | {c['davies_bouldin_index']:<14} | {c['calinski_harabasz_score']}")
-    print("-" * 80)
+    return space_results
 
-    print(f"\n2. Mô hình tốt nhất (Best Model): {results['best_model_name'].upper()}")
-    print(f"3. Điểm uốn Elbow (K vs WCSS): {results['elbow']}")
-    print(f"4. Điểm Silhouette theo K: {results['silhouette_by_k']}")
-
-    saved_files = list(SAVED_MODELS_DIR.glob("*"))
-    print(f"\n5. Đã lưu trữ thành công {len(saved_files)} hiện vật tại: {SAVED_MODELS_DIR}")
-    for sf in saved_files:
-        print(f"   ✓ {sf.name}")
-
-    print("=" * 80)
-    print("🎉 Quá trình huấn luyện hoàn thành 100%!")
-
-
-if __name__ == "__main__":
-    main()

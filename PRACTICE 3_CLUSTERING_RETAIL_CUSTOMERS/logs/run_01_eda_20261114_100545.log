@@ -1,0 +1,19 @@
+10:05:45 | INFO  | ================================================================================
+10:05:45 | INFO  | 🚀 BẮT ĐẦU CHẶNG 01: KHÁM PHÁ DỮ LIỆU KHÁCH HÀNG BÁN LẺ (EDA READ-ONLY)
+10:05:45 | INFO  | ================================================================================
+10:05:45 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+10:05:45 | INFO  | Đã xác minh nguồn dữ liệu thô: data/raw/Mall_Customers.csv
+10:05:45 | INFO  | ▶ BẮT ĐẦU: Khám phá dữ liệu thô và xuất 5 biểu đồ EDA vào docs/images
+10:05:47 | INFO  | ✔ XONG: Khám phá dữ liệu thô và xuất 5 biểu đồ EDA vào docs/images (2.10s)
+10:05:47 | INFO  |   • Quy mô dữ liệu: 200 khách hàng (5 trường thuộc tính).
+10:05:47 | INFO  |   • Cơ cấu giới tính: {'Female': 112, 'Male': 88} (Tỷ lệ: {'Female': 56.0, 'Male': 44.0}).
+10:05:47 | INFO  |   ✔ Đã xuất đủ 5 biểu đồ EDA vào: docs/images
+10:05:47 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_01.json
+10:05:47 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html
+10:05:47 | INFO  |   ✔ Đã tự động tạo: docs/report/01_data_report.html
+10:05:47 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+10:05:47 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 1 và cập nhật index.html (0.02s)
+10:05:47 | INFO  | ================================================================================
+10:05:47 | INFO  | 🎉 HOÀN THÀNH CHẶNG 01 THÀNH CÔNG TRONG 2.13 GIÂY!
+10:05:47 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/01_data_report.html
+10:05:47 | INFO  | ================================================================================

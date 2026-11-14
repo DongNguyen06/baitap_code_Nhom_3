@@ -1,0 +1,49 @@
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | 🚀 BẮT ĐẦU CHẶNG 02: KỸ THUẬT ĐẶC TRƯNG & DÂY CHUYỀN PIPELINE KHÉP KÍN 6 BƯỚC
+09:28:57 | INFO  | ================================================================================
+09:28:57 | INFO  | Môi trường thực thi: Python 3.10.20 | OS: Windows 10 | NumPy 1.26.4 | Pandas 2.3.3 | Scikit-learn 1.7.1 | Random Seed = 42
+09:28:57 | INFO  | --- [BƯỚC 1/6]: LÀM SẠCH DỮ LIỆU THÔ & KHỬ TRÙNG LẶP TRIỆT ĐỂ ---
+09:28:57 | INFO  | ▶ BẮT ĐẦU: Nạp dữ liệu thô từ Amazon Sale Report.csv
+09:28:58 | INFO  | ✔ XONG: Nạp dữ liệu thô từ Amazon Sale Report.csv (0.72s)
+09:28:58 | INFO  |   • Đã nạp thành công 128,975 dòng dữ liệu thô ban đầu (24 thuộc tính).
+09:28:58 | INFO  | ▶ BẮT ĐẦU: Lọc đơn Cancelled, đơn âm/null và khử trùng lặp (Zero Duplicate Leakage)
+09:28:59 | INFO  | ✔ XONG: Lọc đơn Cancelled, đơn âm/null và khử trùng lặp (Zero Duplicate Leakage) (1.30s)
+09:28:59 | INFO  |   • Loại bỏ đơn hủy Status 'Cancelled': 18,332 đơn.
+09:28:59 | INFO  |   • Loại bỏ đơn khuyết thiếu / âm Amount hoặc Qty: 2,572 đơn.
+09:28:59 | INFO  |   • Loại bỏ đơn trùng lặp bản ghi: 5,219 đơn.
+09:28:59 | INFO  |   ✔ Dữ liệu sạch thu được: 102,852 đơn hàng hợp lệ.
+09:28:59 | INFO  |   ✔ Đã xuất tệp dữ liệu sạch: data/processed/clean_amazon_sales.csv
+09:28:59 | INFO  | --- [BƯỚC 2/6]: TRÍCH XUẤT CÁC ĐẶC TRƯNG MIỀN NGHIỆP VỤ TMĐT ---
+09:28:59 | INFO  | ▶ BẮT ĐẦU: Trích xuất đặc trưng thời gian, tiếp thị, B2B và địa lý
+09:28:59 | INFO  | ✔ XONG: Trích xuất đặc trưng thời gian, tiếp thị, B2B và địa lý (0.20s)
+09:28:59 | INFO  |   • Bảng đặc trưng mới: 18 cột (đã tạo: month, day_of_week, is_weekend, is_promoted, is_b2b, state_grouped).
+09:28:59 | INFO  | --- [BƯỚC 3/6]: PHÂN CHIA TRAIN/TEST 80/20 & CƠ CHẾ CHỐNG RÒ RỈ DỮ LIỆU ---
+09:28:59 | INFO  | ▶ BẮT ĐẦU: Quét phát hiện các cặp đặc trưng đa cộng tuyến (|r| > 0.6)
+09:29:00 | INFO  | ✔ XONG: Quét phát hiện các cặp đặc trưng đa cộng tuyến (|r| > 0.6) (0.03s)
+09:29:00 | INFO  |   • Phát hiện 1 cặp đa cộng tuyến (|r| > 0.6): [('day_of_week', 'is_weekend', 0.8006)].
+09:29:00 | INFO  |   • Đã chủ động loại bỏ 'is_weekend' để tránh trùng lặp thông tin với 'day_of_week'.
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Phân chia Train/Test 80/20 và biến đổi log1p biến mục tiêu
+09:29:00 | INFO  | ✔ XONG: Phân chia Train/Test 80/20 và biến đổi log1p biến mục tiêu (0.05s)
+09:29:00 | INFO  |   • Phân chia thành công: Train=82,281 mẫu (80%), Test=20,571 mẫu (20%).
+09:29:00 | INFO  |   • Doanh số TB: Train=665.20 INR, Test=666.94 INR.
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check)
+09:29:00 | INFO  | ✔ XONG: Kiểm tra rò rỉ dữ liệu (Zero Data Leakage Check) (0.01s)
+09:29:00 | INFO  |   ✔ Trùng lặp giữa Train và Test: 0 mẫu (Zero Data Leakage đạt 100%).
+09:29:00 | INFO  | --- [BƯỚC 4 & 5/6]: CHUẨN HÓA & MÃ HÓA QUA DÂY CHUYỀN COLUMNTRANSFORMER ---
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Cấu hình ColumnTransformer và huấn luyện (.fit) DUY NHẤT trên Train set
+09:29:00 | INFO  | ✔ XONG: Cấu hình ColumnTransformer và huấn luyện (.fit) DUY NHẤT trên Train set (0.30s)
+09:29:00 | INFO  |   • Không gian đặc trưng sau One-Hot: 42 chiều (5 số + 37 One-Hot).
+09:29:00 | INFO  | --- [BƯỚC 6/6]: ĐÓNG GÓI PIPELINE & XUẤT HIỆN VẬT BÀN GIAO ---
+09:29:00 | INFO  | ▶ BẮT ĐẦU: Lưu trữ các tệp train.csv, test.csv, train_test_data.joblib & preprocessor.joblib
+09:29:01 | INFO  | ✔ XONG: Lưu trữ các tệp train.csv, test.csv, train_test_data.joblib & preprocessor.joblib (1.22s)
+09:29:01 | INFO  |   ✔ Đã lưu: train_test_data.joblib và preprocessor.joblib
+09:29:01 | INFO  |   ✔ Đã xuất: data/processed/train.csv & test.csv
+09:29:01 | INFO  |   ✔ Đã lưu phong bì kết quả: outputs/stage_02.json
+09:29:01 | INFO  | ▶ BẮT ĐẦU: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html
+09:29:01 | INFO  | ✔ XONG: Tự động sinh báo cáo HTML Chặng 2 và cập nhật index.html (0.00s)
+09:29:01 | INFO  |   ✔ Đã tự động tạo: docs/report/02_feature_pipeline_report.html
+09:29:01 | INFO  |   ✔ Đã cập nhật bảng trạng thái: docs/report/index.html
+09:29:01 | INFO  | ================================================================================
+09:29:01 | INFO  | 🎉 HOÀN THÀNH CHẶNG 02 THÀNH CÔNG TRONG 3.84 GIÂY!
+09:29:01 | INFO  | 👉 Mở xem báo cáo trực quan tại: docs/report/02_feature_pipeline_report.html
+09:29:01 | INFO  | ================================================================================
